@@ -1,0 +1,30 @@
+# Entorno virtual de Python
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# Variables de entorno (nunca subir contraseñas ni claves)
+.env
+
+# Base de datos local
+*.sqlite3
+*.db
+
+# Distribuciones / empaquetados
+*.egg-info/
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Logs
+*.log
