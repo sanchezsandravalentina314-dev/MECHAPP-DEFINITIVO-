@@ -7,7 +7,7 @@ load_dotenv()
 
 raw_url = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:1983@localhost:5434/MechApp.gerval"
+    "postgresql://postgres:1983@localhost:5433/MechApp"
 )
 
 # Cambiado a psycopg (v3) para evitar los problemas de codificación de psycopg2 en Windows
