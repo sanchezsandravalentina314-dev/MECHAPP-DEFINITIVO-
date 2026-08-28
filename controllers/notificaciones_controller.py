@@ -1,28 +1,22 @@
-from fastapi import HTTPException, status
+﻿from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from schemas.notificaciones_schema import NotificacionCreate, NotificacionUpdate
 from services.notificaciones_service import notificaciones_service
+from models.modelos import Usuario, Notificacion
 
-def listar(db: Session, skip: int = 0, limit: int = 100):
-    return notificaciones_service.get_all(db, skip=skip, limit=limit)
+def listar(db: Session, usuario: Usuario, skip: int = 0, limit: int = 100):
+    return db.query(Notificacion).filter(
+        Notificacion.id_usuario == usuario.id_usuario
+    ).order_by(Notificacion.id_notificacion.desc()).offset(skip).limit(limit).all()
 
-def obtener(db: Session, item_id: int):
+def marcar_leida(db: Session, item_id: int, usuario: Usuario):
     obj = notificaciones_service.get_by_id(db, item_id)
-    if not obj:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No encontrado.")
+    if not obj or obj.id_usuario != usuario.id_usuario:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No encontrado o acceso denegado.")
+    obj.leida = True
+    db.commit()
+    db.refresh(obj)
     return obj
 
 def crear(db: Session, datos: NotificacionCreate):
     return notificaciones_service.create(db, datos.model_dump())
-
-def actualizar(db: Session, item_id: int, datos: NotificacionUpdate):
-    obj = notificaciones_service.update(db, item_id, datos.model_dump(exclude_unset=True))
-    if not obj:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No encontrado.")
-    return obj
-
-def eliminar(db: Session, item_id: int):
-    ok = notificaciones_service.delete(db, item_id)
-    if not ok:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No encontrado.")
-    return {"mensaje": "Eliminado correctamente."}

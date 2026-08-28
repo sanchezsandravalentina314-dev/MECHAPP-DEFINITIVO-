@@ -18,3 +18,16 @@ def login_usuario(db: Session, datos: UsuarioLogin):
                             detail="Correo o contraseña incorrectos.")
     token = auth_service.generar_token(usuario)
     return Token(access_token=token, usuario=usuario)
+from utils.security import hash_password, verify_password
+from schemas.auth_schema import CambioContrasena
+from models.modelos import Usuario
+
+def cambiar_contrasena(db: Session, usuario: Usuario, datos: CambioContrasena):
+    # Verificar la contrasena actual
+    if not verify_password(datos.contrasena_actual, usuario.contrasena):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="La contraseña actual es incorrecta.")
+    
+    # Actualizar y hashear la nueva
+    usuario.contrasena = hash_password(datos.nueva_contrasena)
+    db.commit()
+    return {"mensaje": "Contraseña actualizada exitosamente."}

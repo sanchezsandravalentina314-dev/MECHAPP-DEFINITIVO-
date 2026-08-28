@@ -30,3 +30,6 @@ class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
     usuario: UsuarioAuthResponse
+class CambioContrasena(BaseModel):
+    contrasena_actual: str
+    nueva_contrasena: str
