@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
@@ -38,24 +38,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleDemoLogin = async (role) => {
-    try {
-      setLoading(true);
-      const email = role === 'admin' ? 'admin@mechapp.com' : 'jugador@mechapp.com';
-      const user = await login(email, '123456');
-      showSuccess(`Acceso demo concedido como ${role === 'admin' ? 'Administrador' : 'Jugador'}`);
-      if (role === 'admin') {
-        navigate('/admin/dashboard');
-      } else {
-        navigate('/user/torneos');
-      }
-    } catch (err) {
-      showError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="auth-page-wrapper">
       <div className="auth-card">
@@ -63,33 +45,8 @@ export default function LoginPage() {
           <Link to="/">
             <img src="/logo.jpeg" alt="Logo MechApp" className="auth-logo" />
           </Link>
-          <h1>¡Bienvenido a MechApp!</h1>
+          <h1>Iniciar Sesión</h1>
           <p>Ingresa tus credenciales para acceder a la plataforma</p>
-        </div>
-
-        {/* Acceso rápido de demostración */}
-        <div style={{ marginBottom: '24px', padding: '16px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-          <p style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '10px', textAlign: 'center' }}>
-            ⚡ Acceso rápido de prueba:
-          </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => handleDemoLogin('admin')}
-              disabled={loading}
-            >
-              👑 Administrador
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => handleDemoLogin('user')}
-              disabled={loading}
-            >
-              🎯 Jugador
-            </Button>
-          </div>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -124,7 +81,7 @@ export default function LoginPage() {
                 color: 'var(--text-muted)',
               }}
             >
-              {showPassword ? '🙈 Ocultar' : '👁️ Ver'}
+              {showPassword ? 'Ocultar' : 'Ver'}
             </button>
           </div>
 
@@ -135,7 +92,7 @@ export default function LoginPage() {
             loading={loading}
             style={{ width: '100%', marginTop: '12px' }}
           >
-            Iniciar Sesión
+            Ingresar a MechApp
           </Button>
         </form>
 
@@ -148,7 +105,7 @@ export default function LoginPage() {
           </p>
           <p style={{ marginTop: '10px' }}>
             <Link to="/" style={{ color: 'var(--text-dim)' }}>
-              ← Volver al inicio
+              Volver al inicio
             </Link>
           </p>
         </div>

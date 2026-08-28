@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
@@ -37,7 +37,7 @@ export default function RegisterPage() {
     }
 
     if (!isValidDocument(form.documento)) {
-      showError('Por favor ingresa un número de documento válido (mínimo 5 caracteres).');
+      showError('Por favor ingresa un número de documento válido.');
       return;
     }
 
@@ -56,10 +56,16 @@ export default function RegisterPage() {
       return;
     }
 
+    // Seguridad extra: Si alguien intenta inyectar rol 1 por consola, forzamos a 2.
+    let rolSeleccionado = Number(form.id_rol);
+    if (rolSeleccionado === 1) {
+      rolSeleccionado = 2;
+    }
+
     try {
       setLoading(true);
       const payload = {
-        id_rol: Number(form.id_rol),
+        id_rol: rolSeleccionado,
         nombre: form.nombre.trim(),
         documento: form.documento.trim(),
         correo: form.correo.trim().toLowerCase(),
@@ -132,6 +138,7 @@ export default function RegisterPage() {
             />
           </div>
 
+          {/* Seguridad: Quitamos la opción de registrarse como Administrador libremente */}
           <Input
             label="Tipo de Usuario / Rol"
             name="id_rol"
@@ -140,9 +147,8 @@ export default function RegisterPage() {
             onChange={handleChange}
             required
             options={[
-              { value: '2', label: '🎯 Jugador / Deportista' },
-              { value: '3', label: '🏟️ Propietario de Canchas' },
-              { value: '1', label: '👑 Administrador' },
+              { value: '2', label: 'Jugador / Deportista' },
+              { value: '3', label: 'Propietario de Canchas' }
             ]}
           />
 
@@ -177,7 +183,7 @@ export default function RegisterPage() {
               onClick={() => setShowPassword(!showPassword)}
               style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}
             >
-              {showPassword ? '🙈 Ocultar contraseñas' : '👁️ Mostrar contraseñas'}
+              {showPassword ? 'Ocultar contraseñas' : 'Mostrar contraseñas'}
             </button>
           </div>
 
@@ -201,7 +207,7 @@ export default function RegisterPage() {
           </p>
           <p style={{ marginTop: '10px' }}>
             <Link to="/" style={{ color: 'var(--text-dim)' }}>
-              ← Volver al inicio
+              Volver al inicio
             </Link>
           </p>
         </div>

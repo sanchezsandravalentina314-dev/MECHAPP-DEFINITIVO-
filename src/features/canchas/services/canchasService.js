@@ -1,4 +1,4 @@
-import api from '@/services/api';
+﻿import api from '@/services/api';
 
 export const canchasService = {
   async listar() {
@@ -8,6 +8,16 @@ export const canchasService = {
 
   async obtener(id) {
     const response = await api.get(`/canchas/${id}`);
+    return response.data;
+  },
+
+  async consultarDisponibilidad(id, fecha) {
+    const response = await api.get(`/canchas/${id}/disponibilidad?fecha=${fecha}`);
+    return response.data;
+  },
+
+  async obtenerValoraciones(id) {
+    const response = await api.get(`/valoraciones/cancha/${id}`);
     return response.data;
   },
 

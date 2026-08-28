@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import UserLayout from '@/components/layout/UserLayout';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
 import { getRoleName } from '@/utils/formatters';
+import api from '@/services/api';
 
 export default function PerfilPage() {
   const { user, setUser } = useAuth();
-  const { showSuccess } = useApp();
+  const { showSuccess, showError } = useApp();
 
   const [form, setForm] = useState({
     nombre: user?.nombre || '',
     correo: user?.correo || '',
     documento: user?.documento || '',
     telefono: user?.telefono || '',
+  });
+
+  const [pwdForm, setPwdForm] = useState({
+    contrasena_actual: '',
+    nueva_contrasena: '',
+    confirmar: ''
   });
 
   const handleSubmit = (e) => {
@@ -25,12 +32,31 @@ export default function PerfilPage() {
     showSuccess('Perfil actualizado correctamente.');
   };
 
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (pwdForm.nueva_contrasena !== pwdForm.confirmar) {
+      showError('Las contraseñas nuevas no coinciden.');
+      return;
+    }
+    
+    try {
+      await api.put('/auth/cambiar-contrasena', {
+        contrasena_actual: pwdForm.contrasena_actual,
+        nueva_contrasena: pwdForm.nueva_contrasena
+      });
+      showSuccess('Contraseña actualizada de forma segura.');
+      setPwdForm({ contrasena_actual: '', nueva_contrasena: '', confirmar: '' });
+    } catch (error) {
+      showError(error.message || 'No se pudo cambiar la contraseña.');
+    }
+  };
+
   return (
     <UserLayout
       title="Mi Perfil"
       subtitle="Consulta y actualiza tus datos personales y credenciales de contacto."
     >
-      <div style={{ maxWidth: '680px' }}>
+      <div style={{ maxWidth: '680px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px' }}>
             <div
@@ -92,6 +118,40 @@ export default function PerfilPage() {
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
               <Button type="submit" variant="primary">
                 Guardar Cambios del Perfil
+              </Button>
+            </div>
+          </form>
+        </div>
+
+        <div className="card">
+          <h3 style={{ marginBottom: '16px' }}>Cambiar Contraseña</h3>
+          <form onSubmit={handlePasswordSubmit}>
+            <Input
+              label="Contraseña Actual"
+              type="password"
+              value={pwdForm.contrasena_actual}
+              onChange={(e) => setPwdForm({ ...pwdForm, contrasena_actual: e.target.value })}
+              required
+            />
+            <div className="form-grid-2" style={{ marginTop: '16px' }}>
+              <Input
+                label="Nueva Contraseña"
+                type="password"
+                value={pwdForm.nueva_contrasena}
+                onChange={(e) => setPwdForm({ ...pwdForm, nueva_contrasena: e.target.value })}
+                required
+              />
+              <Input
+                label="Confirmar Nueva Contraseña"
+                type="password"
+                value={pwdForm.confirmar}
+                onChange={(e) => setPwdForm({ ...pwdForm, confirmar: e.target.value })}
+                required
+              />
+            </div>
+            <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
+              <Button type="submit" variant="secondary">
+                Actualizar Contraseña
               </Button>
             </div>
           </form>
