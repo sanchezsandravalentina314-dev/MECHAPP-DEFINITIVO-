@@ -169,18 +169,27 @@ export default function CanchasAdminPage() {
     },
   ];
 
+  const esPropietario = user ? Number(user.id_rol) === 3 : false;
+  const canchasVisibles = esPropietario
+    ? canchas.filter((c) => c.id_usuario === user?.id_usuario)
+    : canchas;
+
   return (
     <AdminLayout
-      title="Gestión de Escenarios y Canchas"
-      subtitle="Administra los clubes deportivos aliados, su aforo de canchas, tarifas y ubicaciones."
+      title={esPropietario ? "Panel de Mis Canchas" : "Gestión Global de Canchas"}
+      subtitle={
+        esPropietario
+          ? `Bienvenido ${user?.nombre || ''}. Aquí administras únicamente tus pistas de tejo, tarifas y disponibilidad.`
+          : "Control maestro de todos los escenarios deportivos y canchas del sistema."
+      }
     >
       <Table
         columns={columns}
-        data={canchas}
+        data={canchasVisibles}
         loading={loading}
         onAddNew={handleOpenNew}
-        addNewLabel="＋ Nueva Cancha"
-        searchPlaceholder="Buscar por club, dirección o capacidad..."
+        addNewLabel="＋ Registrar Mi Cancha"
+        searchPlaceholder="Buscar por nombre, dirección o capacidad..."
       />
 
       <Modal

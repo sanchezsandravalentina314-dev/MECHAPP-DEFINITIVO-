@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
@@ -26,10 +26,13 @@ export default function LoginPage() {
       setLoading(true);
       const user = await login(correo, contrasena);
       showSuccess(`¡Bienvenido de nuevo, ${user.nombre}!`);
-      if (user.id_rol === 1) {
+      const userRoleId = Number(user.id_rol);
+      if (userRoleId === 1) {
         navigate('/admin/dashboard');
+      } else if (userRoleId === 3) {
+        navigate('/admin/canchas');
       } else {
-        navigate('/user/torneos');
+        navigate('/user/canchas');
       }
     } catch (err) {
       showError(err.message || 'Credenciales inválidas.');

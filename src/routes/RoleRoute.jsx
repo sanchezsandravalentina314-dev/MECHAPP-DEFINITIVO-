@@ -13,7 +13,10 @@ export default function RoleRoute({ allowedRoles = [] }) {
     return <Loader message="Verificando permisos..." />;
   }
 
-  if (!user || (allowedRoles.length > 0 && !allowedRoles.includes(user.id_rol))) {
+  const userRoleId = user ? Number(user.id_rol) : null;
+  const rolesMapped = allowedRoles.map(Number);
+
+  if (!user || (rolesMapped.length > 0 && !rolesMapped.includes(userRoleId))) {
     return <Navigate to="/" replace />;
   }
 

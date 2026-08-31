@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
@@ -75,7 +75,8 @@ export default function RegisterPage() {
 
       const user = await registro(payload);
       showSuccess(`¡Cuenta creada con éxito! Bienvenido, ${user.nombre}.`);
-      if (user.id_rol === 1) {
+      const userRoleId = Number(user.id_rol);
+      if (userRoleId === 1) {
         navigate('/admin/dashboard');
       } else {
         navigate('/user/torneos');

@@ -20,16 +20,30 @@ export default function Sidebar({ mode = 'admin' }) {
   ];
 
   const userMenu = [
+    { to: '/user/canchas', label: 'Explorar Canchas', icon: '🎯' },
+    { to: '/user/ubicaciones', label: 'Sedes y Clubes', icon: '📍' },
     { to: '/user/torneos', label: 'Torneos Activos', icon: '🏆' },
-    { to: '/user/canchas', label: 'Explorar Canchas', icon: '📍' },
     { to: '/user/mis-reservas', label: 'Mis Reservas', icon: '📅' },
     { to: '/user/equipos', label: 'Mis Equipos', icon: '⚽' },
-    { to: '/user/eventos', label: 'Eventos y Actividades', icon: '🎉' },
     { to: '/user/noticias', label: 'Noticias y Novedades', icon: '📰' },
     { to: '/user/perfil', label: 'Mi Perfil', icon: '👤' },
   ];
 
-  const items = mode === 'admin' ? adminMenu : userMenu;
+  const propietarioMenu = [
+    { to: '/admin/canchas', label: 'Mis Canchas', icon: '📍' },
+    { to: '/admin/reservas', label: 'Reservas Recibidas', icon: '📅' },
+    { to: '/admin/torneos', label: 'Mis Torneos', icon: '🏆' },
+    { to: '/user/noticias', label: 'Noticias', icon: '📰' },
+    { to: '/user/perfil', label: 'Mi Perfil', icon: '👤' },
+  ];
+
+  let items = userMenu;
+  const userRoleId = user ? Number(user.id_rol) : null;
+  if (userRoleId === 1) {
+    items = adminMenu;
+  } else if (userRoleId === 3) {
+    items = propietarioMenu;
+  }
 
   return (
     <aside className="dashboard-sidebar">

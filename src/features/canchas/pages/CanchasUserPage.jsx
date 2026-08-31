@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserLayout from '@/components/layout/UserLayout';
 import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
@@ -42,8 +42,12 @@ export default function CanchasUserPage() {
     numero: '',
     nombre: '',
     vencimiento: '',
-    cvc: ''
+    cvc: '',
   });
+
+  const [filtroCiudad, setFiltroCiudad] = useState('todas');
+  const [busqueda, setBusqueda] = useState('');
+  const [loadingLocation, setLoadingLocation] = useState(false);
 
   const cargarDatos = async () => {
     try {
@@ -69,6 +73,48 @@ export default function CanchasUserPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleObtenerMiUbicacion = () => {
+    if (!navigator.geolocation) {
+      showError('Tu navegador no soporta geolocalización.');
+      return;
+    }
+    setLoadingLocation(true);
+    navigator.geolocation.getCurrentPosition(
+      () => {
+        setLoadingLocation(false);
+        showSuccess('¡Ubicación detectada! Mostrando canchas disponibles.');
+      },
+      () => {
+        setLoadingLocation(false);
+        showError('No se pudo obtener tu ubicación. Verifica los permisos.');
+      }
+    );
+  };
+
+  const ciudadesDisponibles = Array.from(
+    new Set(ubicaciones.map((u) => u.ciudad).filter(Boolean))
+  );
+
+  const canchasFiltradas = canchas.filter((cancha) => {
+    const ubicacion = ubicaciones.find((u) => u.id_ubicacion === cancha.id_ubicacion);
+    const cumpleCiudad = filtroCiudad === 'todas' || ubicacion?.ciudad === filtroCiudad;
+    const cumpleBusqueda =
+      !busqueda.trim() ||
+      (cancha.nombre || '').toLowerCase().includes(busqueda.toLowerCase()) ||
+      (ubicacion?.nombre || '').toLowerCase().includes(busqueda.toLowerCase()) ||
+      (ubicacion?.ciudad || '').toLowerCase().includes(busqueda.toLowerCase()) ||
+      (ubicacion?.barrio || '').toLowerCase().includes(busqueda.toLowerCase()) ||
+      (ubicacion?.direccion || '').toLowerCase().includes(busqueda.toLowerCase());
+    return cumpleCiudad && cumpleBusqueda;
+  });
+
+  const abrirEnGoogleMaps = (ubicacion, canchaNombre) => {
+    const query = encodeURIComponent(
+      `${canchaNombre}, ${ubicacion?.direccion || ''}, ${ubicacion?.ciudad || ''}, Colombia`
+    );
+    window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
   };
 
   useEffect(() => {
@@ -161,11 +207,87 @@ export default function CanchasUserPage() {
       title="Canchas y Escenarios de Tejo"
       subtitle="Explora las pistas disponibles, consulta disponibilidad y reseñas."
     >
+      {/* Barra de Filtros de Ubicación y Búsqueda */}
+      <div
+        style={{
+          background: 'var(--bg-surface)',
+          padding: '16px 20px',
+          borderRadius: 'var(--radius-lg)',
+          marginBottom: '24px',
+          border: '1px solid var(--border-color)',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '12px',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', flex: 1 }}>
+          <input
+            type="text"
+            placeholder="🔍 Buscar por cancha, ciudad, barrio o dirección..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            style={{
+              padding: '10px 14px',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-color)',
+              background: 'var(--bg-card)',
+              color: 'var(--text-color)',
+              minWidth: '240px',
+              flex: 1,
+            }}
+          />
+
+          <select
+            value={filtroCiudad}
+            onChange={(e) => setFiltroCiudad(e.target.value)}
+            style={{
+              padding: '10px 14px',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-color)',
+              background: 'var(--bg-card)',
+              color: 'var(--text-color)',
+              cursor: 'pointer',
+            }}
+          >
+            <option value="todas">Todas las Ciudades</option>
+            {ciudadesDisponibles.map((ciudad) => (
+              <option key={ciudad} value={ciudad}>
+                {ciudad}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <Button
+          variant="secondary"
+          onClick={handleObtenerMiUbicacion}
+          disabled={loadingLocation}
+        >
+          {loadingLocation ? '📍 Localizando...' : '📍 Cerca de Mí'}
+        </Button>
+      </div>
+
       {loading ? (
         <Loader message="Buscando canchas aliadas..." />
+      ) : canchasFiltradas.length === 0 ? (
+        <div
+          style={{
+            textAlign: 'center',
+            padding: '40px',
+            background: 'var(--bg-surface)',
+            borderRadius: 'var(--radius-lg)',
+          }}
+        >
+          <h3>No se encontraron canchas</h3>
+          <p style={{ color: 'var(--text-muted)' }}>
+            Prueba ajustando los filtros de búsqueda o seleccionando otra ciudad.
+          </p>
+        </div>
       ) : (
         <div className="services-grid">
-          {canchas.map((cancha) => {
+          {canchasFiltradas.map((cancha) => {
             const ubicacion = ubicaciones.find((u) => u.id_ubicacion === cancha.id_ubicacion);
             const rating = estrellasCanchas[cancha.id_cancha];
             
@@ -211,18 +333,28 @@ export default function CanchasUserPage() {
                     </div>
                   </div>
 
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
-                    Dirección: {ubicacion?.direccion || 'Sede principal'} ({ubicacion?.barrio || 'Centro'})
-                  </p>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
+                    <div>📍 <strong>{ubicacion?.nombre || 'Sede Principal'}</strong></div>
+                    <div>{ubicacion?.direccion || 'Dirección no registrada'} - {ubicacion?.ciudad || 'Colombia'} ({ubicacion?.barrio || 'Centro'})</div>
+                  </div>
 
-                  <Button
-                    variant="primary"
-                    style={{ width: '100%' }}
-                    onClick={() => handleOpenReservar(cancha)}
-                    disabled={!cancha.estado}
-                  >
-                    Reservar Cancha
-                  </Button>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <Button
+                      variant="outline"
+                      style={{ flex: 1 }}
+                      onClick={() => abrirEnGoogleMaps(ubicacion, cancha.nombre)}
+                    >
+                      🗺️ Mapa
+                    </Button>
+                    <Button
+                      variant="primary"
+                      style={{ flex: 2 }}
+                      onClick={() => handleOpenReservar(cancha)}
+                      disabled={!cancha.estado}
+                    >
+                      Reservar Cancha
+                    </Button>
+                  </div>
                 </div>
               </article>
             );

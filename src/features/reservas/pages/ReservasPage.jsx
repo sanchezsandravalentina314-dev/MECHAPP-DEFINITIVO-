@@ -5,8 +5,8 @@ import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
 import { reservasService } from '../services/reservasService';
 import { canchasService } from '@/features/canchas/services/canchasService';
-import { usuariosService } from '@/features/usuarios/services/usuariosService';
 import { useApp } from '@/context/AppContext';
+import { useAuth } from '@/context/AuthContext';
 import { formatDate, formatTime, formatCurrency } from '@/utils/formatters';
 
 export default function ReservasPage() {
@@ -15,6 +15,7 @@ export default function ReservasPage() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const { user } = useAuth();
   const { showSuccess, showError } = useApp();
 
   const cargarDatos = async () => {
@@ -115,14 +116,24 @@ export default function ReservasPage() {
     },
   ];
 
+  const esPropietario = user ? Number(user.id_rol) === 3 : false;
+  const misCanchasIds = canchas.filter((c) => c.id_usuario === user?.id_usuario).map((c) => c.id_cancha);
+  const reservasVisibles = esPropietario
+    ? reservas.filter((r) => misCanchasIds.includes(r.id_cancha))
+    : reservas;
+
   return (
     <AdminLayout
-      title="Gestión de Reservas de Canchas"
-      subtitle="Monitorea las solicitudes de alquiler de canchas, pagos recibidos y estados de confirmación."
+      title={esPropietario ? "Reservas Recibidas en Mis Canchas" : "Gestión Global de Reservas"}
+      subtitle={
+        esPropietario
+          ? "Monitorea y gestiona las reservas que los jugadores han realizado en tus pistas de tejo."
+          : "Monitorea las solicitudes de alquiler de canchas, pagos recibidos y estados de confirmación."
+      }
     >
       <Table
         columns={columns}
-        data={reservas}
+        data={reservasVisibles}
         loading={loading}
         searchPlaceholder="Buscar por cliente, cancha o estado..."
       />

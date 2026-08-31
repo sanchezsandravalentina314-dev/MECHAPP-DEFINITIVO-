@@ -124,8 +124,8 @@ export default function UsuariosPage() {
       header: 'Rol',
       key: 'id_rol',
       render: (u) => (
-        <Badge variant={u.id_rol === 1 ? 'primary' : u.id_rol === 3 ? 'warning' : 'info'}>
-          {getRoleName(u.id_rol)}
+        <Badge variant={Number(u.id_rol) === 1 ? 'primary' : Number(u.id_rol) === 3 ? 'warning' : 'info'}>
+          {getRoleName(Number(u.id_rol))}
         </Badge>
       ),
     },

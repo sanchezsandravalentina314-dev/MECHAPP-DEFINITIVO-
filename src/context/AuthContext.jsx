@@ -49,9 +49,10 @@ export function AuthProvider({ children }) {
   };
 
   // Helper para verificar rol (1: Admin, 2: Jugador, 3: Propietario)
-  const isAdmin = user?.id_rol === 1;
-  const isJugador = user?.id_rol === 2;
-  const isPropietario = user?.id_rol === 3;
+  const userRoleId = user ? Number(user.id_rol) : null;
+  const isAdmin = userRoleId === 1;
+  const isJugador = userRoleId === 2;
+  const isPropietario = userRoleId === 3;
   const isAuthenticated = !!token && !!user;
 
   return (
