@@ -9,6 +9,7 @@ import Button from '@/components/common/Button';
 import ComboCard from '../components/ComboCard';
 import ProductoCard from '../components/ProductoCard';
 import CarritoConsumo from '../components/CarritoConsumo';
+import PasarelaPagoModal from '@/components/payment/PasarelaPagoModal';
 
 export default function ClienteConsumoPage() {
   const { idReserva } = useParams();
@@ -23,6 +24,7 @@ export default function ClienteConsumoPage() {
   const [carrito, setCarrito] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [enviando, setEnviando] = useState(false);
+  const [isPasarelaOpen, setIsPasarelaOpen] = useState(false);
 
   useEffect(() => {
     cargarMenu();
@@ -116,9 +118,14 @@ export default function ClienteConsumoPage() {
     setCarrito((prev) => prev.filter((it) => !(it.tipo === item.tipo && it.id === item.id)));
   };
 
-  const handleConfirmarPedido = async () => {
-    if (carrito.length === 0) return;
+  const totalCarrito = carrito.reduce((sum, it) => sum + (it.precio || 0) * it.cantidad, 0);
 
+  const handleConfirmarPedido = () => {
+    if (carrito.length === 0) return;
+    setIsPasarelaOpen(true);
+  };
+
+  const handlePagoExitoso = async () => {
     try {
       setEnviando(true);
       const itemsPayload = carrito.map((it) => ({
@@ -130,12 +137,14 @@ export default function ClienteConsumoPage() {
       await consumoService.crearPedido({
         id_reserva: idReserva ? Number(idReserva) : null,
         id_cancha: reserva?.id_cancha || 1,
-        observaciones: 'Pedido realizado desde la aplicación web',
+        observaciones: 'Pedido pagado y confirmado desde la pasarela web',
         items: itemsPayload
       });
 
-      showNotification('¡Pedido de consumo confirmado con éxito! 🎉', 'success');
-      navigate('/mis-reservas');
+      showNotification('¡Pedido y pago confirmados con éxito! 🎉', 'success');
+      setCarrito([]);
+      setIsPasarelaOpen(false);
+      navigate('/user/mis-reservas');
     } catch (err) {
       showNotification(err.message || 'Error al procesar el pedido', 'error');
     } finally {
@@ -275,7 +284,7 @@ export default function ClienteConsumoPage() {
             <div style={{ textAlign: 'center', marginTop: '1rem' }}>
               <Button
                 variant="secondary"
-                onClick={() => navigate('/mis-reservas')}
+                onClick={() => navigate('/user/mis-reservas')}
                 style={{ width: '100%' }}
               >
                 Omitir y ver mis reservas →
@@ -285,6 +294,16 @@ export default function ClienteConsumoPage() {
         </div>
       </div>
     </div>
+
+    {/* Pasarela de Pagos Simulada */}
+    <PasarelaPagoModal
+      isOpen={isPasarelaOpen}
+      onClose={() => setIsPasarelaOpen(false)}
+      monto={totalCarrito}
+      concepto={`Consumo para la cancha #${reserva?.id_cancha || 1} (${carrito.length} artículos)`}
+      metadata={{ id_reserva: idReserva ? Number(idReserva) : null }}
+      onSuccess={handlePagoExitoso}
+    />
     </UserLayout>
   );
 }

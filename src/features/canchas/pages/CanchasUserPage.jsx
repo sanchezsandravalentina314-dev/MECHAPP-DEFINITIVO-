@@ -12,6 +12,7 @@ import { reservasService } from '@/features/reservas/services/reservasService';
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
 import { formatCurrency } from '@/utils/formatters';
+import PasarelaPagoModal from '@/components/payment/PasarelaPagoModal';
 import api from '@/services/api';
 
 export default function CanchasUserPage() {
@@ -168,38 +169,15 @@ export default function CanchasUserPage() {
       const nuevaReserva = await reservasService.crear(payload);
       setReservaPendiente(nuevaReserva);
       setIsModalOpen(false);
-      showSuccess(`¡Reserva creada con éxito! Redirigiendo a Combos y Consumo...`);
-      const idRes = nuevaReserva?.id_reserva || nuevaReserva?.id || 1;
-      navigate(`/reservas/${idRes}/consumo`);
+      setIsPaymentOpen(true);
     } catch (err) {
       showError(err.message || 'No se pudo generar la reserva. Verifica disponibilidad.');
     }
   };
 
-  const handleProcesarPago = async (e) => {
-    e.preventDefault();
-    try {
-      // Simulamos la creación del pago en el backend
-      // El backend (pagos_service.py) automáticamente cambiará la reserva a 'Confirmada'
-      const payloadPago = {
-        id_reserva: reservaPendiente.id_reserva,
-        id_inscripcion: null,
-        monto: reservaPendiente.valor,
-        metodo_pago: 'Tarjeta de Crédito/Débito',
-        estado: 'Aprobado',
-        referencia_transaccion: 'TXN-' + Math.floor(Math.random() * 1000000)
-      };
-
-      await api.post('/pagos/', payloadPago);
-      
-      showSuccess(`Pago exitoso. Reserva en ${selectedCancha.nombre} confirmada.`);
-      setIsPaymentOpen(false);
-      setReservaPendiente(null);
-      setTarjetaForm({ numero: '', nombre: '', vencimiento: '', cvc: '' });
-      cargarDatos();
-    } catch (error) {
-      showError('Error al procesar el pago con la pasarela.');
-    }
+  const handlePagoExitoso = () => {
+    showSuccess(`¡Pago confirmado exitosamente! Tu reserva en ${selectedCancha?.nombre} está activa.`);
+    cargarDatos();
   };
 
   return (
@@ -422,79 +400,20 @@ export default function CanchasUserPage() {
         </form>
       </Modal>
 
-      {/* Modal 2: Pasarela de Pagos Simulada */}
-      <Modal
+      {/* Pasarela de Pagos Simulada */}
+      <PasarelaPagoModal
         isOpen={isPaymentOpen}
         onClose={() => {
           setIsPaymentOpen(false);
-          showError('Has cancelado el proceso de pago. La reserva quedó Pendiente.');
+          if (reservaPendiente) {
+            navigate('/user/mis-reservas');
+          }
         }}
-        title="Pago Seguro"
-      >
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <h4 style={{ margin: '0 0 5px 0' }}>Total a pagar</h4>
-          <h2 style={{ color: 'var(--primary)', margin: 0 }}>{formatCurrency(reservaPendiente?.valor || 0)}</h2>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Cancha: {selectedCancha?.nombre}</p>
-        </div>
-
-        <form onSubmit={handleProcesarPago} style={{ background: '#f8fafc', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '5px', color: '#475569' }}>Número de Tarjeta</label>
-            <input 
-              type="text" 
-              placeholder="0000 0000 0000 0000" 
-              value={tarjetaForm.numero}
-              onChange={e => setTarjetaForm({...tarjetaForm, numero: e.target.value})}
-              required
-              style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-            />
-          </div>
-          
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '5px', color: '#475569' }}>Nombre en la Tarjeta</label>
-            <input 
-              type="text" 
-              placeholder="Ej. Juan Pérez" 
-              value={tarjetaForm.nombre}
-              onChange={e => setTarjetaForm({...tarjetaForm, nombre: e.target.value})}
-              required
-              style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-            />
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '20px' }}>
-            <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '5px', color: '#475569' }}>Vencimiento (MM/AA)</label>
-              <input 
-                type="text" 
-                placeholder="12/25" 
-                value={tarjetaForm.vencimiento}
-                onChange={e => setTarjetaForm({...tarjetaForm, vencimiento: e.target.value})}
-                required
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-              />
-            </div>
-            <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '5px', color: '#475569' }}>CVC</label>
-              <input 
-                type="text" 
-                placeholder="123" 
-                value={tarjetaForm.cvc}
-                onChange={e => setTarjetaForm({...tarjetaForm, cvc: e.target.value})}
-                required
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-              />
-            </div>
-          </div>
-
-          <Button type="submit" variant="primary" style={{ width: '100%', padding: '12px' }}>
-            Pagar {formatCurrency(reservaPendiente?.valor || 0)}
-          </Button>
-          <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '0.75rem', color: '#94a3b8' }}>
-            Transacción procesada de forma segura (Simulada).
-          </div>
-        </form>
-      </Modal>
+        monto={reservaPendiente?.valor || 0}
+        concepto={`Alquiler de Cancha: ${selectedCancha?.nombre || 'Pista de Tejo'} (${reservaForm.fecha})`}
+        metadata={{ id_reserva: reservaPendiente?.id_reserva }}
+        onSuccess={handlePagoExitoso}
+      />
     </UserLayout>
   );
 }

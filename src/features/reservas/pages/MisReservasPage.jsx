@@ -1,37 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import UserLayout from '@/components/layout/UserLayout';
 import Badge from '@/components/common/Badge';
+import Button from '@/components/common/Button';
 import Loader from '@/components/common/Loader';
+import PasarelaPagoModal from '@/components/payment/PasarelaPagoModal';
 import { reservasService } from '../services/reservasService';
 import { canchasService } from '@/features/canchas/services/canchasService';
 import { useAuth } from '@/context/AuthContext';
+import { useApp } from '@/context/AppContext';
 import { formatDate, formatTime, formatCurrency } from '@/utils/formatters';
 
 export default function MisReservasPage() {
   const [reservas, setReservas] = useState([]);
   const [canchas, setCanchas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reservaAPagar, setReservaAPagar] = useState(null);
+  const [isPasarelaOpen, setIsPasarelaOpen] = useState(false);
 
   const { user } = useAuth();
+  const { showSuccess } = useApp();
+
+  const cargarDatos = async () => {
+    try {
+      setLoading(true);
+      const [reservasData, canchasData] = await Promise.all([
+        reservasService.listar(),
+        canchasService.listar(),
+      ]);
+      // Filtrar reservas del usuario actual
+      const misRes = (reservasData || []).filter((r) => r.id_usuario === user?.id_usuario || r.id_usuario === 2);
+      setReservas(misRes);
+      setCanchas(canchasData || []);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const cargarDatos = async () => {
-      try {
-        setLoading(true);
-        const [reservasData, canchasData] = await Promise.all([
-          reservasService.listar(),
-          canchasService.listar(),
-        ]);
-        // Filtrar reservas del usuario actual
-        const misRes = reservasData.filter((r) => r.id_usuario === user?.id_usuario || r.id_usuario === 2);
-        setReservas(misRes);
-        setCanchas(canchasData);
-      } finally {
-        setLoading(false);
-      }
-    };
     cargarDatos();
   }, [user]);
+
+  const handlePagarReserva = (reserva) => {
+    setReservaAPagar(reserva);
+    setIsPasarelaOpen(true);
+  };
+
+  const handlePagoExitoso = async () => {
+    showSuccess('¡Pago confirmado! Tu reserva ya está lista para disfrutar.');
+    await cargarDatos();
+  };
 
   return (
     <UserLayout
@@ -66,17 +83,42 @@ export default function MisReservasPage() {
                     📅 Fecha: <strong>{formatDate(reserva.fecha)}</strong> · ⏰ Horario: <strong>{formatTime(reserva.hora_inicio)} a {formatTime(reserva.hora_fin)}</strong>
                   </p>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-dim)', display: 'block' }}>Total a pagar:</span>
-                  <strong style={{ fontSize: '1.4rem', color: 'var(--primary)' }}>
-                    {formatCurrency(reserva.valor)}
-                  </strong>
+                <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+                  <div>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-dim)', display: 'block' }}>Total:</span>
+                    <strong style={{ fontSize: '1.4rem', color: 'var(--primary)' }}>
+                      {formatCurrency(reserva.valor)}
+                    </strong>
+                  </div>
+                  {reserva.estado !== 'Confirmada' ? (
+                    <Button
+                      variant="primary"
+                      onClick={() => handlePagarReserva(reserva)}
+                      style={{ padding: '8px 16px', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      💳 Pagar con Pasarela
+                    </Button>
+                  ) : (
+                    <span style={{ fontSize: '0.85rem', color: '#22c55e', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      ✓ Pago al día
+                    </span>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
       )}
+
+      {/* Pasarela de Pagos Simulada */}
+      <PasarelaPagoModal
+        isOpen={isPasarelaOpen}
+        onClose={() => setIsPasarelaOpen(false)}
+        monto={reservaAPagar?.valor || 0}
+        concepto={`Reserva #${reservaAPagar?.id_reserva} - Pista de Tejo (${formatDate(reservaAPagar?.fecha)})`}
+        metadata={{ id_reserva: reservaAPagar?.id_reserva }}
+        onSuccess={handlePagoExitoso}
+      />
     </UserLayout>
   );
 }
