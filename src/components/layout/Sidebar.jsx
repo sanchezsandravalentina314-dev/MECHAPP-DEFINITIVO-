@@ -36,6 +36,7 @@ export default function Sidebar({ mode = 'admin' }) {
 
   const propietarioMenu = [
     { to: '/admin/canchas', label: 'Mis Canchas', icon: '📍' },
+    { to: '/propietario/consumo', label: 'Combos y Consumo', icon: '🍔' },
     { to: '/admin/reservas', label: 'Reservas Recibidas', icon: '📅' },
     { to: '/admin/torneos', label: 'Mis Torneos', icon: '🏆' },
     { to: '/user/noticias', label: 'Noticias', icon: '📰' },

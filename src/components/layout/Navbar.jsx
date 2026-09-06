@@ -1,12 +1,8 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { Link } from 'react-router-dom';
 import Button from '@/components/common/Button';
 
 export default function Navbar() {
-  const { user, isAuthenticated, logout, isAdmin } = useAuth();
-  const navigate = useNavigate();
-
   const [isLight, setIsLight] = useState(() => {
     return localStorage.getItem('theme') === 'light';
   });
@@ -44,7 +40,6 @@ export default function Navbar() {
         </nav>
 
         <div className="public-nav-actions" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          
           <Button 
             variant="secondary" 
             size="sm" 
@@ -52,39 +47,6 @@ export default function Navbar() {
           >
             {isLight ? 'Oscuro' : 'Claro'}
           </Button>
-
-          {isAuthenticated ? (
-            <>
-              <Link to={isAdmin ? '/admin/dashboard' : '/user/torneos'}>
-                <Button variant="secondary" size="sm">
-                  {isAdmin ? 'Panel Admin' : 'Mi Panel'}
-                </Button>
-              </Link>
-              <Button
-                variant="danger"
-                size="sm"
-                onClick={() => {
-                  logout();
-                  navigate('/');
-                }}
-              >
-                Cerrar Sesión
-              </Button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">
-                <Button variant="secondary" size="sm">
-                  Iniciar Sesión
-                </Button>
-              </Link>
-              <Link to="/registro">
-                <Button variant="primary" size="sm">
-                  Registrarse
-                </Button>
-              </Link>
-            </>
-          )}
         </div>
       </div>
     </header>

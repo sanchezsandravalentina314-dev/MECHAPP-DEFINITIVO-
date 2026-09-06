@@ -18,6 +18,8 @@ export default function RegisterPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [aceptaTratamiento, setAceptaTratamiento] = useState(false);
+  const [showPolicyModal, setShowPolicyModal] = useState(false);
 
   const { registro } = useAuth();
   const { showSuccess, showError } = useApp();
@@ -56,6 +58,11 @@ export default function RegisterPage() {
       return;
     }
 
+    if (!aceptaTratamiento) {
+      showError('Debes autorizar el tratamiento de tus datos personales para registrarte.');
+      return;
+    }
+
     // Seguridad extra: Si alguien intenta inyectar rol 1 por consola, forzamos a 2.
     let rolSeleccionado = Number(form.id_rol);
     if (rolSeleccionado === 1) {
@@ -71,6 +78,7 @@ export default function RegisterPage() {
         correo: form.correo.trim().toLowerCase(),
         telefono: form.telefono.trim() || null,
         contrasena: form.contrasena,
+        acepta_tratamiento_datos: aceptaTratamiento,
       };
 
       const user = await registro(payload);
@@ -188,6 +196,28 @@ export default function RegisterPage() {
             </button>
           </div>
 
+          {/* Tratamiento de datos personales: casilla independiente del botón de Registrarse */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '20px' }}>
+            <input
+              type="checkbox"
+              id="aceptaTratamiento"
+              checked={aceptaTratamiento}
+              onChange={(e) => setAceptaTratamiento(e.target.checked)}
+              style={{ marginTop: '4px' }}
+            />
+            <label htmlFor="aceptaTratamiento" style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
+              Autorizo el tratamiento de mis datos personales de acuerdo con la{' '}
+              <button
+                type="button"
+                onClick={() => setShowPolicyModal(true)}
+                style={{ textDecoration: 'underline', color: 'var(--primary, #ff6b35)', fontWeight: 600 }}
+              >
+                Política de Tratamiento de Datos Personales
+              </button>{' '}
+              de MechApp.
+            </label>
+          </div>
+
           <Button
             type="submit"
             variant="primary"
@@ -213,6 +243,54 @@ export default function RegisterPage() {
           </p>
         </div>
       </div>
+
+      {showPolicyModal && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000,
+          }}
+          onClick={() => setShowPolicyModal(false)}
+        >
+          <div
+            style={{
+              background: 'var(--card-bg, #1a1a2e)', color: 'var(--text, #fff)',
+              maxWidth: '620px', width: '90%', maxHeight: '80vh', overflowY: 'auto',
+              borderRadius: '12px', padding: '28px',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 style={{ marginBottom: '16px' }}>Política de Tratamiento de Datos Personales</h2>
+
+            <h4>¿Qué datos recopilamos?</h4>
+            <p>Nombre, documento de identidad, correo electrónico, teléfono, usuario y contraseña (cifrada), así como tus estadísticas de juego, torneos y canchas asociadas.</p>
+
+            <h4>¿Para qué los usamos?</h4>
+            <p>Para crear y administrar tu cuenta, gestionar reservas, torneos y equipos, enviarte notificaciones del servicio, mejorar la plataforma y cumplir obligaciones legales.</p>
+
+            <h4>¿Cómo se almacenan?</h4>
+            <p>En una base de datos con controles de acceso, contraseñas cifradas y medidas de seguridad técnicas razonables contra pérdida o acceso no autorizado.</p>
+
+            <h4>¿Con quién pueden compartirse?</h4>
+            <p>No se venden ni comparten con terceros, salvo obligación legal o con proveedores tecnológicos (hosting, nube) bajo acuerdos de confidencialidad.</p>
+
+            <h4>¿Cuáles son tus derechos?</h4>
+            <p>Conocer, actualizar, rectificar y suprimir tus datos, revocar tu autorización, y presentar quejas ante la Superintendencia de Industria y Comercio (SIC), conforme a la Ley 1581 de 2012.</p>
+
+            <h4>¿Cómo solicitar modificación o eliminación?</h4>
+            <p>Escribiendo a [correo de contacto de MechApp] indicando tu nombre, documento y la solicitud específica. Responderemos en máximo 10 días hábiles (consultas) o 15 días hábiles (reclamos).</p>
+
+            <h4>¿Cómo contactar al responsable?</h4>
+            <p>[Nombre del responsable] — [correo de contacto] — [dirección].</p>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+              <Button type="button" variant="primary" onClick={() => setShowPolicyModal(false)}>
+                Cerrar
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

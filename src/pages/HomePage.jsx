@@ -20,12 +20,12 @@ export default function HomePage() {
           </p>
           <div className="hero-actions">
             <Link to="/registro">
-              <Button variant="primary" size="lg" icon="🚀">
+              <Button variant="primary" size="lg" icon="">
                 Comenzar Ahora (Registrarse)
               </Button>
             </Link>
             <Link to="/login">
-              <Button variant="secondary" size="lg" icon="🔑">
+              <Button variant="secondary" size="lg" icon="">
                 Iniciar Sesión
               </Button>
             </Link>
