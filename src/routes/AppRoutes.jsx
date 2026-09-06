@@ -27,6 +27,10 @@ import EventosUserPage from '@/features/eventos/pages/EventosUserPage';
 import NoticiasUserPage from '@/features/noticias/pages/NoticiasUserPage';
 import PerfilPage from '@/features/usuarios/pages/PerfilPage';
 
+// Módulo Combos y Consumo
+import ConsumoPropietarioPage from '@/features/consumo/pages/ConsumoPropietarioPage';
+import ClienteConsumoPage from '@/features/consumo/pages/ClienteConsumoPage';
+
 // Guards
 import ProtectedRoute from './ProtectedRoute';
 import RoleRoute from './RoleRoute';
@@ -57,6 +61,14 @@ export default function AppRoutes() {
           <Route path="/admin/partidos" element={<PartidosAdminPage />} />
           <Route path="/admin/noticias" element={<NoticiasAdminPage />} />
           <Route path="/admin/eventos" element={<EventosAdminPage />} />
+          <Route path="/admin/consumo" element={<ConsumoPropietarioPage esAdmin={true} />} />
+        </Route>
+      </Route>
+
+      {/* Rutas de Propietario (Rol 1 y 3) */}
+      <Route element={<ProtectedRoute />}>
+        <Route element={<RoleRoute allowedRoles={[1, 3]} />}>
+          <Route path="/propietario/consumo" element={<ConsumoPropietarioPage esAdmin={false} />} />
         </Route>
       </Route>
 
@@ -71,6 +83,10 @@ export default function AppRoutes() {
           <Route path="/user/eventos" element={<EventosUserPage />} />
           <Route path="/user/noticias" element={<NoticiasUserPage />} />
           <Route path="/user/perfil" element={<PerfilPage />} />
+
+          {/* Flujo de Consumo y Carrito */}
+          <Route path="/consumo" element={<ClienteConsumoPage />} />
+          <Route path="/reservas/:idReserva/consumo" element={<ClienteConsumoPage />} />
         </Route>
       </Route>
 

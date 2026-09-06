@@ -11,6 +11,9 @@ export function formatCurrency(amount) {
   }).format(Number(amount));
 }
 
+// Alias conveniente
+export const formatCOP = formatCurrency;
+
 export function formatDate(dateStr) {
   if (!dateStr) return 'Sin fecha';
   try {
@@ -25,6 +28,9 @@ export function formatDate(dateStr) {
     return dateStr;
   }
 }
+
+// Alias conveniente
+export const formatFecha = formatDate;
 
 export function formatTime(timeStr) {
   if (!timeStr) return '--:--';

@@ -11,6 +11,7 @@ export default function Sidebar({ mode = 'admin' }) {
     { to: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
     { to: '/admin/usuarios', label: 'Usuarios', icon: '👥' },
     { to: '/admin/canchas', label: 'Canchas / Escenarios', icon: '📍' },
+    { to: '/admin/consumo', label: 'Combos y Consumo', icon: '🍔' },
     { to: '/admin/torneos', label: 'Torneos', icon: '🏆' },
     { to: '/admin/equipos', label: 'Equipos', icon: '⚽' },
     { to: '/admin/partidos', label: 'Partidas y Resultados', icon: '🎯' },
@@ -24,6 +25,10 @@ export default function Sidebar({ mode = 'admin' }) {
     { to: '/user/ubicaciones', label: 'Sedes y Clubes', icon: '📍' },
     { to: '/user/torneos', label: 'Torneos Activos', icon: '🏆' },
     { to: '/user/mis-reservas', label: 'Mis Reservas', icon: '📅' },
+    // Si es propietario (Rol 3) tiene acceso a administrar sus combos y consumo
+    user?.id_rol === 3
+      ? { to: '/propietario/consumo', label: 'Combos y Consumo', icon: '🍔' }
+      : { to: '/consumo', label: 'Combos y Bebidas', icon: '🍔' },
     { to: '/user/equipos', label: 'Mis Equipos', icon: '⚽' },
     { to: '/user/noticias', label: 'Noticias y Novedades', icon: '📰' },
     { to: '/user/perfil', label: 'Mi Perfil', icon: '👤' },

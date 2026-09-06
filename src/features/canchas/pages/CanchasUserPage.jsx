@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserLayout from '@/components/layout/UserLayout';
 import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
@@ -14,6 +15,7 @@ import { formatCurrency } from '@/utils/formatters';
 import api from '@/services/api';
 
 export default function CanchasUserPage() {
+  const navigate = useNavigate();
   const [canchas, setCanchas] = useState([]);
   const [ubicaciones, setUbicaciones] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -166,11 +168,9 @@ export default function CanchasUserPage() {
       const nuevaReserva = await reservasService.crear(payload);
       setReservaPendiente(nuevaReserva);
       setIsModalOpen(false);
-      
-      // Abrir la pasarela de pagos simulada
-      showSuccess('Reserva pre-aprobada. Redirigiendo a pagos...');
-      setIsPaymentOpen(true);
-      
+      showSuccess(`¡Reserva creada con éxito! Redirigiendo a Combos y Consumo...`);
+      const idRes = nuevaReserva?.id_reserva || nuevaReserva?.id || 1;
+      navigate(`/reservas/${idRes}/consumo`);
     } catch (err) {
       showError(err.message || 'No se pudo generar la reserva. Verifica disponibilidad.');
     }
