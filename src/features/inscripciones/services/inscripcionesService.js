@@ -1,6 +1,16 @@
 import api from '@/services/api';
 
 export const inscripcionesService = {
+  async listar() {
+    try {
+      const response = await api.get('/inscripciones/');
+      return response.data;
+    } catch {
+      const saved = localStorage.getItem('mechapp_mock_inscripciones');
+      return saved ? JSON.parse(saved) : [];
+    }
+  },
+
   async inscribirUsuario(data) {
     // data: { id_usuario, id_torneo, estado: 'Confirmada' }
     try {

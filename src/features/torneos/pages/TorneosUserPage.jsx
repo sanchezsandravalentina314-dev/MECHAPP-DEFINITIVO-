@@ -15,9 +15,13 @@ import { formatDate, formatCurrency } from '@/utils/formatters';
 export default function TorneosUserPage() {
   const [torneos, setTorneos] = useState([]);
   const [canchas, setCanchas] = useState([]);
+  const [misInscripciones, setMisInscripciones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTorneo, setSelectedTorneo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categoria, setCategoria] = useState('Mayores (A)');
+  const [notas, setNotas] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const { user } = useAuth();
   const { showSuccess, showError } = useApp();
@@ -25,12 +29,14 @@ export default function TorneosUserPage() {
   const cargarDatos = async () => {
     try {
       setLoading(true);
-      const [torneosData, canchasData] = await Promise.all([
+      const [torneosData, canchasData, inscripcionesData] = await Promise.all([
         torneosService.listar(),
         canchasService.listar(),
+        inscripcionesService.listar().catch(() => []),
       ]);
-      setTorneos(torneosData);
-      setCanchas(canchasData);
+      setTorneos(torneosData || []);
+      setCanchas(canchasData || []);
+      setMisInscripciones(inscripcionesData || []);
     } catch {
       showError('Error cargando torneos.');
     } finally {
@@ -44,21 +50,31 @@ export default function TorneosUserPage() {
 
   const handleOpenInscripcion = (torneo) => {
     setSelectedTorneo(torneo);
+    setCategoria('Mayores (A)');
+    setNotas('');
     setIsModalOpen(true);
   };
 
   const handleConfirmarInscripcion = async (e) => {
     e.preventDefault();
+    if (!categoria) {
+      showError('Por favor selecciona una categoría de juego.');
+      return;
+    }
     try {
+      setSubmitting(true);
       await inscripcionesService.inscribirUsuario({
         id_usuario: user?.id_usuario || 2,
         id_torneo: selectedTorneo.id_torneo,
         estado: 'Confirmada',
       });
-      showSuccess(`¡Te has inscrito exitosamente en el ${selectedTorneo.nombre}!`);
+      showSuccess(`¡Te has inscrito exitosamente en ${selectedTorneo.nombre}! Categoría: ${categoria}`);
       setIsModalOpen(false);
+      await cargarDatos();
     } catch (err) {
       showError(err.message || 'No se pudo completar la inscripción.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -122,14 +138,21 @@ export default function TorneosUserPage() {
                     </div>
                   </div>
 
-                  <Button
-                    variant="primary"
-                    style={{ width: '100%' }}
-                    onClick={() => handleOpenInscripcion(torneo)}
-                    disabled={torneo.estado === 'Finalizado'}
-                  >
-                    📝 Inscribirme al Torneo
-                  </Button>
+                  {(() => {
+                    const estaInscrito = misInscripciones.some(
+                      (ins) => ins.id_torneo === torneo.id_torneo && Number(ins.id_usuario) === Number(user?.id_usuario || 2)
+                    );
+                    return (
+                      <Button
+                        variant={estaInscrito ? 'secondary' : 'primary'}
+                        style={{ width: '100%' }}
+                        onClick={() => handleOpenInscripcion(torneo)}
+                        disabled={torneo.estado === 'Finalizado' || estaInscrito}
+                      >
+                        {estaInscrito ? '✅ Ya estás inscrito' : '📝 Inscribirme al Torneo'}
+                      </Button>
+                    );
+                  })()}
                 </div>
               </article>
             );
@@ -159,22 +182,35 @@ export default function TorneosUserPage() {
           <Input
             label="Categoría de Juego"
             type="select"
+            id="categoria-select"
+            name="categoria"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
             required
-            options={['Mayores (A)', 'Mayores (B)', 'Juvenil / Aficionados', 'Parejas Libres']}
+            options={[
+              { value: 'Mayores (A)', label: 'Mayores (A) - Avanzado' },
+              { value: 'Mayores (B)', label: 'Mayores (B) - Intermedio' },
+              { value: 'Juvenil / Aficionados', label: 'Juvenil / Aficionados' },
+              { value: 'Parejas Libres', label: 'Parejas Libres' },
+            ]}
           />
 
           <Input
             label="Notas o Requerimientos Especiales"
             type="textarea"
+            id="notas-textarea"
+            name="notas"
+            value={notas}
+            onChange={(e) => setNotas(e.target.value)}
             placeholder="Horario preferido, equipo con el que participas..."
           />
 
           <div className="modal-footer">
-            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+            <Button variant="secondary" onClick={() => setIsModalOpen(false)} disabled={submitting}>
               Cancelar
             </Button>
-            <Button type="submit" variant="primary">
-              Confirmar Inscripción
+            <Button type="submit" variant="primary" disabled={submitting}>
+              {submitting ? 'Inscribiendo...' : 'Confirmar Inscripción'}
             </Button>
           </div>
         </form>
