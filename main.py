@@ -35,7 +35,10 @@ from routes import (
     eventos_route,
     noticias_route,
     reportes_route,
+    # Módulo nuevo: Combos y Consumo
+    consumo_route,
 )
+
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -67,6 +70,7 @@ for module in (
     partidas_route, resultados_route, metodos_pago_route, pagos_route,
     notificaciones_route, valoraciones_route, favoritos_route,
     propietarios_route, eventos_route, noticias_route, reportes_route,
+    consumo_route,
 ):
     app.include_router(module.router)
 

@@ -1,56 +1,65 @@
 """
 Servicio de envío de correos electrónicos para MechApp.
-Usa smtplib estándar de Python (sin dependencias externas).
+Usa Resend (resend.com) - gratuito, sin configuración SMTP.
 Configuración en .env:
-    EMAIL_ORIGEN=tu_correo@gmail.com
-    EMAIL_PASSWORD=tu_contraseña_de_aplicacion
-    EMAIL_NOMBRE=MechApp
+    RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
+    EMAIL_NOMBRE=MechApp - Tejo Colombiano
 """
-import smtplib
 import os
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import json
+import urllib.request
+import urllib.error
 from dotenv import load_dotenv
 
 load_dotenv()
 
-EMAIL_ORIGEN   = os.getenv("EMAIL_ORIGEN", "")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "")
+RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
 EMAIL_NOMBRE   = os.getenv("EMAIL_NOMBRE", "MechApp - Tejo Colombiano")
-SMTP_HOST      = os.getenv("SMTP_HOST", "smtp.gmail.com")
-SMTP_PORT      = int(os.getenv("SMTP_PORT", "587"))
+# Con Resend en cuenta gratuita, el remitente debe ser onboarding@resend.dev
+# hasta que verifiques tu dominio. Funciona perfecto para pruebas.
+EMAIL_ORIGEN   = os.getenv("EMAIL_ORIGEN", "onboarding@resend.dev")
 
 
 def _enviar(destinatario: str, asunto: str, cuerpo_html: str) -> bool:
-    """Función interna que abre conexión SMTP y envía el correo."""
-    if not EMAIL_ORIGEN or not EMAIL_PASSWORD:
-        print("⚠️  EMAIL_ORIGEN o EMAIL_PASSWORD no configurados en .env")
+    """Función interna que llama a la API de Resend para enviar el correo."""
+    if not RESEND_API_KEY:
+        print("[EMAIL] RESEND_API_KEY no configurado en .env")
         return False
     try:
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = asunto
-        msg["From"]    = f"{EMAIL_NOMBRE} <{EMAIL_ORIGEN}>"
-        msg["To"]      = destinatario
-        msg.attach(MIMEText(cuerpo_html, "html", "utf-8"))
+        payload = json.dumps({
+            "from": f"{EMAIL_NOMBRE} <{EMAIL_ORIGEN}>",
+            "to": [destinatario],
+            "subject": asunto,
+            "html": cuerpo_html,
+        }).encode("utf-8")
 
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-            server.ehlo()
-            server.starttls()
-            server.login(EMAIL_ORIGEN, EMAIL_PASSWORD)
-            server.sendmail(EMAIL_ORIGEN, destinatario, msg.as_string())
-        print(f"✅ Correo enviado a {destinatario}: {asunto}")
-        return True
+        req = urllib.request.Request(
+            "https://api.resend.com/emails",
+            data=payload,
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req) as response:
+            result = json.loads(response.read().decode("utf-8"))
+            print(f"[EMAIL] Correo enviado a {destinatario} | ID: {result.get('id')}")
+            return True
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode("utf-8")
+        print(f"[EMAIL] Error HTTP {e.code} al enviar a {destinatario}: {error_body}")
+        return False
     except Exception as e:
-        print(f"❌ Error al enviar correo a {destinatario}: {e}")
+        print(f"[EMAIL] Error inesperado al enviar a {destinatario}: {e}")
         return False
 
 
 # ─────────────────────────────────────────────
-# PLANTILLAS DE CORREO
+# PLANTILLA BASE
 # ─────────────────────────────────────────────
 
 def _base_html(titulo: str, contenido: str) -> str:
-    """Plantilla base con estilo de MechApp (tema oscuro + naranja)."""
     return f"""
     <!DOCTYPE html>
     <html lang="es">
@@ -74,13 +83,12 @@ def _base_html(titulo: str, contenido: str) -> str:
         .info-box strong {{ color:#ff5722; }}
         .footer {{ background:#0f3460; text-align:center; padding:20px;
                    font-size:12px; color:#666; }}
-        .footer a {{ color:#ff5722; text-decoration:none; }}
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>🎯 MechApp</h1>
+          <h1>MechApp</h1>
           <p>Plataforma Digital del Tejo Colombiano</p>
         </div>
         <div class="body">
@@ -88,8 +96,7 @@ def _base_html(titulo: str, contenido: str) -> str:
           {contenido}
         </div>
         <div class="footer">
-          <p>© 2024 MechApp · Deporte Nacional de Colombia · Ley 613 del 2000</p>
-          <p>Si no solicitaste este correo, puedes ignorarlo.</p>
+          <p>2024 MechApp - Deporte Nacional de Colombia - Ley 613 del 2000</p>
         </div>
       </div>
     </body>
@@ -102,58 +109,42 @@ def _base_html(titulo: str, contenido: str) -> str:
 # ─────────────────────────────────────────────
 
 def enviar_bienvenida(correo: str, nombre: str) -> bool:
-    """Correo de bienvenida al registrarse en MechApp."""
     contenido = f"""
-    <p>Hola <strong>{nombre}</strong>, ¡bienvenido/a a MechApp! 🎉</p>
+    <p>Hola <strong>{nombre}</strong>, bienvenido/a a MechApp!</p>
     <p>Tu cuenta ha sido creada exitosamente. Ya puedes explorar canchas,
        inscribirte en torneos y reservar tu espacio de juego.</p>
     <div class="info-box">
       <p><strong>Correo registrado:</strong> {correo}</p>
-      <p><strong>Estado:</strong> Activo ✅</p>
+      <p><strong>Estado:</strong> Activo</p>
     </div>
-    <p>¡Que disfrutes el Tejo! 🏆</p>
-    <a class="btn" href="http://localhost:5173/login">Iniciar sesión</a>
+    <p>Que disfrutes el Tejo!</p>
+    <a class="btn" href="http://localhost:5173/login">Iniciar sesion</a>
     """
-    return _enviar(
-        destinatario=correo,
-        asunto="¡Bienvenido/a a MechApp! 🎯",
-        cuerpo_html=_base_html("¡Ya eres parte de MechApp!", contenido)
-    )
+    return _enviar(correo, "Bienvenido/a a MechApp!", _base_html("Ya eres parte de MechApp!", contenido))
 
 
 def enviar_recuperacion_contrasena(correo: str, nombre: str, token: str) -> bool:
-    """Correo con enlace para restablecer contraseña."""
     enlace = f"http://localhost:5173/restablecer-contrasena?token={token}"
     contenido = f"""
     <p>Hola <strong>{nombre}</strong>,</p>
-    <p>Recibimos una solicitud para restablecer la contraseña de tu cuenta en MechApp.</p>
-    <p>Haz clic en el botón a continuación para crear una nueva contraseña.
-       Este enlace es válido por <strong>30 minutos</strong>.</p>
-    <a class="btn" href="{enlace}">Restablecer contraseña</a>
-    <p style="font-size:13px;color:#888;">
-      Si no solicitaste esto, ignora este correo. Tu contraseña no será cambiada.
-    </p>
+    <p>Recibimos una solicitud para restablecer tu contrasena en MechApp.</p>
+    <p>El enlace es valido por <strong>30 minutos</strong>.</p>
+    <a class="btn" href="{enlace}">Restablecer contrasena</a>
     <div class="info-box">
-      <p><strong>Si el botón no funciona, copia este enlace:</strong></p>
+      <p><strong>Si el boton no funciona, copia este enlace:</strong></p>
       <p style="word-break:break-all;">{enlace}</p>
     </div>
     """
-    return _enviar(
-        destinatario=correo,
-        asunto="Recuperar contraseña - MechApp 🔐",
-        cuerpo_html=_base_html("Restablece tu contraseña", contenido)
-    )
+    return _enviar(correo, "Recuperar contrasena - MechApp", _base_html("Restablece tu contrasena", contenido))
 
 
 def enviar_confirmacion_reserva(
     correo: str, nombre: str,
-    cancha: str, fecha: str, hora_inicio: str, hora_fin: str,
-    precio: str
+    cancha: str, fecha: str, hora_inicio: str, hora_fin: str, precio: str
 ) -> bool:
-    """Correo de confirmación cuando se hace una reserva."""
     contenido = f"""
     <p>Hola <strong>{nombre}</strong>,</p>
-    <p>Tu reserva en MechApp ha sido confirmada exitosamente. ¡Nos vemos en la cancha! 🎯</p>
+    <p>Tu reserva ha sido confirmada exitosamente. Nos vemos en la cancha!</p>
     <div class="info-box">
       <p><strong>Cancha:</strong> {cancha}</p>
       <p><strong>Fecha:</strong> {fecha}</p>
@@ -161,49 +152,30 @@ def enviar_confirmacion_reserva(
       <p><strong>Hora fin:</strong> {hora_fin}</p>
       <p><strong>Valor:</strong> {precio}</p>
     </div>
-    <p>Recuerda llegar puntual. ¡Buena puntería! 🏆</p>
     <a class="btn" href="http://localhost:5173/mis-reservas">Ver mis reservas</a>
     """
-    return _enviar(
-        destinatario=correo,
-        asunto="✅ Reserva confirmada - MechApp",
-        cuerpo_html=_base_html("¡Tu reserva está confirmada!", contenido)
-    )
+    return _enviar(correo, "Reserva confirmada - MechApp", _base_html("Tu reserva esta confirmada!", contenido))
 
 
 def enviar_confirmacion_inscripcion(
-    correo: str, nombre: str,
-    torneo: str, equipo: str, fecha_inicio: str
+    correo: str, nombre: str, torneo: str, equipo: str, fecha_inicio: str
 ) -> bool:
-    """Correo de confirmación de inscripción a un torneo."""
     contenido = f"""
     <p>Hola <strong>{nombre}</strong>,</p>
-    <p>¡Tu inscripción al torneo ha sido registrada exitosamente! ⚽🎯</p>
+    <p>Tu inscripcion al torneo ha sido registrada exitosamente!</p>
     <div class="info-box">
       <p><strong>Torneo:</strong> {torneo}</p>
       <p><strong>Equipo:</strong> {equipo}</p>
       <p><strong>Fecha de inicio:</strong> {fecha_inicio}</p>
     </div>
-    <p>Prepara a tu equipo, que viene una gran competencia. ¡Mucho éxito!</p>
     <a class="btn" href="http://localhost:5173/torneos">Ver torneos</a>
     """
-    return _enviar(
-        destinatario=correo,
-        asunto=f"🏆 Inscripción confirmada - {torneo}",
-        cuerpo_html=_base_html("¡Inscripción al torneo confirmada!", contenido)
-    )
+    return _enviar(correo, f"Inscripcion confirmada - {torneo}", _base_html("Inscripcion al torneo confirmada!", contenido))
 
 
-def enviar_notificacion_admin(
-    correo_admin: str, asunto: str, mensaje: str
-) -> bool:
-    """Correo de notificación general para el administrador."""
+def enviar_notificacion_admin(correo_admin: str, asunto: str, mensaje: str) -> bool:
     contenido = f"""
     <p>{mensaje}</p>
     <a class="btn" href="http://localhost:5173/admin">Ir al panel de Admin</a>
     """
-    return _enviar(
-        destinatario=correo_admin,
-        asunto=f"[MechApp Admin] {asunto}",
-        cuerpo_html=_base_html(asunto, contenido)
-    )
+    return _enviar(correo_admin, f"[MechApp Admin] {asunto}", _base_html(asunto, contenido))

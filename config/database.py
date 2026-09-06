@@ -41,4 +41,5 @@ def get_db():
 
 def init_db():
     import models
+    import models.consumo_modelos  # Módulo Combos y Consumo
     Base.metadata.create_all(bind=engine)
