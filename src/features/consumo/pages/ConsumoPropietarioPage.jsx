@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import AdminLayout from '@/components/layout/AdminLayout';
+import UserLayout from '@/components/layout/UserLayout';
 import { consumoService } from '../services/consumoService';
 import { canchasService } from '@/features/canchas/services/canchasService';
 import { formatCOP } from '@/utils/formatters';
@@ -130,22 +132,24 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
     }
   };
 
+  const Layout = esAdmin ? AdminLayout : UserLayout;
+
   if (cargando && !canchaSeleccionada) {
-    return <Loader texto="Cargando módulo de Combos y Consumo..." />;
+    return (
+      <Layout title="🍔 Gestión de Combos y Consumo">
+        <Loader texto="Cargando módulo de Combos y Consumo..." />
+      </Layout>
+    );
   }
 
   return (
+    <Layout
+      title="🍔 Gestión de Combos y Consumo"
+      subtitle="Administra la oferta gastronómica, bebidas, combos y pedidos de tu escenario de tejo."
+    >
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Header y Selector de Sede/Cancha */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: '1.8rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            🍔 Gestión de Combos y Consumo
-          </h1>
-          <p style={{ margin: '4px 0 0 0', color: '#a0aec0', fontSize: '0.95rem' }}>
-            Administra la oferta gastronómica, bebidas, combos y pedidos de tu escenario de tejo.
-          </p>
-        </div>
+      {/* Selector de Sede/Cancha */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
 
         {canchas.length > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -454,5 +458,6 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
         productosDisponibles={productos}
       />
     </div>
+    </Layout>
   );
 }

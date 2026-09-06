@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import UserLayout from '@/components/layout/UserLayout';
 import { consumoService } from '../services/consumoService';
 import { reservasService } from '@/features/reservas/services/reservasService';
 import { useApp } from '@/context/AppContext';
@@ -143,27 +144,36 @@ export default function ClienteConsumoPage() {
   };
 
   if (cargando) {
-    return <Loader texto="Cargando menú de bebidas y comidas..." />;
+    return (
+      <UserLayout title="Combos y Consumo para tu Juego">
+        <Loader texto="Cargando menú de bebidas y comidas..." />
+      </UserLayout>
+    );
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-      {/* Banner de Felicitación por Reserva */}
-      <div style={{
-        background: 'linear-gradient(135deg, rgba(255, 87, 34, 0.2), rgba(76, 175, 80, 0.15))',
-        border: '1px solid rgba(255, 87, 34, 0.4)',
-        borderRadius: '16px',
-        padding: '1.75rem',
-        textAlign: 'center'
-      }}>
-        <div style={{ fontSize: '2.5rem', marginBottom: '0.4rem' }}>🎯</div>
-        <h1 style={{ margin: 0, fontSize: '1.8rem', color: '#fff' }}>
-          {idReserva ? '¡Tu cancha está reservada!' : 'Combos y Consumo para tu Juego'}
-        </h1>
-        <p style={{ margin: '8px 0 0 0', color: '#ffb300', fontSize: '1.1rem', fontWeight: 600 }}>
-          ¿Quieres agregar algo a tu plan para disfrutar con tu parche?
-        </p>
-      </div>
+    <UserLayout
+      title="Combos y Consumo para tu Juego"
+      subtitle="¿Quieres agregar algo a tu plan para disfrutar con tu parche?"
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+        {/* Banner de Felicitación por Reserva si viene de una reserva */}
+        {idReserva && (
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(255, 87, 34, 0.2), rgba(76, 175, 80, 0.15))',
+            border: '1px solid rgba(255, 87, 34, 0.4)',
+            borderRadius: '16px',
+            padding: '1.25rem',
+            textAlign: 'center'
+          }}>
+            <h2 style={{ margin: 0, fontSize: '1.4rem', color: '#fff' }}>
+              🎯 ¡Tu cancha está reservada!
+            </h2>
+            <p style={{ margin: '6px 0 0 0', color: '#ffb300', fontSize: '1rem', fontWeight: 600 }}>
+              Puedes añadir combos, comida o bebidas a tu plan ahora mismo:
+            </p>
+          </div>
+        )}
 
       {/* Layout de Contenido: Catálogo a la izquierda, Carrito a la derecha */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '2rem', alignItems: 'start' }}>
@@ -275,5 +285,6 @@ export default function ClienteConsumoPage() {
         </div>
       </div>
     </div>
+    </UserLayout>
   );
 }
