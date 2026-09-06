@@ -9,6 +9,7 @@ export default function Sidebar({ mode = 'admin' }) {
 
   const adminMenu = [
     { to: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
+    { to: '/admin/reportes', label: 'Reportes y Pagos', icon: '📈' },
     { to: '/admin/usuarios', label: 'Usuarios', icon: '👥' },
     { to: '/admin/canchas', label: 'Canchas / Escenarios', icon: '📍' },
     { to: '/admin/consumo', label: 'Combos y Consumo', icon: '🍔' },
@@ -25,6 +26,7 @@ export default function Sidebar({ mode = 'admin' }) {
     { to: '/user/ubicaciones', label: 'Sedes y Clubes', icon: '📍' },
     { to: '/user/torneos', label: 'Torneos Activos', icon: '🏆' },
     { to: '/user/mis-reservas', label: 'Mis Reservas', icon: '📅' },
+    { to: '/user/reportes', label: 'Comprobantes y Pagos', icon: '🧾' },
     // Si es propietario (Rol 3) tiene acceso a administrar sus combos y consumo
     user?.id_rol === 3
       ? { to: '/propietario/consumo', label: 'Combos y Consumo', icon: '🍔' }
@@ -36,6 +38,7 @@ export default function Sidebar({ mode = 'admin' }) {
 
   const propietarioMenu = [
     { to: '/admin/canchas', label: 'Mis Canchas', icon: '📍' },
+    { to: '/admin/reportes', label: 'Reportes y Ventas', icon: '📈' },
     { to: '/propietario/consumo', label: 'Combos y Consumo', icon: '🍔' },
     { to: '/admin/reservas', label: 'Reservas Recibidas', icon: '📅' },
     { to: '/admin/torneos', label: 'Mis Torneos', icon: '🏆' },

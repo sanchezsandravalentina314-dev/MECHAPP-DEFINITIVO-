@@ -4,6 +4,7 @@ import Badge from '@/components/common/Badge';
 import Button from '@/components/common/Button';
 import Loader from '@/components/common/Loader';
 import PasarelaPagoModal from '@/components/payment/PasarelaPagoModal';
+import ComprobanteDigitalModal from '@/components/common/ComprobanteDigitalModal';
 import { reservasService } from '../services/reservasService';
 import { canchasService } from '@/features/canchas/services/canchasService';
 import { useAuth } from '@/context/AuthContext';
@@ -16,6 +17,8 @@ export default function MisReservasPage() {
   const [loading, setLoading] = useState(true);
   const [reservaAPagar, setReservaAPagar] = useState(null);
   const [isPasarelaOpen, setIsPasarelaOpen] = useState(false);
+  const [comprobanteSeleccionado, setComprobanteSeleccionado] = useState(null);
+  const [isComprobanteOpen, setIsComprobanteOpen] = useState(false);
 
   const { user } = useAuth();
   const { showSuccess } = useApp();
@@ -45,9 +48,31 @@ export default function MisReservasPage() {
     setIsPasarelaOpen(true);
   };
 
-  const handlePagoExitoso = async () => {
+  const handleVerComprobante = (reserva, cancha) => {
+    setComprobanteSeleccionado({
+      referencia: `TXN-${String(reserva.id_reserva).padStart(6, '0')}`,
+      valor: reserva.valor,
+      fecha: reserva.fecha_reserva,
+      fechaReserva: reserva.fecha,
+      horario: `${formatTime(reserva.hora_inicio)} a ${formatTime(reserva.hora_fin)}`,
+      cancha: cancha?.nombre || `Pista de Tejo #${reserva.id_cancha}`,
+      cliente: user?.nombre || 'Deportista MechApp',
+      concepto: `Alquiler Cancha #${reserva.id_cancha} (${formatDate(reserva.fecha)})`,
+      metodoNombre: 'Pasarela Digital MechApp (Tarjeta / PSE / Nequi)',
+    });
+    setIsComprobanteOpen(true);
+  };
+
+  const handlePagoExitoso = async (pagoResultado) => {
     showSuccess('¡Pago confirmado! Tu reserva ya está lista para disfrutar.');
     await cargarDatos();
+    if (pagoResultado) {
+      setComprobanteSeleccionado({
+        ...pagoResultado,
+        cliente: user?.nombre || 'Deportista MechApp',
+      });
+      setIsComprobanteOpen(true);
+    }
   };
 
   return (
@@ -99,9 +124,18 @@ export default function MisReservasPage() {
                       💳 Pagar con Pasarela
                     </Button>
                   ) : (
-                    <span style={{ fontSize: '0.85rem', color: '#22c55e', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      ✓ Pago al día
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ fontSize: '0.85rem', color: '#22c55e', fontWeight: 600 }}>
+                        ✓ Pago al día
+                      </span>
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleVerComprobante(reserva, cancha)}
+                        style={{ padding: '6px 12px', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        🧾 Ver Comprobante
+                      </Button>
+                    </div>
                   )}
                 </div>
               </div>
@@ -118,6 +152,13 @@ export default function MisReservasPage() {
         concepto={`Reserva #${reservaAPagar?.id_reserva} - Pista de Tejo (${formatDate(reservaAPagar?.fecha)})`}
         metadata={{ id_reserva: reservaAPagar?.id_reserva }}
         onSuccess={handlePagoExitoso}
+      />
+
+      {/* Comprobante Digital Modal */}
+      <ComprobanteDigitalModal
+        isOpen={isComprobanteOpen}
+        onClose={() => setIsComprobanteOpen(false)}
+        pago={comprobanteSeleccionado}
       />
     </UserLayout>
   );

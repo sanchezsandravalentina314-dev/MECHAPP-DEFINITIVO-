@@ -221,13 +221,22 @@ export default function PasarelaPagoModal({
             </div>
           </div>
 
-          <Button
-            variant="primary"
-            style={{ width: '100%', padding: '12px', fontSize: '1rem' }}
-            onClick={onClose}
-          >
-            Finalizar y Continuar
-          </Button>
+          <div className="no-print" style={{ display: 'flex', gap: '10px' }}>
+            <Button
+              variant="secondary"
+              style={{ flex: 1, padding: '12px', fontSize: '0.95rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px' }}
+              onClick={() => window.print()}
+            >
+              🖨️ Imprimir Comprobante
+            </Button>
+            <Button
+              variant="primary"
+              style={{ flex: 1, padding: '12px', fontSize: '0.95rem' }}
+              onClick={onClose}
+            >
+              Finalizar y Continuar
+            </Button>
+          </div>
         </div>
       ) : procesando ? (
         /* PANTALLA 2: PROCESANDO TRANSACCIÓN */

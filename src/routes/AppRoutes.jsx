@@ -31,6 +31,9 @@ import PerfilPage from '@/features/usuarios/pages/PerfilPage';
 import ConsumoPropietarioPage from '@/features/consumo/pages/ConsumoPropietarioPage';
 import ClienteConsumoPage from '@/features/consumo/pages/ClienteConsumoPage';
 
+// Módulo Reportes y Comprobantes
+import ReportesPage from '@/features/reportes/pages/ReportesPage';
+
 // Guards
 import ProtectedRoute from './ProtectedRoute';
 import RoleRoute from './RoleRoute';
@@ -49,6 +52,7 @@ export default function AppRoutes() {
           <Route path="/admin/canchas" element={<CanchasAdminPage />} />
           <Route path="/admin/reservas" element={<ReservasPage />} />
           <Route path="/admin/torneos" element={<TorneosAdminPage />} />
+          <Route path="/admin/reportes" element={<ReportesPage />} />
         </Route>
       </Route>
 
@@ -79,6 +83,7 @@ export default function AppRoutes() {
           <Route path="/user/canchas" element={<CanchasUserPage />} />
           <Route path="/user/ubicaciones" element={<UbicacionesUserPage />} />
           <Route path="/user/mis-reservas" element={<MisReservasPage />} />
+          <Route path="/user/reportes" element={<ReportesPage />} />
           <Route path="/user/equipos" element={<EquiposUserPage />} />
           <Route path="/user/eventos" element={<EventosUserPage />} />
           <Route path="/user/noticias" element={<NoticiasUserPage />} />
