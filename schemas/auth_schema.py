@@ -1,7 +1,7 @@
 from typing import Optional
 from datetime import date, datetime, time
 from decimal import Decimal
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 class UsuarioRegistro(BaseModel):
     id_rol: int
@@ -30,3 +30,11 @@ class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
     usuario: UsuarioAuthResponse
+
+class SolicitudRecuperacion(BaseModel):
+    correo: str
+
+class RestablecerContrasena(BaseModel):
+    token: str
+    nueva_contrasena: str
+
