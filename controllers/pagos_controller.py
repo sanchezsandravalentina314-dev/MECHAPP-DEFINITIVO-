@@ -13,7 +13,20 @@ def obtener(db: Session, item_id: int):
     return obj
 
 def crear(db: Session, datos: PagoCreate):
-    return pagos_service.create(db, datos.model_dump())
+    nuevo_pago = pagos_service.create(db, datos.model_dump())
+    if datos.id_reserva and str(datos.estado).lower() in ['aprobado', 'completado', 'confirmada', 'exitoso']:
+        from models.modelos import Reserva
+        reserva = db.query(Reserva).filter(Reserva.id_reserva == datos.id_reserva).first()
+        if reserva:
+            reserva.estado = 'Confirmada'
+            db.commit()
+    if datos.id_inscripcion and str(datos.estado).lower() in ['aprobado', 'completado', 'confirmada', 'exitoso']:
+        from models.modelos import Inscripcion
+        inscripcion = db.query(Inscripcion).filter(Inscripcion.id_inscripcion == datos.id_inscripcion).first()
+        if inscripcion:
+            inscripcion.estado = 'Confirmada'
+            db.commit()
+    return nuevo_pago
 
 def actualizar(db: Session, item_id: int, datos: PagoUpdate):
     obj = pagos_service.update(db, item_id, datos.model_dump(exclude_unset=True))
