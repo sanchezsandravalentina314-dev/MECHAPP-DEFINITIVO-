@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from '@/pages/HomePage';
 import LoginPage from '@/features/auth/pages/LoginPage';
 import RegisterPage from '@/features/auth/pages/RegisterPage';
+import RestablecerContrasenaPage from '@/features/auth/pages/RestablecerContrasenaPage';
 
 // Admin Pages
 import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
@@ -30,6 +31,7 @@ import PerfilPage from '@/features/usuarios/pages/PerfilPage';
 // Módulo Combos y Consumo
 import ConsumoPropietarioPage from '@/features/consumo/pages/ConsumoPropietarioPage';
 import ClienteConsumoPage from '@/features/consumo/pages/ClienteConsumoPage';
+import ConsumoCanchaPage from '@/features/consumo/pages/ConsumoCanchaPage';
 
 // Módulo Reportes y Comprobantes
 import ReportesPage from '@/features/reportes/pages/ReportesPage';
@@ -45,7 +47,7 @@ export default function AppRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registro" element={<RegisterPage />} />
-
+      <Route path="/restablecer-contrasena" element={<RestablecerContrasenaPage />} />
       {/* Rutas de Gestión de Canchas y Reservas (Admin y Propietarios - Roles 1 y 3) */}
       <Route element={<ProtectedRoute />}>
         <Route element={<RoleRoute allowedRoles={[1, 3]} />}>
@@ -92,6 +94,7 @@ export default function AppRoutes() {
           {/* Flujo de Consumo y Carrito */}
           <Route path="/consumo" element={<ClienteConsumoPage />} />
           <Route path="/reservas/:idReserva/consumo" element={<ClienteConsumoPage />} />
+          <Route path="/user/consumo-cancha" element={<ConsumoCanchaPage />} />
         </Route>
       </Route>
 

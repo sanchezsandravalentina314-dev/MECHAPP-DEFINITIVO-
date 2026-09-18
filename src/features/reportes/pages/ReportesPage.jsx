@@ -56,9 +56,10 @@ export default function ReportesPage() {
   // Consolidar datos de reporte unificando Pagos y Reservas
   const reportesData = useMemo(() => {
     // Si no es admin, solo mostrar datos del usuario actual
+    const currentUserId = Number(user?.id_usuario);
     const misReservas = isAdmin
       ? reservas
-      : reservas.filter((r) => r.id_usuario === user?.id_usuario || r.id_usuario === 2);
+      : reservas.filter((r) => Number(r.id_usuario) === currentUserId);
 
     return misReservas.map((r) => {
       const pagoAsociado = pagos.find((p) => p.id_reserva === r.id_reserva);

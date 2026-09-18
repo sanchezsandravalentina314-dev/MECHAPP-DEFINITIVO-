@@ -18,4 +18,22 @@ export const authService = {
     const response = await api.post('/auth/login', data);
     return response.data;
   },
+
+  /**
+   * Solicita el envío de un correo de recuperación de contraseña.
+   * @param {Object} data { correo }
+   */
+  async solicitarRecuperacion(data) {
+    const response = await api.post('/auth/recuperar-contrasena', data);
+    return response.data;
+  },
+
+  /**
+   * Restablece la contraseña usando el token recibido por correo.
+   * @param {Object} data { token, nueva_contrasena }
+   */
+  async restablecerContrasena(data) {
+    const response = await api.post('/auth/restablecer-contrasena', data);
+    return response.data;
+  },
 };

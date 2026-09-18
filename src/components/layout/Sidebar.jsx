@@ -31,6 +31,7 @@ export default function Sidebar({ mode = 'admin' }) {
     user?.id_rol === 3
       ? { to: '/propietario/consumo', label: 'Combos y Consumo', icon: '🍔' }
       : { to: '/consumo', label: 'Combos y Bebidas', icon: '🍔' },
+    { to: '/user/consumo-cancha', label: 'Consumo Cancha', icon: '🍺' },
     { to: '/user/equipos', label: 'Mis Equipos', icon: '⚽' },
     { to: '/user/noticias', label: 'Noticias y Novedades', icon: '📰' },
     { to: '/user/perfil', label: 'Mi Perfil', icon: '👤' },

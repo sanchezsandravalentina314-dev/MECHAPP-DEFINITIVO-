@@ -21,10 +21,28 @@ export default function ClienteConsumoPage() {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [categoriaActiva, setCategoriaActiva] = useState('combos'); // 'combos' | id_categoria
-  const [carrito, setCarrito] = useState([]);
+  const storageKey = idReserva ? `mechapp_carrito_${idReserva}` : 'mechapp_carrito_general';
+
+  const [carrito, setCarrito] = useState(() => {
+    try {
+      const guardado = localStorage.getItem(storageKey);
+      return guardado ? JSON.parse(guardado) : [];
+    } catch {
+      return [];
+    }
+  });
   const [cargando, setCargando] = useState(true);
   const [enviando, setEnviando] = useState(false);
   const [isPasarelaOpen, setIsPasarelaOpen] = useState(false);
+
+  // Guardar en localStorage cada vez que cambie el carrito
+  useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(carrito));
+    } catch (e) {
+      console.error('Error al guardar carrito en localStorage:', e);
+    }
+  }, [carrito, storageKey]);
 
   useEffect(() => {
     cargarMenu();
@@ -142,6 +160,7 @@ export default function ClienteConsumoPage() {
       });
 
       showNotification('¡Pedido y pago confirmados con éxito! 🎉', 'success');
+      localStorage.removeItem(storageKey);
       setCarrito([]);
       setIsPasarelaOpen(false);
       navigate('/user/mis-reservas');

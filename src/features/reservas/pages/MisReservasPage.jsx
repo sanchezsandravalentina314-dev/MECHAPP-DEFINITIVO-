@@ -31,7 +31,8 @@ export default function MisReservasPage() {
         canchasService.listar(),
       ]);
       // Filtrar reservas del usuario actual
-      const misRes = (reservasData || []).filter((r) => r.id_usuario === user?.id_usuario || r.id_usuario === 2);
+      const currentUserId = Number(user?.id_usuario);
+      const misRes = (reservasData || []).filter((r) => Number(r.id_usuario) === currentUserId);
       setReservas(misRes);
       setCanchas(canchasData || []);
     } finally {
