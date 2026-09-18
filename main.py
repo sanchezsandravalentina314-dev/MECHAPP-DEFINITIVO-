@@ -51,6 +51,10 @@ origins = [
     "http://127.0.0.1:5173",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:8081",   # Expo Web (puerto real)
+    "http://127.0.0.1:8081",
+    "http://localhost:8082",   # por si en otra sesión usa este
+    "http://127.0.0.1:8082",
 ]
 
 app.add_middleware(
