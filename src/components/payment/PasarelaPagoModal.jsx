@@ -19,6 +19,7 @@ export default function PasarelaPagoModal({
 
   // Formulario Tarjeta
   const [tarjeta, setTarjeta] = useState({
+    tipo: 'debito', // 'debito' | 'credito'
     numero: '',
     nombre: '',
     expiracion: '',
@@ -118,7 +119,7 @@ export default function PasarelaPagoModal({
           concepto,
           metodoNombre:
             metodo === 'tarjeta'
-              ? `Tarjeta (${getFranquicia(tarjeta.numero).nombre} terminada en ${tarjeta.numero.slice(-4) || '****'})`
+              ? `Tarjeta ${tarjeta.tipo === 'debito' ? 'Débito' : 'Crédito'} (${getFranquicia(tarjeta.numero).nombre} terminada en ${tarjeta.numero.slice(-4) || '****'})`
               : metodo === 'pse'
               ? `PSE (${pse.banco.toUpperCase()})`
               : metodo === 'nequi'
@@ -356,7 +357,9 @@ export default function PasarelaPagoModal({
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                    <span style={{ fontSize: '0.75rem', letterSpacing: '1px', opacity: 0.7 }}>MECHAPP PAY</span>
+                    <span style={{ fontSize: '0.75rem', letterSpacing: '1px', opacity: 0.7 }}>
+                      MECHAPP PAY · {tarjeta.tipo === 'debito' ? 'DÉBITO' : 'CRÉDITO'}
+                    </span>
                     <span style={{ fontWeight: 800, fontSize: '0.85rem', color: '#ffb300' }}>
                       {franquicia.logo}
                     </span>
@@ -401,6 +404,39 @@ export default function PasarelaPagoModal({
 
                 {/* Inputs de la tarjeta */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {/* Selector de Tipo de Tarjeta (Lista Débito / Crédito) */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '4px', fontWeight: 600 }}>
+                      Tipo de Tarjeta
+                    </label>
+                    <select
+                      value={tarjeta.tipo}
+                      onChange={(e) => {
+                        const nuevoTipo = e.target.value;
+                        setTarjeta({
+                          ...tarjeta,
+                          tipo: nuevoTipo,
+                          // Si es débito siempre se fija en 1 cuota; si es crédito mantiene o inicia en 1
+                          cuotas: '1',
+                        });
+                      }}
+                      required
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid var(--border-color)',
+                        background: 'var(--bg-surface)',
+                        color: 'var(--text-color)',
+                        cursor: 'pointer',
+                        fontWeight: 500,
+                      }}
+                    >
+                      <option value="debito">💳 Tarjeta Débito</option>
+                      <option value="credito">💳 Tarjeta Crédito</option>
+                    </select>
+                  </div>
+
                   <div>
                     <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '4px' }}>
                       Número de Tarjeta
@@ -487,24 +523,34 @@ export default function PasarelaPagoModal({
                     </div>
                     <div>
                       <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '4px' }}>
-                        Cuotas
+                        Cuotas {tarjeta.tipo === 'debito' && '(N/A)'}
                       </label>
                       <select
                         value={tarjeta.cuotas}
                         onChange={(e) => setTarjeta({ ...tarjeta, cuotas: e.target.value })}
+                        disabled={tarjeta.tipo === 'debito'}
                         style={{
                           width: '100%',
                           padding: '10px 12px',
                           borderRadius: 'var(--radius-md)',
                           border: '1px solid var(--border-color)',
-                          background: 'var(--bg-surface)',
-                          color: 'var(--text-color)',
+                          background: tarjeta.tipo === 'debito' ? 'rgba(255,255,255,0.03)' : 'var(--bg-surface)',
+                          color: tarjeta.tipo === 'debito' ? 'var(--text-muted)' : 'var(--text-color)',
+                          cursor: tarjeta.tipo === 'debito' ? 'not-allowed' : 'pointer',
                         }}
                       >
-                        <option value="1">1 cuota</option>
-                        <option value="3">3 cuotas</option>
-                        <option value="6">6 cuotas</option>
-                        <option value="12">12 cuotas</option>
+                        {tarjeta.tipo === 'debito' ? (
+                          <option value="1">1 pago (Débito)</option>
+                        ) : (
+                          <>
+                            <option value="1">1 cuota</option>
+                            <option value="3">3 cuotas</option>
+                            <option value="6">6 cuotas</option>
+                            <option value="12">12 cuotas</option>
+                            <option value="24">24 cuotas</option>
+                            <option value="36">36 cuotas</option>
+                          </>
+                        )}
                       </select>
                     </div>
                   </div>
