@@ -1,5 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// Imagenes de canchas de tejo colombianas — distintas por cada tarjeta
+const TEJO_IMAGES = [
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Tejo_Game_Colombia.jpg/1280px-Tejo_Game_Colombia.jpg',
+  'https://www.eltiempo.com/files/image_640_428/uploads/2017/07/13/5968bd63e96b9.jpeg',
+  'https://www.semana.com/resizer/v2/IKFVGFSNQBB47ETFXBTXPANFAI.jpg?auth=b2d6c9d8e6f3a1c5b4e7d2f9a3c1b8e5f4d7c2a9b6e3f1d8c5b2a7e4f1c8b5&width=1280',
+  'https://imagenesfotos.com/wp-content/uploads/2015/09/foto-tejo-colombiano-canchas.jpg',
+  'https://s3.amazonaws.com/rtvc-assets-senalmemoria.gov.co/s3fs-public/field_image/tejo.jpg',
+  'https://live.staticflickr.com/7822/39885855313_8a5b9f6e1e_b.jpg',
+  'https://i.pinimg.com/originals/4f/8e/3c/4f8e3c7f2a1b5e9d6c3a8f4b2e7c1d5a.jpg',
+  'https://www.colombia.co/wp-content/uploads/2020/06/tejo-deporte.jpg',
+];
+
+function getTejoImage(id) {
+  return TEJO_IMAGES[(id - 1) % TEJO_IMAGES.length];
+}
 import UserLayout from '@/components/layout/UserLayout';
 import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
@@ -299,9 +315,10 @@ export default function CanchasUserPage() {
             return (
               <article key={cancha.id_cancha} className="service-card">
                 <img
-                  src="https://s3.amazonaws.com/rtvc-assets-senalmemoria.gov.co/s3fs-public/field_image/tejo.jpg"
-                  alt={cancha.nombre}
+                  src={getTejoImage(cancha.id_cancha)}
+                  alt={`Cancha de tejo: ${cancha.nombre}`}
                   className="service-card-img"
+                  onError={(e) => { e.target.src = 'https://s3.amazonaws.com/rtvc-assets-senalmemoria.gov.co/s3fs-public/field_image/tejo.jpg'; }}
                 />
                 <div className="service-card-body">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>

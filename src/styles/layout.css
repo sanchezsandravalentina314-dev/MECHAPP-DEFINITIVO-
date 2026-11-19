@@ -284,12 +284,19 @@
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
 }
 
+/* Sidebar links: oscuros y legibles en modo claro */
+:root.light-mode .sidebar-link {
+  color: #3a3d4a;
+}
+
 :root.light-mode .sidebar-link:hover {
   background-color: #f0f2f5;
+  color: #1a1d26;
 }
 
 :root.light-mode .sidebar-link.active {
   background: linear-gradient(135deg, rgba(255,87,34,0.1) 0%, rgba(255,87,34,0.03) 100%);
+  color: var(--primary);
 }
 
 :root.light-mode .sidebar-user-pill {
@@ -297,6 +304,33 @@
   border-color: rgba(0, 0, 0, 0.06);
 }
 
+:root.light-mode .sidebar-user-name {
+  color: #1a1d26;
+}
+
 :root.light-mode .dashboard-topbar {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Titulos y headings oscuros en modo claro */
+:root.light-mode h1,
+:root.light-mode h2,
+:root.light-mode h3,
+:root.light-mode h4,
+:root.light-mode h5,
+:root.light-mode h6 {
+  color: #1a1d26;
+}
+
+/* Texto en cards y paginas */
+:root.light-mode .page-title-group h1 {
+  color: #1a1d26;
+}
+
+:root.light-mode .card-title {
+  color: #1a1d26;
+}
+
+:root.light-mode .stat-content h3 {
+  color: #1a1d26;
 }
