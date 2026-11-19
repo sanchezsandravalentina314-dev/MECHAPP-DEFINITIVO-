@@ -212,7 +212,7 @@ export default function ClienteConsumoPage() {
             padding: '1.25rem',
             textAlign: 'center'
           }}>
-            <h2 style={{ margin: 0, fontSize: '1.4rem', color: '#fff' }}>
+            <h2 style={{ margin: 0, fontSize: '1.4rem', color: 'var(--text-main)' }}>
               ¡Tu cancha está reservada!
             </h2>
             <p style={{ margin: '6px 0 0 0', color: '#ffb300', fontSize: '1rem', fontWeight: 600 }}>
@@ -284,7 +284,7 @@ export default function ClienteConsumoPage() {
             </div>
           ) : (
             <div>
-              <h3 style={{ color: '#fff', margin: '0 0 1rem 0' }}>
+              <h3 style={{ color: 'var(--text-main)', margin: '0 0 1rem 0' }}>
                 {categorias.find((c) => c.id_categoria === categoriaActiva)?.nombre || 'Productos'}
               </h3>
               {productos.filter((p) => !categoriaActiva || p.id_categoria === categoriaActiva).length === 0 ? (

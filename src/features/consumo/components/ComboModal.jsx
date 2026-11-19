@@ -151,13 +151,13 @@ export default function ComboModal({ isOpen, onClose, onGuardar, comboEditar, id
         />
 
         {/* Selector de productos a incluir */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
           <label style={{ display: 'block', marginBottom: '8px', color: '#ffb300', fontWeight: 700, fontSize: '0.9rem' }}>
             Selecciona los Productos que incluye este Combo:
           </label>
 
           {productosDisponibles.length === 0 ? (
-            <p style={{ color: '#a0aec0', fontSize: '0.85rem', margin: 0 }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>
               No tienes productos creados en esta cancha. Crea productos primero para agregarlos al combo.
             </p>
           ) : (
@@ -177,7 +177,7 @@ export default function ComboModal({ isOpen, onClose, onGuardar, comboEditar, id
                       border: seleccionado ? '1px solid #ff5722' : '1px solid rgba(255,255,255,0.05)'
                     }}
                   >
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', flex: 1, margin: 0, color: '#fff', fontSize: '0.9rem' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', flex: 1, margin: 0, color: 'var(--text-main)', fontSize: '0.9rem' }}>
                       <input
                         type="checkbox"
                         checked={seleccionado}
@@ -188,7 +188,7 @@ export default function ComboModal({ isOpen, onClose, onGuardar, comboEditar, id
 
                     {seleccionado && (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <span style={{ fontSize: '0.8rem', color: '#a0aec0' }}>Cant:</span>
+                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Cant:</span>
                         <input
                           type="number"
                           min="1"
@@ -197,8 +197,8 @@ export default function ComboModal({ isOpen, onClose, onGuardar, comboEditar, id
                           style={{
                             width: '55px',
                             padding: '4px 8px',
-                            background: '#0f141c',
-                            color: '#fff',
+                            background: 'var(--bg-surface)',
+                            color: 'var(--text-main)',
                             border: '1px solid #ff5722',
                             borderRadius: '6px',
                             textAlign: 'center'

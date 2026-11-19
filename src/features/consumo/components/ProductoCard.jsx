@@ -11,13 +11,13 @@ export default function ProductoCard({ producto, onAgregar, esAdmin = false, onE
       background: 'var(--color-surface, #1e2430)',
       borderRadius: '16px',
       overflow: 'hidden',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
+      border: '1px solid var(--border-color)',
       display: 'flex',
       flexDirection: 'column',
       boxShadow: '0 8px 24px rgba(0,0,0,0.2)'
     }}>
       {/* Imagen */}
-      <div style={{ position: 'relative', height: '140px', background: '#121620' }}>
+      <div style={{ position: 'relative', height: '140px', background: 'var(--bg-surface)' }}>
         <img
           src={producto.imagen_url || 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600'}
           alt={producto.nombre}
@@ -30,7 +30,7 @@ export default function ProductoCard({ producto, onAgregar, esAdmin = false, onE
             top: '10px',
             right: '10px',
             background: '#d32f2f',
-            color: '#fff',
+            color: 'var(--text-main)',
             padding: '3px 8px',
             borderRadius: '12px',
             fontSize: '0.75rem',
@@ -58,8 +58,8 @@ export default function ProductoCard({ producto, onAgregar, esAdmin = false, onE
 
       {/* Info */}
       <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '1.05rem', color: '#fff' }}>{producto.nombre}</h4>
-        <p style={{ margin: '0 0 0.75rem 0', color: '#a0aec0', fontSize: '0.85rem', flex: 1, lineHeight: '1.3' }}>
+        <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '1.05rem', color: 'var(--text-main)' }}>{producto.nombre}</h4>
+        <p style={{ margin: '0 0 0.75rem 0', color: 'var(--text-muted)', fontSize: '0.85rem', flex: 1, lineHeight: '1.3' }}>
           {producto.descripcion || 'Producto fresco y listo para el consumo.'}
         </p>
 

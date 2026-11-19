@@ -225,3 +225,36 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ================= MODO CLARO - LANDING ================= */
+:root.light-mode .hero-section {
+  background: radial-gradient(circle at center top, rgba(255, 87, 34, 0.1) 0%, rgba(244, 246, 249, 0.97) 70%), url('/fondo.png');
+  background-size: cover;
+  background-position: center;
+}
+
+:root.light-mode .hero-title {
+  background: linear-gradient(180deg, #1a1d26 40%, #3a3d4a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:root.light-mode .tejo-highlight {
+  color: #3a3d4a;
+}
+
+:root.light-mode .service-card:hover {
+  border-color: rgba(255, 87, 34, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 0 16px rgba(255, 87, 34, 0.1);
+}
+
+:root.light-mode .auth-page-wrapper {
+  background: radial-gradient(circle at center, rgba(255, 87, 34, 0.06) 0%, var(--bg-main) 70%);
+}
+
+:root.light-mode .auth-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 87, 34, 0.06);
+}

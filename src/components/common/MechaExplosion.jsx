@@ -266,7 +266,7 @@ export default function MechaExplosion({
             padding: '4px 14px',
             borderRadius: '999px',
             background: 'linear-gradient(90deg, #ff5722, #f59e0b)',
-            color: '#fff',
+            color: 'var(--text-main)',
             fontWeight: 800,
             fontSize: '0.78rem',
             letterSpacing: '1px',
@@ -285,7 +285,7 @@ export default function MechaExplosion({
             fontSize: '2.1rem',
             fontWeight: 900,
             letterSpacing: '-0.5px',
-            color: '#fff',
+            color: 'var(--text-main)',
             textShadow: '0 2px 12px rgba(255, 87, 34, 0.8), 0 0 25px rgba(255, 152, 0, 0.6)',
             lineHeight: 1.15,
           }}

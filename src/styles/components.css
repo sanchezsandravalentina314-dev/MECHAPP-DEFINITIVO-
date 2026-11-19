@@ -429,3 +429,52 @@
   from { opacity: 0; transform: translateX(40px); }
   to { opacity: 1; transform: translateX(0); }
 }
+
+/* ================= MODO CLARO - COMPONENTES ================= */
+:root.light-mode .btn-secondary {
+  background-color: #f0f2f5;
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+:root.light-mode .btn-secondary:hover {
+  background-color: #e4e7ec;
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+:root.light-mode .btn-primary {
+  box-shadow: 0 4px 14px rgba(255, 87, 34, 0.25);
+  border: 1px solid rgba(255, 87, 34, 0.3);
+}
+
+:root.light-mode .btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(255, 87, 34, 0.35);
+}
+
+:root.light-mode .card:hover {
+  border-color: rgba(255, 87, 34, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 0 12px rgba(255, 87, 34, 0.08);
+}
+
+:root.light-mode .data-table th {
+  background: #f7f8fa;
+}
+
+:root.light-mode .data-table tr:hover td {
+  background: #f7f8fa;
+}
+
+:root.light-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+:root.light-mode .modal-content {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+:root.light-mode .toast {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}

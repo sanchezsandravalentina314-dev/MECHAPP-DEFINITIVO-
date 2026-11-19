@@ -219,7 +219,7 @@ export default function LoginPage() {
                   style={{
                     marginTop: '20px',
                     background: 'var(--color-primary, #ff5722)',
-                    color: '#fff',
+                    color: 'var(--text-main)',
                     border: 'none',
                     borderRadius: '8px',
                     padding: '10px 24px',

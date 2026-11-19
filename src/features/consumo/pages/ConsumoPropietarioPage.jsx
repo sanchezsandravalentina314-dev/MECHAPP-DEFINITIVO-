@@ -158,8 +158,8 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
               value={canchaSeleccionada}
               onChange={(e) => setCanchaSeleccionada(e.target.value)}
               style={{
-                background: '#1a202c',
-                color: '#fff',
+                background: 'var(--bg-card)',
+                color: 'var(--text-main)',
                 border: '1px solid #ff5722',
                 borderRadius: '8px',
                 padding: '8px 14px',
@@ -178,7 +178,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
       </div>
 
       {/* Barra de Navegación de Subsecciones */}
-      <div style={{ display: 'flex', gap: '0.5rem', background: '#121620', padding: '6px', borderRadius: '12px', overflowX: 'auto' }}>
+      <div style={{ display: 'flex', gap: '0.5rem', background: 'var(--bg-surface)', padding: '6px', borderRadius: '12px', overflowX: 'auto' }}>
         {[
           { id: 'dashboard', label: 'Dashboard Consumo' },
           { id: 'productos', label: 'Productos' },
@@ -213,36 +213,36 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {/* Métricas Principales */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-            <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #4caf50' }}>
-              <span style={{ color: '#a0aec0', fontSize: '0.8rem', textTransform: 'uppercase' }}>VENTAS DE HOY</span>
+            <div style={{ background: 'var(--bg-card)', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #4caf50' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase' }}>VENTAS DE HOY</span>
               <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#4caf50', marginTop: '4px' }}>
                 {formatCOP(stats.ventas_hoy)}
               </div>
             </div>
 
-            <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #ff9800' }}>
-              <span style={{ color: '#a0aec0', fontSize: '0.8rem', textTransform: 'uppercase' }}>PEDIDOS DE HOY</span>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #ff9800' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase' }}>PEDIDOS DE HOY</span>
+              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px' }}>
                 {stats.pedidos_hoy}
               </div>
             </div>
 
-            <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #2196f3' }}>
-              <span style={{ color: '#a0aec0', fontSize: '0.8rem', textTransform: 'uppercase' }}>INGRESOS DEL MES</span>
+            <div style={{ background: 'var(--bg-card)', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #2196f3' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase' }}>INGRESOS DEL MES</span>
               <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#2196f3', marginTop: '4px' }}>
                 {formatCOP(stats.ventas_mes)}
               </div>
             </div>
 
-            <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #9c27b0' }}>
-              <span style={{ color: '#a0aec0', fontSize: '0.8rem', textTransform: 'uppercase' }}>TICKET PROMEDIO</span>
+            <div style={{ background: 'var(--bg-card)', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #9c27b0' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase' }}>TICKET PROMEDIO</span>
               <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#9c27b0', marginTop: '4px' }}>
                 {formatCOP(stats.ticket_promedio)}
               </div>
             </div>
 
-            <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #f44336' }}>
-              <span style={{ color: '#a0aec0', fontSize: '0.8rem', textTransform: 'uppercase' }}>ALERTA STOCK BAJO</span>
+            <div style={{ background: 'var(--bg-card)', padding: '1.25rem', borderRadius: '12px', borderLeft: '4px solid #f44336' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase' }}>ALERTA STOCK BAJO</span>
               <div style={{ fontSize: '1.6rem', fontWeight: 800, color: stats.productos_stock_bajo > 0 ? '#f44336' : '#4caf50', marginTop: '4px' }}>
                 {stats.productos_stock_bajo} productos
               </div>
@@ -251,7 +251,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
 
           {/* Grilla de Top Combos y Productos */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-            <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '1.25rem', borderRadius: '12px' }}>
               <h3 style={{ margin: '0 0 1rem 0', color: '#ffb300', fontSize: '1.1rem' }}>Combos Más Vendidos</h3>
               {stats.top_combos?.length === 0 ? (
                 <p style={{ color: '#718096', fontSize: '0.9rem' }}>Aún no hay ventas de combos registradas este mes.</p>
@@ -259,7 +259,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                   {stats.top_combos.map((tc, idx) => (
                     <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                      <span style={{ color: '#fff' }}>#{idx + 1} {tc.nombre}</span>
+                      <span style={{ color: 'var(--text-main)' }}>#{idx + 1} {tc.nombre}</span>
                       <span style={{ fontWeight: 700, color: '#4caf50' }}>{tc.total} vendidos</span>
                     </li>
                   ))}
@@ -267,7 +267,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
               )}
             </div>
 
-            <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '1.25rem', borderRadius: '12px' }}>
               <h3 style={{ margin: '0 0 1rem 0', color: '#ff5722', fontSize: '1.1rem' }}>Productos Más Vendidos</h3>
               {stats.top_productos?.length === 0 ? (
                 <p style={{ color: '#718096', fontSize: '0.9rem' }}>Aún no hay ventas individuales registradas este mes.</p>
@@ -275,7 +275,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                   {stats.top_productos.map((tp, idx) => (
                     <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                      <span style={{ color: '#fff' }}>#{idx + 1} {tp.nombre}</span>
+                      <span style={{ color: 'var(--text-main)' }}>#{idx + 1} {tp.nombre}</span>
                       <span style={{ fontWeight: 700, color: '#4caf50' }}>{tp.total} unidades</span>
                     </li>
                   ))}
@@ -290,7 +290,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
       {seccion === 'productos' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#a0aec0', fontSize: '0.95rem' }}>{productos.length} producto(s) en catálogo</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{productos.length} producto(s) en catálogo</span>
             <Button
               variant="primary"
               onClick={() => { setProductoEditar(null); setModalProductoOpen(true); }}
@@ -317,7 +317,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
       {seccion === 'combos' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#a0aec0', fontSize: '0.95rem' }}>{combos.length} combo(s) configurados</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{combos.length} combo(s) configurados</span>
             <Button
               variant="primary"
               onClick={() => { setComboEditar(null); setModalComboOpen(true); }}
@@ -354,12 +354,12 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
 
       {/* ── 5. INVENTARIO ── */}
       {seccion === 'inventario' && (
-        <div style={{ background: '#1e2430', borderRadius: '12px', padding: '1.25rem' }}>
-          <h3 style={{ margin: '0 0 1rem 0', color: '#fff' }}>Control de Stock y Existencias</h3>
+        <div style={{ background: 'var(--bg-card)', borderRadius: '12px', padding: '1.25rem' }}>
+          <h3 style={{ margin: '0 0 1rem 0', color: 'var(--text-main)' }}>Control de Stock y Existencias</h3>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: '#a0aec0' }}>
+                <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>
                   <th style={{ padding: '10px' }}>Producto</th>
                   <th style={{ padding: '10px' }}>Precio</th>
                   <th style={{ padding: '10px' }}>Stock Actual</th>
@@ -374,12 +374,12 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
                   const agotado = p.stock <= 0;
                   return (
                     <tr key={p.id_producto} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <td style={{ padding: '10px', color: '#fff', fontWeight: 600 }}>{p.nombre}</td>
+                      <td style={{ padding: '10px', color: 'var(--text-main)', fontWeight: 600 }}>{p.nombre}</td>
                       <td style={{ padding: '10px', color: '#4caf50' }}>{formatCOP(p.precio)}</td>
                       <td style={{ padding: '10px', fontWeight: 700, color: agotado ? '#f44336' : (bajo ? '#ff9800' : '#fff') }}>
                         {p.stock} uds
                       </td>
-                      <td style={{ padding: '10px', color: '#a0aec0' }}>{p.stock_minimo} uds</td>
+                      <td style={{ padding: '10px', color: 'var(--text-muted)' }}>{p.stock_minimo} uds</td>
                       <td style={{ padding: '10px' }}>
                         {agotado ? (
                           <span style={{ color: '#f44336', fontWeight: 700 }}>Agotado</span>
@@ -395,7 +395,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
                             type="number"
                             defaultValue={p.stock}
                             id={`stock-input-${p.id_producto}`}
-                            style={{ width: '60px', padding: '4px', background: '#0f141c', color: '#fff', border: '1px solid #4a5568', borderRadius: '4px', textAlign: 'center' }}
+                            style={{ width: '60px', padding: '4px', background: 'var(--bg-surface)', color: 'var(--text-main)', border: '1px solid #4a5568', borderRadius: '4px', textAlign: 'center' }}
                           />
                           <Button
                             variant="secondary"
@@ -420,20 +420,20 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
 
       {/* ── 6. VENTAS ── */}
       {seccion === 'ventas' && stats && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: '#1e2430', padding: '1.5rem', borderRadius: '12px' }}>
-          <h3 style={{ margin: 0, color: '#fff' }}>Resumen Consolidado de Ventas</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '12px' }}>
+          <h3 style={{ margin: 0, color: 'var(--text-main)' }}>Resumen Consolidado de Ventas</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-            <div style={{ background: '#121620', padding: '1rem', borderRadius: '8px' }}>
-              <span style={{ color: '#a0aec0', fontSize: '0.85rem' }}>Esta Semana</span>
+            <div style={{ background: 'var(--bg-surface)', padding: '1rem', borderRadius: '8px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Esta Semana</span>
               <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#ffb300' }}>{formatCOP(stats.ventas_semana)}</div>
             </div>
-            <div style={{ background: '#121620', padding: '1rem', borderRadius: '8px' }}>
-              <span style={{ color: '#a0aec0', fontSize: '0.85rem' }}>Este Mes</span>
+            <div style={{ background: 'var(--bg-surface)', padding: '1rem', borderRadius: '8px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Este Mes</span>
               <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#4caf50' }}>{formatCOP(stats.ventas_mes)}</div>
             </div>
-            <div style={{ background: '#121620', padding: '1rem', borderRadius: '8px' }}>
-              <span style={{ color: '#a0aec0', fontSize: '0.85rem' }}>Total Pedidos del Mes</span>
-              <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#fff' }}>{stats.pedidos_mes}</div>
+            <div style={{ background: 'var(--bg-surface)', padding: '1rem', borderRadius: '8px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Total Pedidos del Mes</span>
+              <div style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-main)' }}>{stats.pedidos_mes}</div>
             </div>
           </div>
         </div>

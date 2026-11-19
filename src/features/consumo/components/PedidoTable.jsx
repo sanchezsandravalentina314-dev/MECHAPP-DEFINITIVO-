@@ -23,7 +23,7 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
       <div style={{ overflowX: 'auto', background: 'var(--color-surface, #1e2430)', borderRadius: '12px' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: '#a0aec0' }}>
+            <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>
               <th style={{ padding: '12px 16px' }}># Pedido</th>
               <th style={{ padding: '12px 16px' }}>Reserva</th>
               <th style={{ padding: '12px 16px' }}>Fecha</th>
@@ -46,13 +46,13 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
                   <td style={{ padding: '12px 16px', fontWeight: 700, color: '#ff5722' }}>
                     #{p.id_pedido}
                   </td>
-                  <td style={{ padding: '12px 16px', color: '#e2e8f0' }}>
+                  <td style={{ padding: '12px 16px', color: 'var(--text-muted)' }}>
                     {p.id_reserva ? `Reserva #${p.id_reserva}` : 'Consumo directo'}
                   </td>
-                  <td style={{ padding: '12px 16px', color: '#a0aec0' }}>
+                  <td style={{ padding: '12px 16px', color: 'var(--text-muted)' }}>
                     {formatFecha(p.fecha_pedido)}
                   </td>
-                  <td style={{ padding: '12px 16px', color: '#fff' }}>
+                  <td style={{ padding: '12px 16px', color: 'var(--text-main)' }}>
                     {p.detalles?.length || 0} producto(s)
                   </td>
                   <td style={{ padding: '12px 16px', fontWeight: 700, color: '#4caf50' }}>
@@ -70,7 +70,7 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
                         style={{
                           background: 'rgba(255,255,255,0.08)',
                           border: 'none',
-                          color: '#fff',
+                          color: 'var(--text-main)',
                           padding: '6px 12px',
                           borderRadius: '6px',
                           cursor: 'pointer',
@@ -85,8 +85,8 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
                           value={p.estado}
                           onChange={(e) => onCambiarEstado(p.id_pedido, e.target.value)}
                           style={{
-                            background: '#0f141c',
-                            color: '#fff',
+                            background: 'var(--bg-surface)',
+                            color: 'var(--text-main)',
                             border: '1px solid rgba(255,255,255,0.2)',
                             borderRadius: '6px',
                             padding: '4px 8px',
@@ -119,10 +119,10 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '8px' }}>
-              <div><strong style={{ color: '#a0aec0' }}>Fecha:</strong> {formatFecha(pedidoDetalle.fecha_pedido)}</div>
-              <div><strong style={{ color: '#a0aec0' }}>Estado:</strong> <Badge variant={getBadgeColor(pedidoDetalle.estado)}>{pedidoDetalle.estado}</Badge></div>
-              <div><strong style={{ color: '#a0aec0' }}>Reserva:</strong> #{pedidoDetalle.id_reserva || 'N/A'}</div>
-              <div><strong style={{ color: '#a0aec0' }}>Usuario:</strong> #{pedidoDetalle.id_usuario}</div>
+              <div><strong style={{ color: 'var(--text-muted)' }}>Fecha:</strong> {formatFecha(pedidoDetalle.fecha_pedido)}</div>
+              <div><strong style={{ color: 'var(--text-muted)' }}>Estado:</strong> <Badge variant={getBadgeColor(pedidoDetalle.estado)}>{pedidoDetalle.estado}</Badge></div>
+              <div><strong style={{ color: 'var(--text-muted)' }}>Reserva:</strong> #{pedidoDetalle.id_reserva || 'N/A'}</div>
+              <div><strong style={{ color: 'var(--text-muted)' }}>Usuario:</strong> #{pedidoDetalle.id_usuario}</div>
             </div>
 
             <h4 style={{ margin: '0.5rem 0 0 0', color: '#ffb300' }}>Productos / Combos solicitados:</h4>
@@ -137,10 +137,10 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
                   border: '1px solid rgba(255,255,255,0.05)'
                 }}>
                   <div>
-                    <span style={{ fontWeight: 600, color: '#fff' }}>
+                    <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>
                       {d.id_combo ? 'Combo' : 'Producto'} #{d.id_combo || d.id_producto}
                     </span>
-                    <span style={{ color: '#a0aec0', fontSize: '0.85rem', marginLeft: '0.5rem' }}>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: '0.5rem' }}>
                       x{d.cantidad}
                     </span>
                   </div>
@@ -152,7 +152,7 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
             </div>
 
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', fontSize: '1.2rem', fontWeight: 800 }}>
-              <span style={{ color: '#fff' }}>Total:</span>
+              <span style={{ color: 'var(--text-main)' }}>Total:</span>
               <span style={{ color: '#4caf50' }}>{formatCOP(pedidoDetalle.total)}</span>
             </div>
           </div>

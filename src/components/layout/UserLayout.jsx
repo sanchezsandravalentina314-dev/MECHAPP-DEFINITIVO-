@@ -60,7 +60,7 @@ export default function UserLayout({ children, title, subtitle }) {
               >
                 
                 {unreadCount > 0 && (
-                  <span style={{ position: 'absolute', top: '-5px', right: '-5px', background: 'red', color: 'white', borderRadius: '50%', padding: '2px 6px', fontSize: '0.7rem', fontWeight: 'bold' }}>
+                  <span style={{ position: 'absolute', top: '-5px', right: '-5px', background: 'red', color: 'var(--text-main)', borderRadius: '50%', padding: '2px 6px', fontSize: '0.7rem', fontWeight: 'bold' }}>
                     {unreadCount}
                   </span>
                 )}

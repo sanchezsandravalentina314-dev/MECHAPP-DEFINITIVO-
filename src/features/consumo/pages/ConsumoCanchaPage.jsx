@@ -195,7 +195,7 @@ export default function ConsumoCanchaPage() {
               onChange={(e) => setCanchaSeleccionada(Number(e.target.value))}
               style={{
                 background: 'rgba(255,255,255,0.08)',
-                color: '#fff',
+                color: 'var(--text-main)',
                 border: '1px solid var(--border-color, #333)',
                 padding: '6px 12px',
                 borderRadius: '8px',
@@ -204,7 +204,7 @@ export default function ConsumoCanchaPage() {
               }}
             >
               {canchas.map(c => (
-                <option key={c.id_cancha} value={c.id_cancha} style={{ background: '#1a1a2e', color: '#fff' }}>
+                <option key={c.id_cancha} value={c.id_cancha} style={{ background: 'var(--bg-card)', color: 'var(--text-main)' }}>
                   {c.nombre}
                 </option>
               ))}
@@ -268,7 +268,7 @@ export default function ConsumoCanchaPage() {
                   outline: 'none'
                 }}
               />
-              <div style={{ fontSize: '3.5rem', fontWeight: 900, color: '#fff', lineHeight: 1.1 }}>
+              <div style={{ fontSize: '3.5rem', fontWeight: 900, color: 'var(--text-main)', lineHeight: 1.1 }}>
                 {marcadorLocal}
               </div>
             </div>
@@ -294,7 +294,7 @@ export default function ConsumoCanchaPage() {
                   outline: 'none'
                 }}
               />
-              <div style={{ fontSize: '3.5rem', fontWeight: 900, color: '#fff', lineHeight: 1.1 }}>
+              <div style={{ fontSize: '3.5rem', fontWeight: 900, color: 'var(--text-main)', lineHeight: 1.1 }}>
                 {marcadorVisitante}
               </div>
             </div>
@@ -308,7 +308,7 @@ export default function ConsumoCanchaPage() {
                 onClick={() => registrarTiro('local', 1, 'Mano (+1)')}
                 style={{
                   background: 'linear-gradient(135deg, #ff5722, #e64a19)',
-                  color: '#fff',
+                  color: 'var(--text-main)',
                   border: 'none',
                   padding: '12px',
                   borderRadius: '10px',
@@ -341,7 +341,7 @@ export default function ConsumoCanchaPage() {
                 onClick={() => registrarTiro('visitante', 1, 'Mano (+1)')}
                 style={{
                   background: 'linear-gradient(135deg, #2196f3, #1976d2)',
-                  color: '#fff',
+                  color: 'var(--text-main)',
                   border: 'none',
                   padding: '12px',
                   borderRadius: '10px',
@@ -429,12 +429,12 @@ export default function ConsumoCanchaPage() {
                     onClick={() => agregarConsumo(prod)}
                     style={{
                       background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(255,255,255,0.08)',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '10px',
                       padding: '10px 8px',
                       textAlign: 'center',
                       cursor: 'pointer',
-                      color: '#fff',
+                      color: 'var(--text-main)',
                       transition: 'all 0.2s'
                     }}
                   >
@@ -491,7 +491,7 @@ export default function ConsumoCanchaPage() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <button
                         onClick={() => modificarCantidadConsumo(item.id_producto, -1)}
-                        style={{ width: '24px', height: '24px', borderRadius: '4px', border: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer', fontWeight: 700 }}
+                        style={{ width: '24px', height: '24px', borderRadius: '4px', border: 'none', background: 'rgba(255,255,255,0.1)', color: 'var(--text-main)', cursor: 'pointer', fontWeight: 700 }}
                       >
                         -
                       </button>
@@ -500,7 +500,7 @@ export default function ConsumoCanchaPage() {
                       </span>
                       <button
                         onClick={() => modificarCantidadConsumo(item.id_producto, 1)}
-                        style={{ width: '24px', height: '24px', borderRadius: '4px', border: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer', fontWeight: 700 }}
+                        style={{ width: '24px', height: '24px', borderRadius: '4px', border: 'none', background: 'rgba(255,255,255,0.1)', color: 'var(--text-main)', cursor: 'pointer', fontWeight: 700 }}
                       >
                         +
                       </button>

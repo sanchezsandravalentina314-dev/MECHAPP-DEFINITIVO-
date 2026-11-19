@@ -86,7 +86,7 @@ export default function ProductoModal({ isOpen, onClose, onGuardar, productoEdit
           />
 
           <div>
-            <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.9rem', color: '#e2e8f0', fontWeight: 600 }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Categoría
             </label>
             <select
@@ -96,7 +96,7 @@ export default function ProductoModal({ isOpen, onClose, onGuardar, productoEdit
                 width: '100%',
                 padding: '10px 14px',
                 background: 'var(--color-bg, #0f141c)',
-                color: '#fff',
+                color: 'var(--text-main)',
                 border: '1px solid rgba(255,255,255,0.15)',
                 borderRadius: '8px',
                 fontSize: '0.95rem'

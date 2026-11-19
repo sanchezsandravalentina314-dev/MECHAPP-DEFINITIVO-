@@ -267,3 +267,36 @@
   font-size: 0.95rem;
   color: var(--text-muted);
 }
+
+/* ================= MODO CLARO - LAYOUT ================= */
+:root.light-mode .public-header {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+:root.light-mode .brand-title {
+  background: linear-gradient(135deg, #1a1d26 0%, #3a3d4a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:root.light-mode .dashboard-sidebar {
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+}
+
+:root.light-mode .sidebar-link:hover {
+  background-color: #f0f2f5;
+}
+
+:root.light-mode .sidebar-link.active {
+  background: linear-gradient(135deg, rgba(255,87,34,0.1) 0%, rgba(255,87,34,0.03) 100%);
+}
+
+:root.light-mode .sidebar-user-pill {
+  background: #f7f8fa;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+:root.light-mode .dashboard-topbar {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}

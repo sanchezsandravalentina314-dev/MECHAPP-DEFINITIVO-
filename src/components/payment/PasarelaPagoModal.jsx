@@ -345,10 +345,10 @@ export default function PasarelaPagoModal({
                 <div
                   style={{
                     background: `linear-gradient(135deg, #1e293b 0%, #0f172a 100%)`,
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '14px',
                     padding: '16px 20px',
-                    color: '#fff',
+                    color: 'var(--text-main)',
                     marginBottom: '18px',
                     boxShadow: '0 8px 20px rgba(0,0,0,0.35)',
                     position: 'relative',

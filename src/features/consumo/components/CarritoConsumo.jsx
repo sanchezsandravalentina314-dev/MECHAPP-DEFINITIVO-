@@ -13,10 +13,10 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
         padding: '2rem',
         textAlign: 'center',
         border: '1px dashed rgba(255,255,255,0.15)',
-        color: '#a0aec0'
+        color: 'var(--text-muted)'
       }}>
         <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}></div>
-        <h4 style={{ color: '#fff', margin: '0 0 0.5rem 0' }}>Tu carrito está vacío</h4>
+        <h4 style={{ color: 'var(--text-main)', margin: '0 0 0.5rem 0' }}>Tu carrito está vacío</h4>
         <p style={{ fontSize: '0.9rem', margin: 0 }}>
           Agrega combos o bebidas para disfrutar al máximo tu tiempo en la cancha.
         </p>
@@ -29,7 +29,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
       background: 'var(--color-surface, #1e2430)',
       borderRadius: '16px',
       padding: '1.5rem',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
+      border: '1px solid var(--border-color)',
       boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
       display: 'flex',
       flexDirection: 'column',
@@ -37,7 +37,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
     }}>
       {/* Header del carrito */}
       <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.75rem' }}>
-        <h3 style={{ margin: 0, color: '#fff', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h3 style={{ margin: 0, color: 'var(--text-main)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           Tu Pedido de Consumo
         </h3>
         {reservaInfo && (
@@ -59,10 +59,10 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
             borderRadius: '10px'
           }}>
             <div style={{ flex: 1, paddingRight: '0.5rem' }}>
-              <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>
+              <div style={{ fontWeight: 600, color: 'var(--text-main)', fontSize: '0.9rem' }}>
                 {it.tipo === 'combo' ? '' : ''} {it.nombre}
               </div>
-              <div style={{ fontSize: '0.8rem', color: '#a0aec0' }}>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                 {formatCOP(it.precio)} c/u
               </div>
             </div>
@@ -74,7 +74,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
                 style={{
                   background: 'rgba(255,255,255,0.1)',
                   border: 'none',
-                  color: '#fff',
+                  color: 'var(--text-main)',
                   width: '26px',
                   height: '26px',
                   borderRadius: '6px',
@@ -84,7 +84,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
               >
                 -
               </button>
-              <span style={{ fontWeight: 700, color: '#fff', minWidth: '20px', textAlign: 'center' }}>
+              <span style={{ fontWeight: 700, color: 'var(--text-main)', minWidth: '20px', textAlign: 'center' }}>
                 {it.cantidad}
               </span>
               <button
@@ -92,7 +92,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
                 style={{
                   background: 'rgba(255,255,255,0.1)',
                   border: 'none',
-                  color: '#fff',
+                  color: 'var(--text-main)',
                   width: '26px',
                   height: '26px',
                   borderRadius: '6px',
@@ -124,7 +124,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
 
       {/* Resumen de totales */}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: '#a0aec0', fontSize: '0.9rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           <span>Subtotal Consumo</span>
           <span>{formatCOP(total)}</span>
         </div>
