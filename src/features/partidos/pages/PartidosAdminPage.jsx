@@ -194,10 +194,10 @@ export default function PartidosAdminPage() {
       render: (p) => (
         <div className="actions-cell">
           <Button variant="primary" size="sm" onClick={() => handleOpenRegistrarResultado(p)}>
-            🎯 {p.resultado ? 'Editar Marcador' : 'Cómputo'}
+            {p.resultado ? 'Editar Marcador' : 'Cómputo'}
           </Button>
           <Button variant="danger" size="sm" onClick={() => handleDelete(p.id_partido)}>
-            🗑️
+            
           </Button>
         </div>
       ),
@@ -214,7 +214,7 @@ export default function PartidosAdminPage() {
         data={partidos}
         loading={loading}
         onAddNew={handleOpenNewPartido}
-        addNewLabel="＋ Programar Partido"
+        addNewLabel="+ Programar Partido"
         searchPlaceholder="Buscar por equipo, torneo o estado..."
       />
 
@@ -222,7 +222,7 @@ export default function PartidosAdminPage() {
       <Modal
         isOpen={isModalPartidoOpen}
         onClose={() => setIsModalPartidoOpen(false)}
-        title="🎯 Programar Encuentro de Tejo"
+        title="Programar Encuentro de Tejo"
       >
         <form onSubmit={handleCrearPartido}>
           <Input
@@ -302,7 +302,7 @@ export default function PartidosAdminPage() {
       <Modal
         isOpen={isModalResultadoOpen}
         onClose={() => setIsModalResultadoOpen(false)}
-        title={`🎯 Cómputo de Marcador (Partida #${selectedPartido?.id_partido})`}
+        title={`Cómputo de Marcador (Partida #${selectedPartido?.id_partido})`}
       >
         <form onSubmit={handleGuardarResultado}>
           <div className="form-grid-2">

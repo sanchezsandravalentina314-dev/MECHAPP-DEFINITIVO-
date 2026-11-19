@@ -33,7 +33,7 @@ export default function CanchasUserPage() {
   const [estrellasCanchas, setEstrellasCanchas] = useState({});
 
   const { user } = useAuth();
-  const { showSuccess, showError } = useApp();
+  const { showSuccess, showError, triggerMechaExplosion } = useApp();
 
   const [reservaForm, setReservaForm] = useState({
     fecha: new Date().toISOString().split('T')[0],
@@ -62,13 +62,18 @@ export default function CanchasUserPage() {
       setCanchas(canchasData);
       setUbicaciones(ubicacionesData);
 
+      // Cargar valoraciones en paralelo (evita N+1 secuencial)
+      const valoracionesResults = await Promise.all(
+        canchasData.map(c =>
+          canchasService.obtenerValoraciones(c.id_cancha).catch(() => null)
+        )
+      );
       const estrellas = {};
-      for (const c of canchasData) {
-        try {
-          const valoracion = await canchasService.obtenerValoraciones(c.id_cancha);
-          estrellas[c.id_cancha] = valoracion;
-        } catch(e) {}
-      }
+      canchasData.forEach((c, i) => {
+        if (valoracionesResults[i] !== null) {
+          estrellas[c.id_cancha] = valoracionesResults[i];
+        }
+      });
       setEstrellasCanchas(estrellas);
       
     } catch {
@@ -153,17 +158,34 @@ export default function CanchasUserPage() {
     setIsModalOpen(true);
   };
 
+  const calcularHorasYValor = () => {
+    if (!reservaForm.hora_inicio || !reservaForm.hora_fin || !selectedCancha) {
+      return { horas: 2, valor: Number(selectedCancha?.precio_hora || 35000) * 2 };
+    }
+    const [hI, mI] = reservaForm.hora_inicio.split(':').map(Number);
+    const [hF, mF] = reservaForm.hora_fin.split(':').map(Number);
+    const diff = (hF + mF / 60) - (hI + mI / 60);
+    const horas = diff > 0 ? Number(diff.toFixed(1)) : 1;
+    const valor = Math.round(horas * Number(selectedCancha.precio_hora || 35000));
+    return { horas, valor };
+  };
+
   const handleCrearReservaPendiente = async (e) => {
     e.preventDefault();
     try {
+      const { horas, valor } = calcularHorasYValor();
+      if (reservaForm.hora_fin <= reservaForm.hora_inicio) {
+        showError('La hora de finalización debe ser posterior a la de inicio.');
+        return;
+      }
       const payload = {
         id_usuario: user?.id_usuario || 2,
         id_cancha: selectedCancha.id_cancha,
         fecha: reservaForm.fecha,
-        hora_inicio: reservaForm.hora_inicio + ':00',
-        hora_fin: reservaForm.hora_fin + ':00',
-        valor: (selectedCancha.precio_hora || 35000) * 2, // asumiendo 2h default
-        estado: 'Pendiente Pago', // ESTADO INICIAL
+        hora_inicio: reservaForm.hora_inicio.length === 5 ? reservaForm.hora_inicio + ':00' : reservaForm.hora_inicio,
+        hora_fin: reservaForm.hora_fin.length === 5 ? reservaForm.hora_fin + ':00' : reservaForm.hora_fin,
+        valor: valor,
+        estado: 'Pendiente Pago',
       };
 
       const nuevaReserva = await reservasService.crear(payload);
@@ -176,6 +198,11 @@ export default function CanchasUserPage() {
   };
 
   const handlePagoExitoso = () => {
+    triggerMechaExplosion({
+      title: '¡¡MECHAAAAA!! ',
+      subtitle: `¡Reserva confirmada en ${selectedCancha?.nombre || 'la cancha'}! Pista lista para el partido.`,
+      badgeText: '¡RESERVA CONFIRMADA!',
+    });
     showSuccess(`¡Pago confirmado exitosamente! Tu reserva en ${selectedCancha?.nombre} está activa.`);
     cargarDatos();
   };
@@ -203,7 +230,7 @@ export default function CanchasUserPage() {
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', flex: 1 }}>
           <input
             type="text"
-            placeholder="🔍 Buscar por cancha, ciudad, barrio o dirección..."
+            placeholder="Buscar por cancha, ciudad, barrio o dirección..."
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             style={{
@@ -243,7 +270,7 @@ export default function CanchasUserPage() {
           onClick={handleObtenerMiUbicacion}
           disabled={loadingLocation}
         >
-          {loadingLocation ? '📍 Localizando...' : '📍 Cerca de Mí'}
+          {loadingLocation ? 'Localizando...' : 'Cerca de Mí'}
         </Button>
       </div>
 
@@ -282,7 +309,7 @@ export default function CanchasUserPage() {
                       {cancha.estado ? 'Disponible' : 'Ocupado'}
                     </Badge>
                     <span style={{ fontSize: '0.9rem', color: '#f59e0b', fontWeight: 'bold' }}>
-                      ⭐ {rating?.promedio > 0 ? rating.promedio : 'Nuevo'} <span style={{fontSize: '0.7rem', color: 'var(--text-muted)'}}>({rating?.total || 0})</span>
+                      {rating?.promedio > 0 ? rating.promedio : 'Nuevo'} <span style={{fontSize: '0.7rem', color: 'var(--text-muted)'}}>({rating?.total || 0})</span>
                     </span>
                   </div>
 
@@ -312,7 +339,7 @@ export default function CanchasUserPage() {
                   </div>
 
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
-                    <div>📍 <strong>{ubicacion?.nombre || 'Sede Principal'}</strong></div>
+                    <div><strong>{ubicacion?.nombre || 'Sede Principal'}</strong></div>
                     <div>{ubicacion?.direccion || 'Dirección no registrada'} - {ubicacion?.ciudad || 'Colombia'} ({ubicacion?.barrio || 'Centro'})</div>
                   </div>
 
@@ -322,7 +349,7 @@ export default function CanchasUserPage() {
                       style={{ flex: 1 }}
                       onClick={() => abrirEnGoogleMaps(ubicacion, cancha.nombre)}
                     >
-                      🗺️ Mapa
+                      Mapa
                     </Button>
                     <Button
                       variant="primary"
@@ -347,9 +374,12 @@ export default function CanchasUserPage() {
         title={`Reservar en ${selectedCancha?.nombre}`}
       >
         <form onSubmit={handleCrearReservaPendiente}>
-          <div style={{ marginBottom: '16px', padding: '12px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)' }}>
+          <div style={{ marginBottom: '16px', padding: '12px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <p style={{ margin: 0, fontSize: '0.9rem' }}>
               Tarifa por hora: <strong>{formatCurrency(selectedCancha?.precio_hora)}</strong>
+            </p>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--primary)', fontWeight: 700 }}>
+              Duración: {calcularHorasYValor().horas}h · Total: {formatCurrency(calcularHorasYValor().valor)}
             </p>
           </div>
 

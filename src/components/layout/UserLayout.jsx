@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import { useAuth } from '@/context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -58,7 +58,7 @@ export default function UserLayout({ children, title, subtitle }) {
                 onClick={() => setShowNoti(!showNoti)}
                 style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', position: 'relative' }}
               >
-                🔔
+                
                 {unreadCount > 0 && (
                   <span style={{ position: 'absolute', top: '-5px', right: '-5px', background: 'red', color: 'white', borderRadius: '50%', padding: '2px 6px', fontSize: '0.7rem', fontWeight: 'bold' }}>
                     {unreadCount}

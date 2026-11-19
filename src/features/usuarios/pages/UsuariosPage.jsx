@@ -148,10 +148,10 @@ export default function UsuariosPage() {
       render: (u) => (
         <div className="actions-cell">
           <Button variant="secondary" size="sm" onClick={() => handleOpenEdit(u)}>
-            ✏️ Editar
+            Editar
           </Button>
           <Button variant="danger" size="sm" onClick={() => handleDelete(u.id_usuario)}>
-            🗑️
+            
           </Button>
         </div>
       ),
@@ -168,14 +168,14 @@ export default function UsuariosPage() {
         data={usuarios}
         loading={loading}
         onAddNew={handleOpenNew}
-        addNewLabel="＋ Nuevo Usuario"
+        addNewLabel="+ Nuevo Usuario"
         searchPlaceholder="Buscar por nombre, correo o documento..."
       />
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingUser ? `✏️ Editar Usuario (#${editingUser.id_usuario})` : '＋ Registrar Nuevo Usuario'}
+        title={editingUser ? `Editar Usuario (#${editingUser.id_usuario})` : '+ Registrar Nuevo Usuario'}
       >
         <form onSubmit={handleSubmit}>
           <div className="form-grid-2">
@@ -220,9 +220,9 @@ export default function UsuariosPage() {
               onChange={(e) => setFormData({ ...formData, id_rol: e.target.value })}
               required
               options={[
-                { value: '1', label: '👑 Administrador' },
-                { value: '2', label: '🎯 Jugador' },
-                { value: '3', label: '🏟️ Propietario de Cancha' },
+                { value: '1', label: 'Administrador' },
+                { value: '2', label: 'Jugador' },
+                { value: '3', label: 'Propietario de Cancha' },
               ]}
             />
             <Input
@@ -232,8 +232,8 @@ export default function UsuariosPage() {
               onChange={(e) => setFormData({ ...formData, estado: e.target.value === 'true' })}
               required
               options={[
-                { value: 'true', label: '🟢 Activo' },
-                { value: 'false', label: '🔴 Inactivo' },
+                { value: 'true', label: 'Activo' },
+                { value: 'false', label: 'Inactivo' },
               ]}
             />
           </div>

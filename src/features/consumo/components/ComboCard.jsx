@@ -34,7 +34,7 @@ export default function ComboCard({ combo, onAgregar, accionTexto = 'Agregar al 
           fontSize: '0.8rem',
           fontWeight: 700
         }}>
-          👥 {combo.personas_min}-{combo.personas_max} personas
+          {combo.personas_min}-{combo.personas_max} personas
         </div>
         {!combo.estado && (
           <div style={{
@@ -93,13 +93,13 @@ export default function ComboCard({ combo, onAgregar, accionTexto = 'Agregar al 
 
           {esAdmin ? (
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              {onEditar && <Button variant="secondary" onClick={() => onEditar(combo)} style={{ padding: '6px 12px' }}>✏️</Button>}
-              {onEliminar && <Button variant="danger" onClick={() => onEliminar(combo.id_combo)} style={{ padding: '6px 12px' }}>🗑️</Button>}
+              {onEditar && <Button variant="secondary" onClick={() => onEditar(combo)} style={{ padding: '6px 12px' }}></Button>}
+              {onEliminar && <Button variant="danger" onClick={() => onEliminar(combo.id_combo)} style={{ padding: '6px 12px' }}></Button>}
             </div>
           ) : (
             onAgregar && (
               <Button variant="primary" onClick={() => onAgregar(combo)} style={{ background: 'linear-gradient(135deg, #ff5722, #e64a19)' }}>
-                🔥 {accionTexto}
+                {accionTexto}
               </Button>
             )
           )}

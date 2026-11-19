@@ -159,10 +159,10 @@ export default function CanchasAdminPage() {
       render: (c) => (
         <div className="actions-cell">
           <Button variant="secondary" size="sm" onClick={() => handleOpenEdit(c)}>
-            ✏️ Editar
+            Editar
           </Button>
           <Button variant="danger" size="sm" onClick={() => handleDelete(c.id_cancha)}>
-            🗑️
+            
           </Button>
         </div>
       ),
@@ -188,14 +188,14 @@ export default function CanchasAdminPage() {
         data={canchasVisibles}
         loading={loading}
         onAddNew={handleOpenNew}
-        addNewLabel="＋ Registrar Mi Cancha"
+        addNewLabel="+ Registrar Mi Cancha"
         searchPlaceholder="Buscar por nombre, dirección o capacidad..."
       />
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingCancha ? `✏️ Editar Escenario (#${editingCancha.id_cancha})` : '＋ Registrar Nuevo Escenario'}
+        title={editingCancha ? `Editar Escenario (#${editingCancha.id_cancha})` : '+ Registrar Nuevo Escenario'}
       >
         <form onSubmit={handleSubmit}>
           <Input
@@ -254,8 +254,8 @@ export default function CanchasAdminPage() {
               value={formData.estado ? 'true' : 'false'}
               onChange={(e) => setFormData({ ...formData, estado: e.target.value === 'true' })}
               options={[
-                { value: 'true', label: '🟢 Activo / Abierto' },
-                { value: 'false', label: '🔴 Cerrado / Mantenimiento' },
+                { value: 'true', label: 'Activo / Abierto' },
+                { value: 'false', label: 'Cerrado / Mantenimiento' },
               ]}
             />
           </div>

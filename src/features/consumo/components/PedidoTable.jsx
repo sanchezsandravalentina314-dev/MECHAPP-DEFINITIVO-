@@ -77,7 +77,7 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
                           fontSize: '0.8rem'
                         }}
                       >
-                        👁️ Ver
+                        Ver
                       </button>
 
                       {onCambiarEstado && (
@@ -115,7 +115,7 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
         <Modal
           isOpen={!!pedidoDetalle}
           onClose={() => setPedidoDetalle(null)}
-          title={`🧾 Detalle del Pedido #${pedidoDetalle.id_pedido}`}
+          title={`Detalle del Pedido #${pedidoDetalle.id_pedido}`}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '8px' }}>
@@ -138,7 +138,7 @@ export default function PedidoTable({ pedidos = [], onCambiarEstado, esAdmin = f
                 }}>
                   <div>
                     <span style={{ fontWeight: 600, color: '#fff' }}>
-                      {d.id_combo ? '🔥 Combo' : '🍔 Producto'} #{d.id_combo || d.id_producto}
+                      {d.id_combo ? 'Combo' : 'Producto'} #{d.id_combo || d.id_producto}
                     </span>
                     <span style={{ color: '#a0aec0', fontSize: '0.85rem', marginLeft: '0.5rem' }}>
                       x{d.cantidad}

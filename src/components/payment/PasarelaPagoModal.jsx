@@ -21,7 +21,6 @@ export default function PasarelaPagoModal({
   const [tarjeta, setTarjeta] = useState({
     tipo: 'debito', // 'debito' | 'credito'
     numero: '',
-    nombre: '',
     expiracion: '',
     cvc: '',
     cuotas: '1',
@@ -72,10 +71,10 @@ export default function PasarelaPagoModal({
   // Identificar franquicia
   const getFranquicia = (num) => {
     const clean = num.replace(/\s/g, '');
-    if (clean.startsWith('4')) return { nombre: 'Visa', color: '#1a1f71', logo: '💳 VISA' };
-    if (clean.startsWith('5')) return { nombre: 'Mastercard', color: '#eb001b', logo: '💳 MASTERCARD' };
-    if (clean.startsWith('3')) return { nombre: 'Amex', color: '#007cc3', logo: '💳 AMEX' };
-    return { nombre: 'Tarjeta', color: '#334155', logo: '💳 CRÉDITO / DÉBITO' };
+    if (clean.startsWith('4')) return { nombre: 'Visa', color: '#1a1f71', logo: 'VISA' };
+    if (clean.startsWith('5')) return { nombre: 'Mastercard', color: '#eb001b', logo: 'MASTERCARD' };
+    if (clean.startsWith('3')) return { nombre: 'Amex', color: '#007cc3', logo: 'AMEX' };
+    return { nombre: 'Tarjeta', color: '#334155', logo: 'CRÉDITO / DÉBITO' };
   };
 
   // Mapear método a id_metodo_pago de la BD
@@ -147,7 +146,7 @@ export default function PasarelaPagoModal({
     <Modal
       isOpen={isOpen}
       onClose={() => !procesando && onClose()}
-      title={pagoExitoso ? '✅ ¡Pago Confirmado Exitosamente!' : '🔒 Pasarela de Pago Segura (Simulada)'}
+      title={pagoExitoso ? '¡Pago Confirmado Exitosamente!' : 'Pasarela de Pago Segura (Simulada)'}
       size="md"
     >
       {/* PANTALLA 1: COMPROBANTE DE PAGO EXITOSO */}
@@ -168,7 +167,7 @@ export default function PasarelaPagoModal({
               margin: '0 auto 16px',
             }}
           >
-            ✓
+            
           </div>
 
           <h3 style={{ margin: '0 0 6px', fontSize: '1.4rem', color: 'var(--text-color)' }}>
@@ -218,7 +217,7 @@ export default function PasarelaPagoModal({
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-muted)' }}>Estado:</span>
-              <span style={{ color: '#22c55e', fontWeight: 700 }}>● Aprobado</span>
+              <span style={{ color: '#22c55e', fontWeight: 700 }}>Aprobado</span>
             </div>
           </div>
 
@@ -228,7 +227,7 @@ export default function PasarelaPagoModal({
               style={{ flex: 1, padding: '12px', fontSize: '0.95rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px' }}
               onClick={() => window.print()}
             >
-              🖨️ Imprimir Comprobante
+              Imprimir Comprobante
             </Button>
             <Button
               variant="primary"
@@ -312,10 +311,10 @@ export default function PasarelaPagoModal({
             }}
           >
             {[
-              { id: 'tarjeta', label: '💳 Tarjeta' },
-              { id: 'pse', label: '🏦 PSE' },
-              { id: 'nequi', label: '📱 Nequi' },
-              { id: 'efectivo', label: '💵 Sede' },
+              { id: 'tarjeta', label: 'Tarjeta' },
+              { id: 'pse', label: 'PSE' },
+              { id: 'nequi', label: 'Nequi' },
+              { id: 'efectivo', label: 'Sede' },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -390,9 +389,9 @@ export default function PasarelaPagoModal({
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', fontSize: '0.8rem' }}>
                     <div>
-                      <div style={{ fontSize: '0.65rem', opacity: 0.7, textTransform: 'uppercase' }}>Titular</div>
+                      <div style={{ fontSize: '0.65rem', opacity: 0.7, textTransform: 'uppercase' }}>Tipo</div>
                       <div style={{ fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                        {tarjeta.nombre || 'NOMBRE DEL TITULAR'}
+                        {tarjeta.tipo === 'debito' ? 'DEBITO' : 'CREDITO'}
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
@@ -432,8 +431,8 @@ export default function PasarelaPagoModal({
                         fontWeight: 500,
                       }}
                     >
-                      <option value="debito">💳 Tarjeta Débito</option>
-                      <option value="credito">💳 Tarjeta Crédito</option>
+                      <option value="debito">Tarjeta Débito</option>
+                      <option value="credito">Tarjeta Crédito</option>
                     </select>
                   </div>
 
@@ -446,27 +445,6 @@ export default function PasarelaPagoModal({
                       value={tarjeta.numero}
                       onChange={handleNumeroTarjetaChange}
                       placeholder="4500 1234 5678 9012"
-                      required
-                      style={{
-                        width: '100%',
-                        padding: '10px 12px',
-                        borderRadius: 'var(--radius-md)',
-                        border: '1px solid var(--border-color)',
-                        background: 'var(--bg-surface)',
-                        color: 'var(--text-color)',
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '4px' }}>
-                      Nombre en la Tarjeta
-                    </label>
-                    <input
-                      type="text"
-                      value={tarjeta.nombre}
-                      onChange={(e) => setTarjeta({ ...tarjeta, nombre: e.target.value })}
-                      placeholder="Como figura en el plástico"
                       required
                       style={{
                         width: '100%',
@@ -562,7 +540,7 @@ export default function PasarelaPagoModal({
             {metodo === 'pse' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ background: 'rgba(59, 130, 246, 0.08)', padding: '12px', borderRadius: 'var(--radius-md)', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                  🏦 Transfiere directamente desde tu cuenta bancaria a través del botón de pagos PSE.
+                  Transfiere directamente desde tu cuenta bancaria a través del botón de pagos PSE.
                 </div>
 
                 <div>
@@ -676,7 +654,7 @@ export default function PasarelaPagoModal({
                       cursor: 'pointer',
                     }}
                   >
-                    💜 Nequi
+                    Nequi
                   </button>
                   <button
                     type="button"
@@ -692,7 +670,7 @@ export default function PasarelaPagoModal({
                       cursor: 'pointer',
                     }}
                   >
-                    ❤️ Daviplata
+                    Daviplata
                   </button>
                 </div>
 
@@ -718,7 +696,7 @@ export default function PasarelaPagoModal({
                 </div>
 
                 <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', background: 'var(--bg-surface)', padding: '10px', borderRadius: 'var(--radius-md)' }}>
-                  📲 Al presionar pagar, recibirás una notificación push simulada en tu celular para aprobar la transferencia con tu clave o huella digital.
+                  Al presionar pagar, recibirás una notificación push simulada en tu celular para aprobar la transferencia con tu clave o huella digital.
                 </div>
               </div>
             )}
@@ -726,7 +704,7 @@ export default function PasarelaPagoModal({
             {/* SUB-FORMULARIO 4: EFECTIVO EN SEDE */}
             {metodo === 'efectivo' && (
               <div style={{ textAlign: 'center', padding: '16px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>💵</div>
+                <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}></div>
                 <h4 style={{ margin: '0 0 6px' }}>Pago en Efectivo en Taquilla</h4>
                 <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-muted)' }}>
                   Tu reserva quedará apartada con código pendiente. Podrás pagar el total en efectivo directamente en la entrada de la cancha antes de iniciar tu turno de juego.
@@ -749,7 +727,7 @@ export default function PasarelaPagoModal({
                   gap: '8px',
                 }}
               >
-                🔒 Pagar {formatCurrency(monto)}
+                Pagar {formatCurrency(monto)}
               </Button>
 
               <div
@@ -763,7 +741,7 @@ export default function PasarelaPagoModal({
                   color: 'var(--text-dim)',
                 }}
               >
-                <span>🛡️ Transacción 100% segura con cifrado SSL de 256 bits (Entorno de Simulación MechApp)</span>
+                <span>Transacción 100% segura con cifrado SSL de 256 bits (Entorno de Simulación MechApp)</span>
               </div>
             </div>
           </form>

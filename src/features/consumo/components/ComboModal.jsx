@@ -102,7 +102,7 @@ export default function ComboModal({ isOpen, onClose, onGuardar, comboEditar, id
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={comboEditar ? '✏️ Editar Combo' : '🔥 Crear Nuevo Combo'}>
+    <Modal isOpen={isOpen} onClose={onClose} title={comboEditar ? 'Editar Combo' : 'Crear Nuevo Combo'}>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxHeight: '75vh', overflowY: 'auto' }}>
         <Input
           label="Nombre del Combo"
@@ -153,7 +153,7 @@ export default function ComboModal({ isOpen, onClose, onGuardar, comboEditar, id
         {/* Selector de productos a incluir */}
         <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' }}>
           <label style={{ display: 'block', marginBottom: '8px', color: '#ffb300', fontWeight: 700, fontSize: '0.9rem' }}>
-            🛒 Selecciona los Productos que incluye este Combo:
+            Selecciona los Productos que incluye este Combo:
           </label>
 
           {productosDisponibles.length === 0 ? (

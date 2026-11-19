@@ -119,10 +119,10 @@ export default function NoticiasAdminPage() {
       render: (n) => (
         <div className="actions-cell">
           <Button variant="secondary" size="sm" onClick={() => handleOpenEdit(n)}>
-            ✏️ Editar
+            Editar
           </Button>
           <Button variant="danger" size="sm" onClick={() => handleDelete(n.id)}>
-            🗑️
+            
           </Button>
         </div>
       ),
@@ -139,14 +139,14 @@ export default function NoticiasAdminPage() {
         data={noticias}
         loading={loading}
         onAddNew={handleOpenNew}
-        addNewLabel="＋ Publicar Noticia"
+        addNewLabel="+ Publicar Noticia"
         searchPlaceholder="Buscar noticia por título..."
       />
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingNoticia ? `✏️ Editar Noticia (#${editingNoticia.id})` : '＋ Publicar Nueva Noticia'}
+        title={editingNoticia ? `Editar Noticia (#${editingNoticia.id})` : '+ Publicar Nueva Noticia'}
       >
         <form onSubmit={handleSubmit}>
           <Input

@@ -136,7 +136,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
 
   if (cargando && !canchaSeleccionada) {
     return (
-      <Layout title="🍔 Gestión de Combos y Consumo">
+      <Layout title="Gestión de Combos y Consumo">
         <Loader texto="Cargando módulo de Combos y Consumo..." />
       </Layout>
     );
@@ -144,7 +144,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
 
   return (
     <Layout
-      title="🍔 Gestión de Combos y Consumo"
+      title="Gestión de Combos y Consumo"
       subtitle="Administra la oferta gastronómica, bebidas, combos y pedidos de tu escenario de tejo."
     >
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -180,12 +180,12 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
       {/* Barra de Navegación de Subsecciones */}
       <div style={{ display: 'flex', gap: '0.5rem', background: '#121620', padding: '6px', borderRadius: '12px', overflowX: 'auto' }}>
         {[
-          { id: 'dashboard', label: '📊 Dashboard Consumo' },
-          { id: 'productos', label: '🍔 Productos' },
-          { id: 'combos', label: '🔥 Combos' },
-          { id: 'pedidos', label: '📋 Pedidos' },
-          { id: 'inventario', label: '📦 Inventario' },
-          { id: 'ventas', label: '📈 Ventas' },
+          { id: 'dashboard', label: 'Dashboard Consumo' },
+          { id: 'productos', label: 'Productos' },
+          { id: 'combos', label: 'Combos' },
+          { id: 'pedidos', label: 'Pedidos' },
+          { id: 'inventario', label: 'Inventario' },
+          { id: 'ventas', label: 'Ventas' },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -252,7 +252,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
           {/* Grilla de Top Combos y Productos */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
             <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px' }}>
-              <h3 style={{ margin: '0 0 1rem 0', color: '#ffb300', fontSize: '1.1rem' }}>🔥 Combos Más Vendidos</h3>
+              <h3 style={{ margin: '0 0 1rem 0', color: '#ffb300', fontSize: '1.1rem' }}>Combos Más Vendidos</h3>
               {stats.top_combos?.length === 0 ? (
                 <p style={{ color: '#718096', fontSize: '0.9rem' }}>Aún no hay ventas de combos registradas este mes.</p>
               ) : (
@@ -268,7 +268,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
             </div>
 
             <div style={{ background: '#1e2430', padding: '1.25rem', borderRadius: '12px' }}>
-              <h3 style={{ margin: '0 0 1rem 0', color: '#ff5722', fontSize: '1.1rem' }}>🍔 Productos Más Vendidos</h3>
+              <h3 style={{ margin: '0 0 1rem 0', color: '#ff5722', fontSize: '1.1rem' }}>Productos Más Vendidos</h3>
               {stats.top_productos?.length === 0 ? (
                 <p style={{ color: '#718096', fontSize: '0.9rem' }}>Aún no hay ventas individuales registradas este mes.</p>
               ) : (
@@ -323,7 +323,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
               onClick={() => { setComboEditar(null); setModalComboOpen(true); }}
               style={{ background: 'linear-gradient(135deg, #ff5722, #e64a19)' }}
             >
-              🔥 Crear Nuevo Combo
+              Crear Nuevo Combo
             </Button>
           </div>
 
@@ -355,7 +355,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
       {/* ── 5. INVENTARIO ── */}
       {seccion === 'inventario' && (
         <div style={{ background: '#1e2430', borderRadius: '12px', padding: '1.25rem' }}>
-          <h3 style={{ margin: '0 0 1rem 0', color: '#fff' }}>📦 Control de Stock y Existencias</h3>
+          <h3 style={{ margin: '0 0 1rem 0', color: '#fff' }}>Control de Stock y Existencias</h3>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
               <thead>
@@ -382,11 +382,11 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
                       <td style={{ padding: '10px', color: '#a0aec0' }}>{p.stock_minimo} uds</td>
                       <td style={{ padding: '10px' }}>
                         {agotado ? (
-                          <span style={{ color: '#f44336', fontWeight: 700 }}>⛔ Agotado</span>
+                          <span style={{ color: '#f44336', fontWeight: 700 }}>Agotado</span>
                         ) : bajo ? (
-                          <span style={{ color: '#ff9800', fontWeight: 700 }}>⚠️ Stock Bajo</span>
+                          <span style={{ color: '#ff9800', fontWeight: 700 }}>Stock Bajo</span>
                         ) : (
-                          <span style={{ color: '#4caf50', fontWeight: 700 }}>✅ Óptimo</span>
+                          <span style={{ color: '#4caf50', fontWeight: 700 }}>Óptimo</span>
                         )}
                       </td>
                       <td style={{ padding: '10px' }}>
@@ -405,7 +405,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
                             }}
                             style={{ padding: '4px 8px', fontSize: '0.8rem' }}
                           >
-                            💾 Guardar
+                            Guardar
                           </Button>
                         </div>
                       </td>
@@ -421,7 +421,7 @@ export default function ConsumoPropietarioPage({ esAdmin = false }) {
       {/* ── 6. VENTAS ── */}
       {seccion === 'ventas' && stats && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: '#1e2430', padding: '1.5rem', borderRadius: '12px' }}>
-          <h3 style={{ margin: 0, color: '#fff' }}>📈 Resumen Consolidado de Ventas</h3>
+          <h3 style={{ margin: 0, color: '#fff' }}>Resumen Consolidado de Ventas</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
             <div style={{ background: '#121620', padding: '1rem', borderRadius: '8px' }}>
               <span style={{ color: '#a0aec0', fontSize: '0.85rem' }}>Esta Semana</span>

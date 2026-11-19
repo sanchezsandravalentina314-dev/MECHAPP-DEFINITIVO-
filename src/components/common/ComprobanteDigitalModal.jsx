@@ -22,7 +22,7 @@ export default function ComprobanteDigitalModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="🧾 Comprobante Digital de Pago"
+      title="Comprobante Digital de Pago"
       size="md"
     >
       {/* Estilos para impresión */}
@@ -64,7 +64,7 @@ export default function ComprobanteDigitalModal({
         {/* Encabezado del comprobante */}
         <div style={{ textAlign: 'center', borderBottom: '2px dashed var(--border-color)', paddingBottom: '16px', marginBottom: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '4px' }}>
-            <span style={{ fontSize: '1.6rem' }}>🎯</span>
+            <span style={{ fontSize: '1.6rem' }}></span>
             <strong style={{ fontSize: '1.4rem', letterSpacing: '1px', color: 'var(--primary)' }}>MECHAPP</strong>
           </div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -74,7 +74,7 @@ export default function ComprobanteDigitalModal({
             NIT: 901.584.239-4 · Facturación y Comprobante Digital
           </div>
           <div style={{ marginTop: '10px', display: 'inline-block', background: 'rgba(34, 197, 94, 0.12)', color: '#22c55e', padding: '4px 12px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700 }}>
-            ● TRANSACCIÓN APROBADA
+            TRANSACCIÓN APROBADA
           </div>
         </div>
 
@@ -175,7 +175,7 @@ export default function ComprobanteDigitalModal({
           onClick={handleImprimir}
           style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px' }}
         >
-          🖨️ Imprimir / PDF
+          Imprimir / PDF
         </Button>
       </div>
     </Modal>

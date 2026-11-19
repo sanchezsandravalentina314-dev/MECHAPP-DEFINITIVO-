@@ -21,7 +21,7 @@ export default function MisReservasPage() {
   const [isComprobanteOpen, setIsComprobanteOpen] = useState(false);
 
   const { user } = useAuth();
-  const { showSuccess } = useApp();
+  const { showSuccess, triggerMechaExplosion } = useApp();
 
   const cargarDatos = async () => {
     try {
@@ -65,6 +65,11 @@ export default function MisReservasPage() {
   };
 
   const handlePagoExitoso = async (pagoResultado) => {
+    triggerMechaExplosion({
+      title: '¡¡MECHAAAAA!! ',
+      subtitle: '¡Pago recibido y validado con éxito! Tu pista está confirmada.',
+      badgeText: '¡RESERVA ASEGURADA!',
+    });
     showSuccess('¡Pago confirmado! Tu reserva ya está lista para disfrutar.');
     await cargarDatos();
     if (pagoResultado) {
@@ -85,7 +90,7 @@ export default function MisReservasPage() {
         <Loader message="Cargando tu historial de reservas..." />
       ) : reservas.length === 0 ? (
         <div className="card empty-state">
-          <div className="empty-state-icon">📅</div>
+          <div className="empty-state-icon"></div>
           <h3>Aún no tienes reservas activas</h3>
           <p>Explora nuestras canchas aliadas y agenda tu primera partida con amigos.</p>
         </div>
@@ -106,7 +111,7 @@ export default function MisReservasPage() {
                   </div>
                   <h3 style={{ fontSize: '1.25rem' }}>{cancha?.nombre || `Cancha #${reserva.id_cancha}`}</h3>
                   <p style={{ margin: '4px 0 0', fontSize: '0.9rem' }}>
-                    📅 Fecha: <strong>{formatDate(reserva.fecha)}</strong> · ⏰ Horario: <strong>{formatTime(reserva.hora_inicio)} a {formatTime(reserva.hora_fin)}</strong>
+                    Fecha: <strong>{formatDate(reserva.fecha)}</strong> · Horario: <strong>{formatTime(reserva.hora_inicio)} a {formatTime(reserva.hora_fin)}</strong>
                   </p>
                 </div>
                 <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
@@ -122,19 +127,19 @@ export default function MisReservasPage() {
                       onClick={() => handlePagarReserva(reserva)}
                       style={{ padding: '8px 16px', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '6px' }}
                     >
-                      💳 Pagar con Pasarela
+                      Pagar con Pasarela
                     </Button>
                   ) : (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ fontSize: '0.85rem', color: '#22c55e', fontWeight: 600 }}>
-                        ✓ Pago al día
+                        Pago al día
                       </span>
                       <Button
                         variant="secondary"
                         onClick={() => handleVerComprobante(reserva, cancha)}
                         style={{ padding: '6px 12px', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '4px' }}
                       >
-                        🧾 Ver Comprobante
+                        Ver Comprobante
                       </Button>
                     </div>
                   )}

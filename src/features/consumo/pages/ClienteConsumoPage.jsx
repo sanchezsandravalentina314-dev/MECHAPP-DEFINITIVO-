@@ -14,7 +14,7 @@ import PasarelaPagoModal from '@/components/payment/PasarelaPagoModal';
 export default function ClienteConsumoPage() {
   const { idReserva } = useParams();
   const navigate = useNavigate();
-  const { showNotification } = useApp();
+  const { showNotification, triggerMechaExplosion } = useApp();
 
   const [reserva, setReserva] = useState(null);
   const [combos, setCombos] = useState([]);
@@ -99,6 +99,12 @@ export default function ClienteConsumoPage() {
         cantidad: 1
       }];
     });
+    triggerMechaExplosion({
+      title: '¡¡CHISPA DE SABOR!! ',
+      subtitle: `¡${combo.nombre} añadido al carrito!`,
+      badgeText: '¡COMBO AL CARRITO!',
+      duration: 1800,
+    });
     showNotification(`¡${combo.nombre} agregado al carrito!`, 'success');
   };
 
@@ -118,6 +124,12 @@ export default function ClienteConsumoPage() {
         precio: producto.precio,
         cantidad: 1
       }];
+    });
+    triggerMechaExplosion({
+      title: '¡¡CHISPAZO!! ',
+      subtitle: `¡${producto.nombre} agregado a tu orden!`,
+      badgeText: '¡PRODUCTO AÑADIDO!',
+      duration: 1700,
     });
     showNotification(`¡${producto.nombre} agregado!`, 'success');
   };
@@ -159,7 +171,13 @@ export default function ClienteConsumoPage() {
         items: itemsPayload
       });
 
-      showNotification('¡Pedido y pago confirmados con éxito! 🎉', 'success');
+      triggerMechaExplosion({
+        title: '¡¡MECHAAAAA!! ',
+        subtitle: '¡Pedido de consumo pagado y confirmado! Listo para disfrutar en la pista.',
+        badgeText: '¡ORDEN CONFIRMADA!',
+        duration: 2800,
+      });
+      showNotification('¡Pedido y pago confirmados con éxito! ', 'success');
       localStorage.removeItem(storageKey);
       setCarrito([]);
       setIsPasarelaOpen(false);
@@ -195,7 +213,7 @@ export default function ClienteConsumoPage() {
             textAlign: 'center'
           }}>
             <h2 style={{ margin: 0, fontSize: '1.4rem', color: '#fff' }}>
-              🎯 ¡Tu cancha está reservada!
+              ¡Tu cancha está reservada!
             </h2>
             <p style={{ margin: '6px 0 0 0', color: '#ffb300', fontSize: '1rem', fontWeight: 600 }}>
               Puedes añadir combos, comida o bebidas a tu plan ahora mismo:
@@ -222,7 +240,7 @@ export default function ClienteConsumoPage() {
                 color: categoriaActiva === 'combos' ? '#fff' : '#a0aec0'
               }}
             >
-              🔥 Combos y Promos
+              Combos y Promos
             </button>
 
             {categorias.map((cat) => (
@@ -240,7 +258,7 @@ export default function ClienteConsumoPage() {
                   color: categoriaActiva === cat.id_categoria ? '#fff' : '#a0aec0'
                 }}
               >
-                {cat.icono || '🍽️'} {cat.nombre}
+                {cat.icono || ''} {cat.nombre}
               </button>
             ))}
           </div>
@@ -248,7 +266,7 @@ export default function ClienteConsumoPage() {
           {/* Renderizado según pestaña activa */}
           {categoriaActiva === 'combos' ? (
             <div>
-              <h3 style={{ color: '#ffb300', margin: '0 0 1rem 0' }}>🔥 Combos Especiales de Tejo</h3>
+              <h3 style={{ color: '#ffb300', margin: '0 0 1rem 0' }}>Combos Especiales de Tejo</h3>
               {combos.length === 0 ? (
                 <p style={{ color: '#718096' }}>No hay combos disponibles en este momento.</p>
               ) : (

@@ -15,7 +15,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
         border: '1px dashed rgba(255,255,255,0.15)',
         color: '#a0aec0'
       }}>
-        <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🛒</div>
+        <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}></div>
         <h4 style={{ color: '#fff', margin: '0 0 0.5rem 0' }}>Tu carrito está vacío</h4>
         <p style={{ fontSize: '0.9rem', margin: 0 }}>
           Agrega combos o bebidas para disfrutar al máximo tu tiempo en la cancha.
@@ -38,11 +38,11 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
       {/* Header del carrito */}
       <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.75rem' }}>
         <h3 style={{ margin: 0, color: '#fff', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          🛒 Tu Pedido de Consumo
+          Tu Pedido de Consumo
         </h3>
         {reservaInfo && (
           <div style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#ffb300', background: 'rgba(255, 179, 0, 0.1)', padding: '6px 10px', borderRadius: '6px' }}>
-            🎯 Asociado a Reserva #{reservaInfo.id_reserva} · Cancha: {reservaInfo.cancha_nombre || reservaInfo.id_cancha}
+            Asociado a Reserva #{reservaInfo.id_reserva} · Cancha: {reservaInfo.cancha_nombre || reservaInfo.id_cancha}
           </div>
         )}
       </div>
@@ -60,7 +60,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
           }}>
             <div style={{ flex: 1, paddingRight: '0.5rem' }}>
               <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>
-                {it.tipo === 'combo' ? '🔥 ' : '🍔 '} {it.nombre}
+                {it.tipo === 'combo' ? '' : ''} {it.nombre}
               </div>
               <div style={{ fontSize: '0.8rem', color: '#a0aec0' }}>
                 {formatCOP(it.precio)} c/u
@@ -115,7 +115,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
                 }}
                 title="Eliminar"
               >
-                🗑️
+                
               </button>
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function CarritoConsumo({ items, onModificarCantidad, onEliminarI
           background: 'linear-gradient(135deg, #4caf50, #2e7d32)'
         }}
       >
-        {cargando ? 'Procesando...' : '✅ Confirmar Pedido de Consumo'}
+        {cargando ? 'Procesando...' : 'Confirmar Pedido de Consumo'}
       </Button>
     </div>
   );

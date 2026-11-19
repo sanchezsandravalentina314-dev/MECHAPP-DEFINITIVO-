@@ -147,7 +147,7 @@ export default function TorneosAdminPage() {
     {
       header: 'Bolsa de Premios',
       key: 'premio',
-      render: (t) => <strong>🏆 {formatCurrency(t.premio)}</strong>,
+      render: (t) => <strong>{formatCurrency(t.premio)}</strong>,
     },
     {
       header: 'Estado',
@@ -171,10 +171,10 @@ export default function TorneosAdminPage() {
       render: (t) => (
         <div className="actions-cell">
           <Button variant="secondary" size="sm" onClick={() => handleOpenEdit(t)}>
-            ✏️ Editar
+            Editar
           </Button>
           <Button variant="danger" size="sm" onClick={() => handleDelete(t.id_torneo)}>
-            🗑️
+            
           </Button>
         </div>
       ),
@@ -191,14 +191,14 @@ export default function TorneosAdminPage() {
         data={torneos}
         loading={loading}
         onAddNew={handleOpenNew}
-        addNewLabel="＋ Nuevo Torneo"
+        addNewLabel="+ Nuevo Torneo"
         searchPlaceholder="Buscar torneo por nombre o estado..."
       />
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingTorneo ? `✏️ Editar Torneo (#${editingTorneo.id_torneo})` : '＋ Planificar Nuevo Torneo'}
+        title={editingTorneo ? `Editar Torneo (#${editingTorneo.id_torneo})` : '+ Planificar Nuevo Torneo'}
       >
         <form onSubmit={handleSubmit}>
           <Input
@@ -274,10 +274,10 @@ export default function TorneosAdminPage() {
               onChange={(e) => setFormData({ ...formData, estado: e.target.value })}
               required
               options={[
-                { value: 'En Inscripción', label: '🟡 En Inscripción' },
-                { value: 'Activo', label: '🟢 Activo en Competencia' },
-                { value: 'Finalizado', label: '⚪ Finalizado' },
-                { value: 'Próximo', label: '🔵 Próximamente' },
+                { value: 'En Inscripción', label: 'En Inscripción' },
+                { value: 'Activo', label: 'Activo en Competencia' },
+                { value: 'Finalizado', label: 'Finalizado' },
+                { value: 'Próximo', label: 'Próximamente' },
               ]}
             />
           </div>

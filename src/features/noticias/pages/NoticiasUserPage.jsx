@@ -39,7 +39,7 @@ export default function NoticiasUserPage() {
               />
               <div className="service-card-body">
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', display: 'block', marginBottom: '8px' }}>
-                  📅 {formatDate(noticia.fecha_publicacion)}
+                  {formatDate(noticia.fecha_publicacion)}
                 </span>
                 <h3>{noticia.titulo}</h3>
                 <p style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>{noticia.contenido}</p>

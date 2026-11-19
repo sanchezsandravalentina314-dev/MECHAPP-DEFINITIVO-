@@ -72,8 +72,8 @@ export default function ProductoCard({ producto, onAgregar, esAdmin = false, onE
 
           {esAdmin ? (
             <div style={{ display: 'flex', gap: '0.4rem' }}>
-              {onEditar && <Button variant="secondary" onClick={() => onEditar(producto)} style={{ padding: '4px 8px' }}>✏️</Button>}
-              {onEliminar && <Button variant="danger" onClick={() => onEliminar(producto.id_producto)} style={{ padding: '4px 8px' }}>🗑️</Button>}
+              {onEditar && <Button variant="secondary" onClick={() => onEditar(producto)} style={{ padding: '4px 8px' }}></Button>}
+              {onEliminar && <Button variant="danger" onClick={() => onEliminar(producto.id_producto)} style={{ padding: '4px 8px' }}></Button>}
             </div>
           ) : (
             onAgregar && (

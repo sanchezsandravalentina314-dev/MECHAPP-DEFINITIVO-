@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useApp } from '@/context/AppContext';
 import { authService } from '@/features/auth/services/authService';
@@ -60,7 +60,7 @@ export default function RestablecerContrasenaPage() {
 
         {exito ? (
           <div style={{ textAlign: 'center', padding: '24px 0' }}>
-            <p style={{ fontSize: '2.5rem', marginBottom: '12px' }}>✅</p>
+            <p style={{ fontSize: '2.5rem', marginBottom: '12px' }}></p>
             <p style={{ color: 'var(--color-success, #4caf50)', fontWeight: 600, fontSize: '1.05rem' }}>
               ¡Contraseña actualizada!
             </p>
@@ -80,7 +80,7 @@ export default function RestablecerContrasenaPage() {
                 fontSize: '0.9rem',
                 marginBottom: '16px',
               }}>
-                ⚠️ Enlace inválido. Por favor solicita un nuevo correo de recuperación.
+                Enlace inválido. Por favor solicita un nuevo correo de recuperación.
               </p>
             )}
 

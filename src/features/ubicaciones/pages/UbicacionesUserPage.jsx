@@ -106,7 +106,7 @@ export default function UbicacionesUserPage() {
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', flex: 1 }}>
           <input
             type="text"
-            placeholder="🔍 Buscar por nombre, barrio o dirección..."
+            placeholder="Buscar por nombre, barrio o dirección..."
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             style={{
@@ -146,7 +146,7 @@ export default function UbicacionesUserPage() {
           onClick={handleObtenerMiUbicacion}
           disabled={loadingLocation}
         >
-          {loadingLocation ? '📍 Localizando...' : '📍 Cerca de Mí'}
+          {loadingLocation ? 'Localizando...' : 'Cerca de Mí'}
         </Button>
       </div>
 
@@ -202,7 +202,7 @@ export default function UbicacionesUserPage() {
                         color: 'var(--primary-color)',
                       }}
                     >
-                      🏙️ {ubicacion.ciudad}
+                      {ubicacion.ciudad}
                     </span>
                   </div>
 
@@ -211,12 +211,12 @@ export default function UbicacionesUserPage() {
                   </h3>
 
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                    📍 <strong>Dirección:</strong> {ubicacion.direccion}
+                    <strong>Dirección:</strong> {ubicacion.direccion}
                   </p>
 
                   {ubicacion.barrio && (
                     <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginBottom: '14px' }}>
-                      🏘️ <strong>Barrio:</strong> {ubicacion.barrio}
+                      <strong>Barrio:</strong> {ubicacion.barrio}
                     </p>
                   )}
 
@@ -233,7 +233,7 @@ export default function UbicacionesUserPage() {
                       Pistas disponibles en esta sede:
                     </div>
                     <strong style={{ fontSize: '1rem', color: 'var(--text-color)' }}>
-                      🎯 {canchasDeSede.length}{' '}
+                      {canchasDeSede.length}{' '}
                       {canchasDeSede.length === 1 ? 'Cancha' : 'Canchas'}
                     </strong>
                     {canchasDeSede.length > 0 && (
@@ -269,7 +269,7 @@ export default function UbicacionesUserPage() {
                     style={{ flex: 1 }}
                     onClick={() => abrirEnGoogleMaps(ubicacion)}
                   >
-                    🗺️ Cómo llegar
+                    Cómo llegar
                   </Button>
                   <Button
                     variant="primary"

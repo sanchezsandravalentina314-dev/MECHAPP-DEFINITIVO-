@@ -53,7 +53,7 @@ export default function EventosUserPage() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                     <Badge variant="info">{evento.tipo || 'Evento'}</Badge>
                     <span style={{ fontSize: '0.85rem', color: 'var(--text-dim)' }}>
-                      📅 {formatDate(evento.fecha)}
+                      {formatDate(evento.fecha)}
                     </span>
                   </div>
 
@@ -69,10 +69,10 @@ export default function EventosUserPage() {
                     }}
                   >
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                      📍 Sede: <strong>{cancha?.nombre || 'Escenario deportivo'}</strong>
+                      Sede: <strong>{cancha?.nombre || 'Escenario deportivo'}</strong>
                     </div>
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                      ⏰ Hora: {formatTime(evento.hora)}
+                      Hora: {formatTime(evento.hora)}
                     </div>
                   </div>
 
@@ -81,7 +81,7 @@ export default function EventosUserPage() {
                     style={{ width: '100%' }}
                     onClick={() => handleAnotarse(evento)}
                   >
-                    🎟️ Anotarme al Evento
+                    Anotarme al Evento
                   </Button>
                 </div>
               </article>

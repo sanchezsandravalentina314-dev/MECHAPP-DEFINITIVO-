@@ -140,19 +140,26 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow-card);
   transition: var(--transition);
+  position: relative;
 }
 
 .service-card:hover {
   transform: translateY(-6px);
-  border-color: var(--primary);
-  box-shadow: 0 12px 32px rgba(255, 87, 34, 0.15);
+  border-color: rgba(255, 87, 34, 0.4);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 87, 34, 0.2);
 }
 
 .service-card-img {
   width: 100%;
   height: 190px;
   object-fit: cover;
+  transition: var(--transition);
+}
+
+.service-card:hover .service-card-img {
+  transform: scale(1.03);
 }
 
 .service-card-body {
@@ -171,13 +178,15 @@
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  background: radial-gradient(circle at center, rgba(255, 87, 34, 0.1) 0%, var(--bg-main) 70%);
+  background: radial-gradient(circle at center, rgba(255, 87, 34, 0.12) 0%, var(--bg-main) 70%);
 }
 
 .auth-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  background: rgba(22, 29, 48, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 87, 34, 0.15);
   width: 100%;
   max-width: 480px;
   padding: 36px;

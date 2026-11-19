@@ -270,7 +270,7 @@ export default function ReportesPage() {
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', flex: 1 }}>
           <input
             type="text"
-            placeholder="🔍 Buscar por ref, cancha, cliente o método..."
+            placeholder="Buscar por ref, cancha, cliente o método..."
             value={filtroTexto}
             onChange={(e) => setFiltroTexto(e.target.value)}
             style={{
@@ -342,14 +342,14 @@ export default function ReportesPage() {
             onClick={handleExportarCSV}
             style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
           >
-            📥 Exportar CSV
+            Exportar CSV
           </Button>
           <Button
             variant="primary"
             onClick={() => window.print()}
             style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
           >
-            🖨️ Imprimir Reporte
+            Imprimir Reporte
           </Button>
         </div>
       </div>
@@ -359,7 +359,7 @@ export default function ReportesPage() {
         <Loader message="Consolidando datos de pagos y reportes..." />
       ) : reportesFiltrados.length === 0 ? (
         <div className="card empty-state" style={{ padding: '40px', textAlign: 'center' }}>
-          <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>📊</div>
+          <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}></div>
           <h3>No se encontraron registros con los filtros seleccionados</h3>
           <p style={{ color: 'var(--text-muted)' }}>Prueba cambiando el período o criterio de búsqueda.</p>
         </div>
@@ -413,7 +413,7 @@ export default function ReportesPage() {
                       onClick={() => handleVerComprobante(item)}
                       style={{ padding: '4px 10px', fontSize: '0.8rem' }}
                     >
-                      🧾 Ver
+                      Ver
                     </Button>
                   </td>
                 </tr>

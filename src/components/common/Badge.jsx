@@ -7,7 +7,7 @@ export default function Badge({
 }) {
   return (
     <span className={`badge badge-${variant} ${className}`}>
-      ● {children}
+      {children}
     </span>
   );
 }

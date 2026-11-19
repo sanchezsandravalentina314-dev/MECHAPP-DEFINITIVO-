@@ -5,6 +5,7 @@ import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
 import { reservasService } from '../services/reservasService';
 import { canchasService } from '@/features/canchas/services/canchasService';
+import { usuariosService } from '@/features/usuarios/services/usuariosService';
 import { useApp } from '@/context/AppContext';
 import { useAuth } from '@/context/AuthContext';
 import { formatDate, formatTime, formatCurrency } from '@/utils/formatters';
@@ -103,12 +104,12 @@ export default function ReservasPage() {
         <div className="actions-cell">
           {r.estado !== 'Confirmada' && (
             <Button variant="primary" size="sm" onClick={() => handleCambiarEstado(r, 'Confirmada')}>
-              ✓ Confirmar
+              Confirmar
             </Button>
           )}
           {r.estado !== 'Cancelada' && (
             <Button variant="danger" size="sm" onClick={() => handleCambiarEstado(r, 'Cancelada')}>
-              ✕ Cancelar
+              Cancelar
             </Button>
           )}
         </div>

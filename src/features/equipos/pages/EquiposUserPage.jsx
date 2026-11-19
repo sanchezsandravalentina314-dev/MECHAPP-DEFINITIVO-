@@ -63,7 +63,7 @@ export default function EquiposUserPage() {
       subtitle="Crea tu propio equipo, gestiona los jugadores y compite bajo una misma bandera en torneos oficiales."
     >
       <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'flex-end' }}>
-        <Button onClick={() => setIsModalOpen(true)} icon="＋">
+        <Button onClick={() => setIsModalOpen(true)} icon="+">
           Crear Nuevo Equipo
         </Button>
       </div>
@@ -87,14 +87,14 @@ export default function EquiposUserPage() {
                     borderBottom: '1px solid var(--border-color)',
                   }}
                 >
-                  ⚽
+                  
                 </div>
                 <div className="service-card-body">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <Badge variant={equipo.estado ? 'success' : 'danger'}>
                       {equipo.estado ? 'Activo' : 'Inactivo'}
                     </Badge>
-                    {esCapitan && <span className="badge badge-primary">👑 Capitán</span>}
+                    {esCapitan && <span className="badge badge-primary">Capitán</span>}
                   </div>
 
                   <h3>{equipo.nombre}</h3>
@@ -103,7 +103,7 @@ export default function EquiposUserPage() {
                   </p>
 
                   <div style={{ fontSize: '0.82rem', color: 'var(--text-dim)', margin: '12px 0' }}>
-                    📅 Fundado: {formatDate(equipo.fecha_creacion)}
+                    Fundado: {formatDate(equipo.fecha_creacion)}
                   </div>
 
                   <Button
@@ -111,7 +111,7 @@ export default function EquiposUserPage() {
                     style={{ width: '100%' }}
                     onClick={() => alert(`Gestionando nómina de ${equipo.nombre}`)}
                   >
-                    👥 Ver Plantilla de Jugadores
+                    Ver Plantilla de Jugadores
                   </Button>
                 </div>
               </article>
@@ -124,7 +124,7 @@ export default function EquiposUserPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="⚽ Fundar Nuevo Equipo de Tejo"
+        title="Fundar Nuevo Equipo de Tejo"
       >
         <form onSubmit={handleCrearEquipo}>
           <div style={{ marginBottom: '16px', padding: '12px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)' }}>

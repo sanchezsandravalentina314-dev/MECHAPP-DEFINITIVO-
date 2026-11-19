@@ -110,7 +110,7 @@ export default function TorneosUserPage() {
                       {torneo.estado}
                     </Badge>
                     <span style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 700 }}>
-                      🏆 {formatCurrency(torneo.premio)}
+                      {formatCurrency(torneo.premio)}
                     </span>
                   </div>
 
@@ -128,13 +128,13 @@ export default function TorneosUserPage() {
                     }}
                   >
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                      📍 Sede: <strong>{cancha?.nombre || 'Escenario oficial'}</strong>
+                      Sede: <strong>{cancha?.nombre || 'Escenario oficial'}</strong>
                     </div>
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                      📅 Fechas: {formatDate(torneo.fecha_inicio)} al {formatDate(torneo.fecha_fin)}
+                      Fechas: {formatDate(torneo.fecha_inicio)} al {formatDate(torneo.fecha_fin)}
                     </div>
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                      👥 Cupos: Máximo {torneo.cupo_maximo} competidores
+                      Cupos: Máximo {torneo.cupo_maximo} competidores
                     </div>
                   </div>
 
@@ -149,7 +149,7 @@ export default function TorneosUserPage() {
                         onClick={() => handleOpenInscripcion(torneo)}
                         disabled={torneo.estado === 'Finalizado' || estaInscrito}
                       >
-                        {estaInscrito ? '✅ Ya estás inscrito' : '📝 Inscribirme al Torneo'}
+                        {estaInscrito ? 'Ya estás inscrito' : 'Inscribirme al Torneo'}
                       </Button>
                     );
                   })()}
@@ -164,7 +164,7 @@ export default function TorneosUserPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={`📝 Inscripción: ${selectedTorneo?.nombre}`}
+        title={`Inscripción: ${selectedTorneo?.nombre}`}
       >
         <form onSubmit={handleConfirmarInscripcion}>
           <div style={{ marginBottom: '16px', padding: '14px', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)' }}>

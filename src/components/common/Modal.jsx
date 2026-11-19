@@ -27,7 +27,7 @@ export default function Modal({
         <div className="modal-header">
           <h2>{title}</h2>
           <button className="modal-close-btn" onClick={onClose} aria-label="Cerrar modal">
-            ✕
+            
           </button>
         </div>
         <div className="modal-body">{children}</div>

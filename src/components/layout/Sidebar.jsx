@@ -8,43 +8,43 @@ export default function Sidebar({ mode = 'admin' }) {
   const navigate = useNavigate();
 
   const adminMenu = [
-    { to: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
-    { to: '/admin/reportes', label: 'Reportes y Pagos', icon: '📈' },
-    { to: '/admin/usuarios', label: 'Usuarios', icon: '👥' },
-    { to: '/admin/canchas', label: 'Canchas / Escenarios', icon: '📍' },
-    { to: '/admin/consumo', label: 'Combos y Consumo', icon: '🍔' },
-    { to: '/admin/torneos', label: 'Torneos', icon: '🏆' },
-    { to: '/admin/equipos', label: 'Equipos', icon: '⚽' },
-    { to: '/admin/partidos', label: 'Partidas y Resultados', icon: '🎯' },
-    { to: '/admin/reservas', label: 'Reservas de Canchas', icon: '📅' },
-    { to: '/admin/noticias', label: 'Noticias', icon: '📰' },
-    { to: '/admin/eventos', label: 'Eventos', icon: '🎉' },
+    { to: '/admin/dashboard', label: 'Dashboard' },
+    { to: '/admin/reportes', label: 'Reportes y Pagos' },
+    { to: '/admin/usuarios', label: 'Usuarios' },
+    { to: '/admin/canchas', label: 'Canchas / Escenarios' },
+    { to: '/admin/consumo', label: 'Combos y Consumo' },
+    { to: '/admin/torneos', label: 'Torneos' },
+    { to: '/admin/equipos', label: 'Equipos' },
+    { to: '/admin/partidos', label: 'Partidas y Resultados' },
+    { to: '/admin/reservas', label: 'Reservas de Canchas' },
+    { to: '/admin/noticias', label: 'Noticias' },
+    { to: '/admin/eventos', label: 'Eventos' },
   ];
 
   const userMenu = [
-    { to: '/user/canchas', label: 'Explorar Canchas', icon: '🎯' },
-    { to: '/user/ubicaciones', label: 'Sedes y Clubes', icon: '📍' },
-    { to: '/user/torneos', label: 'Torneos Activos', icon: '🏆' },
-    { to: '/user/mis-reservas', label: 'Mis Reservas', icon: '📅' },
-    { to: '/user/reportes', label: 'Comprobantes y Pagos', icon: '🧾' },
+    { to: '/user/canchas', label: 'Explorar Canchas' },
+    { to: '/user/ubicaciones', label: 'Sedes y Clubes' },
+    { to: '/user/torneos', label: 'Torneos Activos' },
+    { to: '/user/mis-reservas', label: 'Mis Reservas' },
+    { to: '/user/reportes', label: 'Comprobantes y Pagos' },
     // Si es propietario (Rol 3) tiene acceso a administrar sus combos y consumo
     user?.id_rol === 3
-      ? { to: '/propietario/consumo', label: 'Combos y Consumo', icon: '🍔' }
-      : { to: '/consumo', label: 'Combos y Bebidas', icon: '🍔' },
-    { to: '/user/consumo-cancha', label: 'Consumo Cancha', icon: '🍺' },
-    { to: '/user/equipos', label: 'Mis Equipos', icon: '⚽' },
-    { to: '/user/noticias', label: 'Noticias y Novedades', icon: '📰' },
-    { to: '/user/perfil', label: 'Mi Perfil', icon: '👤' },
+      ? { to: '/propietario/consumo', label: 'Combos y Consumo' }
+      : { to: '/consumo', label: 'Combos y Bebidas' },
+    { to: '/user/consumo-cancha', label: 'Consumo Cancha' },
+    { to: '/user/equipos', label: 'Mis Equipos' },
+    { to: '/user/noticias', label: 'Noticias y Novedades' },
+    { to: '/user/perfil', label: 'Mi Perfil' },
   ];
 
   const propietarioMenu = [
-    { to: '/admin/canchas', label: 'Mis Canchas', icon: '📍' },
-    { to: '/admin/reportes', label: 'Reportes y Ventas', icon: '📈' },
-    { to: '/propietario/consumo', label: 'Combos y Consumo', icon: '🍔' },
-    { to: '/admin/reservas', label: 'Reservas Recibidas', icon: '📅' },
-    { to: '/admin/torneos', label: 'Mis Torneos', icon: '🏆' },
-    { to: '/user/noticias', label: 'Noticias', icon: '📰' },
-    { to: '/user/perfil', label: 'Mi Perfil', icon: '👤' },
+    { to: '/admin/canchas', label: 'Mis Canchas' },
+    { to: '/admin/reportes', label: 'Reportes y Ventas' },
+    { to: '/propietario/consumo', label: 'Combos y Consumo' },
+    { to: '/admin/reservas', label: 'Reservas Recibidas' },
+    { to: '/admin/torneos', label: 'Mis Torneos' },
+    { to: '/user/noticias', label: 'Noticias' },
+    { to: '/user/perfil', label: 'Mi Perfil' },
   ];
 
   let items = userMenu;
@@ -81,7 +81,6 @@ export default function Sidebar({ mode = 'admin' }) {
               `sidebar-link ${isActive ? 'active' : ''}`
             }
           >
-            <span>{item.icon}</span>
             <span>{item.label}</span>
           </NavLink>
         ))}
@@ -95,8 +94,7 @@ export default function Sidebar({ mode = 'admin' }) {
             navigate('/');
           }}
         >
-          <span>🚪</span>
-          <span>Cerrar Sesión</span>
+          <span>Cerrar Sesion</span>
         </button>
       </div>
     </aside>

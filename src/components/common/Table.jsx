@@ -28,7 +28,7 @@ export default function Table({
     <div className="table-container">
       <div className="table-toolbar">
         <div className="table-search">
-          <span>🔍</span>
+          <span></span>
           <input
             type="search"
             value={searchTerm}
@@ -37,7 +37,7 @@ export default function Table({
           />
         </div>
         {onAddNew && (
-          <Button onClick={onAddNew} icon="＋">
+          <Button onClick={onAddNew} icon="+">
             {addNewLabel}
           </Button>
         )}
@@ -65,7 +65,7 @@ export default function Table({
             ) : filteredData.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className="empty-state">
-                  <div className="empty-state-icon">📂</div>
+                  <div className="empty-state-icon"></div>
                   <p>{emptyMessage}</p>
                 </td>
               </tr>

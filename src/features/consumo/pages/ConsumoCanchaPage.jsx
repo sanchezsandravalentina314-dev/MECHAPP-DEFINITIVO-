@@ -157,7 +157,7 @@ export default function ConsumoCanchaPage() {
         items: itemsPayload
       });
 
-      showSuccess('¡Cuenta y consumo pagados exitosamente! 🎉');
+      showSuccess('¡Cuenta y consumo pagados exitosamente! ');
       setConsumos([]);
       localStorage.removeItem('mechapp_consumo_cancha_items');
       setIsPasarelaOpen(false);
@@ -170,7 +170,7 @@ export default function ConsumoCanchaPage() {
 
   return (
     <UserLayout
-      title="🎯 Consumo Cancha y Marcador en Vivo"
+      title="Consumo Cancha y Marcador en Vivo"
       subtitle="Lleva la cuenta de los tiros y el consumo de bebidas/snacks en tiempo real mientras juegas."
     >
       {/* Selector de Cancha */}
@@ -187,7 +187,7 @@ export default function ConsumoCanchaPage() {
         gap: '12px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{ fontSize: '1.4rem' }}>📍</span>
+          <span style={{ fontSize: '1.4rem' }}></span>
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted, #a0aec0)' }}>Pista / Escenario Actual</div>
             <select
@@ -214,11 +214,11 @@ export default function ConsumoCanchaPage() {
 
         <div style={{ display: 'flex', gap: '10px' }}>
           <Button variant="secondary" size="sm" onClick={reiniciarMarcador}>
-            🔄 Reiniciar Marcador
+            Reiniciar Marcador
           </Button>
           {consumos.length > 0 && (
             <Button variant="danger" size="sm" onClick={limpiarConsumo}>
-              🗑️ Vaciar Consumos
+              Vaciar Consumos
             </Button>
           )}
         </div>
@@ -236,7 +236,7 @@ export default function ConsumoCanchaPage() {
           boxShadow: '0 8px 24px rgba(0,0,0,0.25)'
         }}>
           <h2 style={{ fontSize: '1.2rem', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            🏆 Marcador de Partida
+            Marcador de Partida
           </h2>
 
           {/* Marcador Gigante */}
@@ -317,20 +317,20 @@ export default function ConsumoCanchaPage() {
                   fontSize: '0.95rem'
                 }}
               >
-                🎯 +1 Tiro {equipoLocal}
+                +1 Tiro {equipoLocal}
               </button>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
                 <button
                   onClick={() => registrarTiro('local', 3, 'Mecha (+3)')}
                   style={{ background: 'rgba(255,87,34,0.15)', color: '#ff5722', border: '1px solid #ff5722', padding: '8px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}
                 >
-                  🧨 Mecha (+3)
+                  Mecha (+3)
                 </button>
                 <button
                   onClick={() => registrarTiro('local', 6, 'Embocada (+6)')}
                   style={{ background: 'rgba(255,87,34,0.15)', color: '#ff5722', border: '1px solid #ff5722', padding: '8px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}
                 >
-                  🎯 Bocín (+6)
+                  Bocín (+6)
                 </button>
               </div>
             </div>
@@ -350,20 +350,20 @@ export default function ConsumoCanchaPage() {
                   fontSize: '0.95rem'
                 }}
               >
-                🎯 +1 Tiro {equipoVisitante}
+                +1 Tiro {equipoVisitante}
               </button>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
                 <button
                   onClick={() => registrarTiro('visitante', 3, 'Mecha (+3)')}
                   style={{ background: 'rgba(33,150,243,0.15)', color: '#2196f3', border: '1px solid #2196f3', padding: '8px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}
                 >
-                  🧨 Mecha (+3)
+                  Mecha (+3)
                 </button>
                 <button
                   onClick={() => registrarTiro('visitante', 6, 'Embocada (+6)')}
                   style={{ background: 'rgba(33,150,243,0.15)', color: '#2196f3', border: '1px solid #2196f3', padding: '8px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}
                 >
-                  🎯 Bocín (+6)
+                  Bocín (+6)
                 </button>
               </div>
             </div>
@@ -411,7 +411,7 @@ export default function ConsumoCanchaPage() {
           gap: '16px'
         }}>
           <h2 style={{ fontSize: '1.2rem', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-            🍻 Consumos en Cancha
+            Consumos en Cancha
           </h2>
 
           {/* Catálogo Rápido de Productos */}
@@ -439,7 +439,7 @@ export default function ConsumoCanchaPage() {
                     }}
                   >
                     <div style={{ fontSize: '1.3rem', marginBottom: '4px' }}>
-                      {prod.nombre.toLowerCase().includes('cerveza') ? '🍺' : prod.nombre.toLowerCase().includes('coca') ? '🥤' : '🍟'}
+                      {prod.nombre.toLowerCase().includes('cerveza') ? '' : prod.nombre.toLowerCase().includes('coca') ? '' : ''}
                     </div>
                     <div style={{ fontSize: '0.85rem', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {prod.nombre}
@@ -464,7 +464,7 @@ export default function ConsumoCanchaPage() {
             gap: '10px'
           }}>
             <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#ffb300' }}>
-              📋 Cuenta de la Cancha Actual ({consumos.reduce((a, b) => a + b.cantidad, 0)} ítems)
+              Cuenta de la Cancha Actual ({consumos.reduce((a, b) => a + b.cantidad, 0)} ítems)
             </div>
 
             {consumos.length === 0 ? (
@@ -534,7 +534,7 @@ export default function ConsumoCanchaPage() {
             disabled={consumos.length === 0 || enviandoPedido}
             style={{ width: '100%', background: 'linear-gradient(135deg, #4caf50, #2e7d32)' }}
           >
-            💳 Pagar Cuenta en Cancha ({formatCOP(totalConsumo)})
+            Pagar Cuenta en Cancha ({formatCOP(totalConsumo)})
           </Button>
         </div>
 

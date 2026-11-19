@@ -10,7 +10,7 @@ export default function HomePage() {
       <section id="inicio" className="hero-section">
         <div className="hero-content">
           <div className="hero-badge">
-            🇨🇴 Deporte Nacional y Patrimonio Cultural
+            Deporte Nacional y Patrimonio Cultural
           </div>
           <h1 className="hero-title">
             Conectando generaciones a través del <span>Tejo Colombiano</span>
@@ -78,7 +78,7 @@ export default function HomePage() {
                 className="service-card-img"
               />
               <div className="service-card-body">
-                <h3>🏆 Torneos y Campeonatos</h3>
+                <h3>Torneos y Campeonatos</h3>
                 <p>
                   Inscríbete en torneos locales y nacionales, consulta fixtures oficiales, tablas de posiciones y compite por premios en efectivo.
                 </p>
@@ -92,7 +92,7 @@ export default function HomePage() {
                 className="service-card-img"
               />
               <div className="service-card-body">
-                <h3>⚽ Creación de Equipos</h3>
+                <h3>Creación de Equipos</h3>
                 <p>
                   Funda tu propio club, añade deportistas, asigna capitanes y representa a tu ciudad en los eventos oficiales de la comunidad.
                 </p>
@@ -106,7 +106,7 @@ export default function HomePage() {
                 className="service-card-img"
               />
               <div className="service-card-body">
-                <h3>📍 Reserva de Canchas</h3>
+                <h3>Reserva de Canchas</h3>
                 <p>
                   Encuentra pistas de arcilla cercanas, revisa disponibilidad de horarios, tarifas por hora y realiza tu reserva de manera digital.
                 </p>
@@ -119,7 +119,7 @@ export default function HomePage() {
       {/* CTA Final */}
       <section style={{ padding: '80px 0', background: 'radial-gradient(circle, rgba(255,87,34,0.15) 0%, var(--bg-surface) 100%)', textAlign: 'center', borderTop: '1px solid var(--border-color)' }}>
         <div className="container">
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '16px' }}>¿Listo para lanzar tu mejor mecha? 🎯</h2>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '16px' }}>¿Listo para lanzar tu mejor mecha? </h2>
           <p style={{ maxWidth: '600px', margin: '0 auto 32px', fontSize: '1.1rem' }}>
             Únete a la comunidad de deportistas y propietarios de canchas más grande del país.
           </p>

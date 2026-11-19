@@ -65,7 +65,7 @@ export default function ProductoModal({ isOpen, onClose, onGuardar, productoEdit
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={productoEditar ? '✏️ Editar Producto' : '🍔 Nuevo Producto'}>
+    <Modal isOpen={isOpen} onClose={onClose} title={productoEditar ? 'Editar Producto' : 'Nuevo Producto'}>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <Input
           label="Nombre del Producto"
@@ -105,7 +105,7 @@ export default function ProductoModal({ isOpen, onClose, onGuardar, productoEdit
               <option value="">-- Sin categoría --</option>
               {categorias.map((c) => (
                 <option key={c.id_categoria} value={c.id_categoria}>
-                  {c.icono || '🍽️'} {c.nombre}
+                  {c.icono || ''} {c.nombre}
                 </option>
               ))}
             </select>

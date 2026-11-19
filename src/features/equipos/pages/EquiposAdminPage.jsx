@@ -110,7 +110,7 @@ export default function EquiposAdminPage() {
       key: 'nombre',
       render: (e) => (
         <div>
-          <strong>⚽ {e.nombre}</strong>
+          <strong>{e.nombre}</strong>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
             {e.descripcion?.slice(0, 50)}...
           </div>
@@ -143,10 +143,10 @@ export default function EquiposAdminPage() {
       render: (e) => (
         <div className="actions-cell">
           <Button variant="secondary" size="sm" onClick={() => handleOpenEdit(e)}>
-            ✏️ Editar
+            Editar
           </Button>
           <Button variant="danger" size="sm" onClick={() => handleDelete(e.id_equipo)}>
-            🗑️
+            
           </Button>
         </div>
       ),
@@ -163,14 +163,14 @@ export default function EquiposAdminPage() {
         data={equipos}
         loading={loading}
         onAddNew={handleOpenNew}
-        addNewLabel="＋ Nuevo Equipo"
+        addNewLabel="+ Nuevo Equipo"
         searchPlaceholder="Buscar equipo por nombre o capitán..."
       />
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingEquipo ? `✏️ Editar Equipo (#${editingEquipo.id_equipo})` : '＋ Registrar Nuevo Equipo'}
+        title={editingEquipo ? `Editar Equipo (#${editingEquipo.id_equipo})` : '+ Registrar Nuevo Equipo'}
       >
         <form onSubmit={handleSubmit}>
           <Input
@@ -207,8 +207,8 @@ export default function EquiposAdminPage() {
             value={formData.estado ? 'true' : 'false'}
             onChange={(e) => setFormData({ ...formData, estado: e.target.value === 'true' })}
             options={[
-              { value: 'true', label: '🟢 Activo para Competencia' },
-              { value: 'false', label: '🔴 Inactivo' },
+              { value: 'true', label: 'Activo para Competencia' },
+              { value: 'false', label: 'Inactivo' },
             ]}
           />
 

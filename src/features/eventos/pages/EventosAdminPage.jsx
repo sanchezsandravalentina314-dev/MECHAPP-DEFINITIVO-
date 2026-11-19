@@ -118,7 +118,7 @@ export default function EventosAdminPage() {
       key: 'nombre',
       render: (ev) => (
         <div>
-          <strong>🎉 {ev.nombre}</strong>
+          <strong>{ev.nombre}</strong>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
             {ev.descripcion?.slice(0, 55)}...
           </div>
@@ -146,10 +146,10 @@ export default function EventosAdminPage() {
       render: (ev) => (
         <div className="actions-cell">
           <Button variant="secondary" size="sm" onClick={() => handleOpenEdit(ev)}>
-            ✏️ Editar
+            Editar
           </Button>
           <Button variant="danger" size="sm" onClick={() => handleDelete(ev.id)}>
-            🗑️
+            
           </Button>
         </div>
       ),
@@ -166,14 +166,14 @@ export default function EventosAdminPage() {
         data={eventos}
         loading={loading}
         onAddNew={handleOpenNew}
-        addNewLabel="＋ Programar Evento"
+        addNewLabel="+ Programar Evento"
         searchPlaceholder="Buscar por nombre o tipo de actividad..."
       />
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingEvento ? `✏️ Editar Evento (#${editingEvento.id})` : '＋ Programar Nuevo Evento'}
+        title={editingEvento ? `Editar Evento (#${editingEvento.id})` : '+ Programar Nuevo Evento'}
       >
         <form onSubmit={handleSubmit}>
           <Input
