@@ -1,21 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-// Imagenes de canchas de tejo colombianas — distintas por cada tarjeta
-const TEJO_IMAGES = [
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Tejo_Game_Colombia.jpg/1280px-Tejo_Game_Colombia.jpg',
-  'https://www.eltiempo.com/files/image_640_428/uploads/2017/07/13/5968bd63e96b9.jpeg',
-  'https://www.semana.com/resizer/v2/IKFVGFSNQBB47ETFXBTXPANFAI.jpg?auth=b2d6c9d8e6f3a1c5b4e7d2f9a3c1b8e5f4d7c2a9b6e3f1d8c5b2a7e4f1c8b5&width=1280',
-  'https://imagenesfotos.com/wp-content/uploads/2015/09/foto-tejo-colombiano-canchas.jpg',
-  'https://s3.amazonaws.com/rtvc-assets-senalmemoria.gov.co/s3fs-public/field_image/tejo.jpg',
-  'https://live.staticflickr.com/7822/39885855313_8a5b9f6e1e_b.jpg',
-  'https://i.pinimg.com/originals/4f/8e/3c/4f8e3c7f2a1b5e9d6c3a8f4b2e7c1d5a.jpg',
-  'https://www.colombia.co/wp-content/uploads/2020/06/tejo-deporte.jpg',
-];
-
-function getTejoImage(id) {
-  return TEJO_IMAGES[(id - 1) % TEJO_IMAGES.length];
-}
 import UserLayout from '@/components/layout/UserLayout';
 import Button from '@/components/common/Button';
 import Badge from '@/components/common/Badge';
@@ -30,6 +14,24 @@ import { useApp } from '@/context/AppContext';
 import { formatCurrency } from '@/utils/formatters';
 import PasarelaPagoModal from '@/components/payment/PasarelaPagoModal';
 import api from '@/services/api';
+
+// Fotos distintas de canchas y deporte al aire libre — una por cada cancha
+const TEJO_IMAGES = [
+  'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80',
+  'https://images.unsplash.com/photo-1575361204480-aadea25e6e68?w=600&q=80',
+  'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=600&q=80',
+  'https://images.unsplash.com/photo-1543351611-58f69d7c1781?w=600&q=80',
+  'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=600&q=80',
+  'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80',
+  'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&q=80',
+  'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80',
+  'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
+  'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80',
+];
+
+function getTejoImage(id) {
+  return TEJO_IMAGES[(id - 1) % TEJO_IMAGES.length];
+}
 
 export default function CanchasUserPage() {
   const navigate = useNavigate();
